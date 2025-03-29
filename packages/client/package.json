@@ -8,7 +8,13 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "jest ./"
+    "test": "jest ./",
+    "prepare": "husky init"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm-run-all lint test"
+    }
   },
   "dependencies": {
     "dotenv": "^16.0.2",
@@ -26,6 +32,7 @@
     "@typescript-eslint/parser": "^5.35.1",
     "@vitejs/plugin-react": "^2.0.1",
     "eslint": "^8.23.0",
+    "husky": "^9.1.7",
     "jest": "^28",
     "jest-environment-jsdom": "^29.0.1",
     "lefthook": "^1.3.9",
