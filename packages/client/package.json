@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "jest ./",
-    "prepare": "husky init"
+    "prepare": "husky"
   },
   "husky": {
     "hooks": {
@@ -24,14 +24,21 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
     "@testing-library/react": "^13.3.0",
     "@types/jest": "^28.1.8",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
-    "@typescript-eslint/eslint-plugin": "^5.35.1",
-    "@typescript-eslint/parser": "^5.35.1",
+    "@typescript-eslint/eslint-plugin": "^8.28.0",
+    "@typescript-eslint/parser": "^8.28.0",
     "@vitejs/plugin-react": "^2.0.1",
-    "eslint": "^8.23.0",
+    "eslint": "8.57.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^18.0.0",
+    "eslint-import-resolver-typescript": "^4.3.1",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.4",
     "husky": "^9.1.7",
     "jest": "^28",
     "jest-environment-jsdom": "^29.0.1",
