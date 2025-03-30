@@ -1,3 +1,4 @@
+import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import dotenv from 'dotenv';
@@ -13,4 +14,21 @@ export default defineConfig({
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
   plugins: [react()],
+  resolve: {
+    alias: [
+      {
+        find: '@', replacement: resolve(__dirname, './src'),
+      },
+    ],
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `
+        @use '@/styles/variables' as *;
+        @use 'normalize-scss/sass/normalize' as *;
+        `,
+      },
+    },
+  },
 });
