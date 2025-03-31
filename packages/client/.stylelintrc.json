@@ -1,8 +1,7 @@
 {
   "extends": "stylelint-config-standard",
   "plugins": [
-    "stylelint-scss",
-    "stylelint-selector-bem-pattern"
+    "stylelint-scss"
   ],
   "rules": {
     "string-no-newline": true,
