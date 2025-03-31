@@ -8,15 +8,16 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    // 'plugin:@typescript-eslint/recommended-type-checked',
+    // 'plugin:@typescript-eslint/stylistic-type-checked',
     'prettier',
     'airbnb',
-    // 'airbnb-typescript',
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
   parserOptions: {
     ecmaVersion: 12,
     sourceType: 'module',
+    parser: '@typescript-eslint/parser',
   },
   settings: {
     'import/resolver': {
@@ -27,9 +28,9 @@ module.exports = {
   },
   rules: {
     '@typescript-eslint/ban-ts-comment': 1,
-    'no-unused-vars': 'off',
-    quotes: ['error', 'single'],
     '@typescript-eslint/no-unused-vars': ['off'],
+    quotes: ['error', 'single'],
+    'no-unused-vars': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'import/extensions': [
