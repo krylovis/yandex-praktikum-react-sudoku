@@ -1,3 +1,2 @@
-@use 'variables';
-
-@include normalize();
+@use './variables.scss' as *;
+@use './normalize.css' as *;

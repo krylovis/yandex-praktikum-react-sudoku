@@ -24,5 +24,7 @@
     "color-function-notation": null
   },
 
-  "ignoreFiles": []
+  "ignoreFiles": [
+    "./src/styles/normalize.css"
+  ]
 }
