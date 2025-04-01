@@ -43,7 +43,6 @@ function App() {
   }, []);
   return (
     <div className="app">
-      Вот тут будет жить ваше приложение :)
       <Routes>
         <Route path={ROUTES.SIGN_UP} element={<AuthPage />} />
         <Route path={ROUTES.FORUM} element={<ForumPage />} />
@@ -54,12 +53,17 @@ function App() {
         <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
         <Route path={ROUTES.TOPIC} element={<TopicPage />} />
       </Routes>
+      {!hideNavigationOnRoutes.includes(location.pathname) && (
+        <div>Вот тут будет жить ваше приложение :)</div>
+      )}
       {!hideNavigationOnRoutes.includes(location.pathname) && <Navigation />}
       {/* Кнопка "Назад" для определённых страниц */}
       {hideNavigationOnRoutes.includes(location.pathname) && (
-        <button type="button" onClick={() => navigate('/')}>
-          Назад
-        </button>
+        <div>
+          <button type="button" onClick={() => navigate('/')}>
+            Назад
+          </button>
+        </div>
       )}
     </div>
   );
