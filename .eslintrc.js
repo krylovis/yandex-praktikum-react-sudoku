@@ -46,5 +46,18 @@ module.exports = {
       'error',
       { devDependencies: true },
     ],
+    'comma-dangle': [
+      'error',
+      {
+        arrays: 'always-multiline', // Запятая для массивов
+        objects: 'always-multiline', // Запятая для объектов
+        imports: 'always-multiline', // Запятая для импортов
+        exports: 'always-multiline', // Запятая для экспорта
+        functions: 'never', // Никогда не требовать запятую для функций
+      },
+    ],
+    'function-paren-newline': 'off',
+    'implicit-arrow-linebreak': 'off',
+    'object-curly-newline': 'off',
   },
 };
