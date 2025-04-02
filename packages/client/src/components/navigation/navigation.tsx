@@ -12,7 +12,7 @@ const navigationLinks = {
   [ROUTES.LEADERBOARD]: 'Страница лидерборда',
 };
 
-export default function Navigation() {
+function Navigation() {
   return (
     <nav>
       <ul>
@@ -25,3 +25,5 @@ export default function Navigation() {
     </nav>
   );
 }
+
+export default Navigation;
