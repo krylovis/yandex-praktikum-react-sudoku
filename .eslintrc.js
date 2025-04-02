@@ -1,5 +1,4 @@
 module.exports = {
-  root: true,
   env: {
     browser: true,
     es2020: true,
@@ -17,6 +16,7 @@ module.exports = {
     sourceType: 'module',
     parser: '@typescript-eslint/parser',
   },
+  plugins: ['@typescript-eslint'],
   settings: {
     'import/resolver': {
       node: {

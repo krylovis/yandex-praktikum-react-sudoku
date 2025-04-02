@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { ComponentType } from 'react';
 import { Navigate } from 'react-router-dom';
-import ROUTES from '../constants/constants';
+import ROUTES from '../../constants/constants';
 
 interface ProtectedRouteProps<P> {
   element: ComponentType<P>;
