@@ -11,8 +11,8 @@ import {
   ProfilePage,
   TopicPage,
 } from '../pages/index';
-import Navigation from '../navigation/Navigation';
 import ROUTES from '../../constants/constants';
+import Navigation from '../navigation/navigation';
 
 // eslint-disable-next-line object-curly-newline
 const hideNavigationOnRoutes: string[] = [
