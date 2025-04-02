@@ -12,7 +12,7 @@ import {
   TopicPage,
 } from '../pages/index';
 import ROUTES from '../../constants/constants';
-import Navigation from '../navigation/navigation';
+import Navigation from '../navigation/NavigationComponent';
 
 // eslint-disable-next-line object-curly-newline
 const hideNavigationOnRoutes: string[] = [
