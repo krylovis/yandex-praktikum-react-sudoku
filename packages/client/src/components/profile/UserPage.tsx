@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './userPage.scss';
+import './UserPage.scss';
 import UserField from './UserField';
 
 type field = { key: string; value: string; label: string };
