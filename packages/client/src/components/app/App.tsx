@@ -11,7 +11,7 @@ import {
   ProfilePage,
   TopicPage,
 } from '../pages/index';
-import Navigation from '../navigation/navigation';
+import Navigation from '../navigation/Navigation';
 import ROUTES from '../../constants/constants';
 
 // eslint-disable-next-line object-curly-newline
