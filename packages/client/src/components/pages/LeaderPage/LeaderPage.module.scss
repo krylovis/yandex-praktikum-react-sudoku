@@ -1,0 +1,136 @@
+.wrapper {
+    position: relative;
+    max-width: 1280px;
+    width: 100%;
+    height: 100vh;
+    margin: auto;
+    display: flex;
+}
+
+.backgroung {
+    position: fixed;
+    right: 0;
+    z-index: -1;
+    object-fit: cover;
+}
+
+.wrap {
+    max-width: 900px;
+    width: 70.31vw;
+    max-height: calc(80.88% - 69px - 84px);
+    height: 100%;
+    margin: auto;
+    padding: 86px 0;
+    box-shadow: 0 0 6px 0 $color-shadow;
+    border-radius: 12px;
+    padding: 69px 0 84px;
+    background-color: $white;
+}
+
+.backWrap {
+    display: flex;
+    align-items: center;
+    margin: 0 0 0 11.1%;
+    padding: 0;
+    border: none;
+    background-color: inherit;
+
+    &:hover {
+        cursor: pointer;
+        opacity: 0.6;
+    }
+}
+
+.backIcon {
+    margin-right: 10px;
+}
+
+.backText {
+    color: $color-primary;
+    margin: 0;
+    font-size: 12px;
+}
+
+.title {
+    text-align: center;
+    font-size: 40px;
+    color: $color-text;
+    margin: 0 auto 82px;
+}
+
+.table {
+    width: 77.8%;
+    margin: auto;
+    border-collapse: collapse;
+}
+
+.raw {
+    border-bottom: 1px solid $color-border;
+}
+
+.text {
+    font-size: 12px;
+    margin: 15px 0;
+}
+
+.headText {
+    color: $color-secondary;
+    text-align: start;
+}
+
+.lastChild {
+    text-align: end;
+}
+
+.rawText {
+    color: $color-text;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.name {
+    max-width: 500px;
+    width: 38vw;
+}
+
+.avatarWrap {
+    width: 40px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.avatar {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+@media screen and (max-width: 768px) {
+    .wrap {
+        width: 88.54vw;
+    }
+
+    .title {
+        font-size: 30px;
+    }
+
+    .backWrap {
+        margin-left: 5.73%;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .wrap {
+        width: 94.44vw;
+    }
+
+    .backWrap {
+        margin-left: 2.78%;
+    }
+
+    .title {
+        font-size: 24px;
+    }
+}

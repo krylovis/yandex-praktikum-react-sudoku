@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import './app.scss';
+import { LeaderPage } from '../pages';
 
 function App() {
   useEffect(() => {
@@ -13,7 +14,8 @@ function App() {
 
     fetchServerData();
   }, []);
-  return <div className="app">Вот тут будет жить ваше приложение :)</div>;
+  // return <div className="app">Вот тут будет жить ваше приложение :)</div>;
+  return <LeaderPage />;
 }
 
 export default App;
