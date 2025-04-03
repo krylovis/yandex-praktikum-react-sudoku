@@ -19,7 +19,7 @@ function Pagination({
         disabled={currentPage === 1}
       >
         &lt;
-      </button>,
+      </button>
     );
     // Логика отображения страниц
     if (totalPages <= 5) {
@@ -32,7 +32,7 @@ function Pagination({
             onClick={() => onPageChange(i)}
           >
             {i}
-          </button>,
+          </button>
         );
       }
     } else {
@@ -45,7 +45,7 @@ function Pagination({
           onClick={() => onPageChange(1)}
         >
           1
-        </button>,
+        </button>
       );
       // Добавляем многоточие, если текущая страница больше 3
       if (currentPage > 3) {
@@ -63,7 +63,7 @@ function Pagination({
             onClick={() => onPageChange(i)}
           >
             {i}
-          </button>,
+          </button>
         );
       }
       // Добавляем многоточие, если текущая страница меньше, чем предпоследняя
@@ -80,7 +80,7 @@ function Pagination({
             onClick={() => onPageChange(totalPages)}
           >
             {totalPages}
-          </button>,
+          </button>
         );
       }
     }
@@ -94,7 +94,7 @@ function Pagination({
         disabled={currentPage === totalPages}
       >
         &gt;
-      </button>,
+      </button>
     );
     return paginationItems;
   };

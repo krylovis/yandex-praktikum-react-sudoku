@@ -24,9 +24,7 @@
     "declaration": true,
     "jsx": "react-jsx",
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"],
     }
   },
   "include": ["src"],

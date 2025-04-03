@@ -1,9 +1,6 @@
 {
   "extends": "stylelint-config-standard",
-  "plugins": [
-    "stylelint-scss",
-    "stylelint-selector-bem-pattern"
-  ],
+  "plugins": ["stylelint-scss", "stylelint-selector-bem-pattern"],
   "rules": {
     "string-no-newline": true,
     "value-keyword-case": null,
@@ -24,7 +21,5 @@
     "color-function-notation": null
   },
 
-  "ignoreFiles": [
-    "./src/styles/normalize.css"
-  ]
+  "ignoreFiles": ["./src/styles/normalize.css"]
 }

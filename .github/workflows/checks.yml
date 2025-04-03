@@ -19,6 +19,8 @@ jobs:
         run: yarn
       - name: Initialize
         run: yarn lerna bootstrap
+      - name: Debug project structure
+        run: ls -R packages/client/src/components
       - name: Lint
         run: yarn lint
       - name: Test
