@@ -26,29 +26,29 @@ export default function LeaderPage() {
   const headNames = ['Место', 'Аватар', 'Имя', 'Время'];
 
   return (
-    <main className={style.leader_page}>
-      <div className={style.leader_page__wrap}>
-        <button className={style.leader_page__back_wrap} type="button" onClick={handleBackBtnClick}>
-          <img className={style.leader_page__back_icon} src={leftBlueArrow} alt="Стрелка назад" />
-          <p className={style.leader_page__back_text}>Назад</p>
+    <main className={style.leaderPage}>
+      <div className={style.leaderPage__wrap}>
+        <button className={style.leaderPage__backWrap} type="button" onClick={handleBackBtnClick}>
+          <img className={style.leaderPage__backIcon} src={leftBlueArrow} alt="Стрелка назад" />
+          <p className={style.leaderPage__backText}>Назад</p>
         </button>
-        <h1 className={style.leader_page__title}>Таблица лидеров</h1>
+        <h1 className={style.leaderPage__title}>Таблица лидеров</h1>
 
-        <div className={style.leader_page__table}>
-          <ul className={style.leader_page__raw}>
+        <div className={style.leaderPage__table}>
+          <ul className={style.leaderPage__raw}>
             {headNames.map((headName, ind) => (
-              <li className={`${style.leader_page__head_text} ${style.leader_page__text} ${headName === 'Имя' ? style.leader_page__name : ''}`} key={ind}>{headName}</li>
+              <li className={`${style.leaderPage__headText} ${style.leaderPage__text} ${headName === 'Имя' ? style.leaderPage__name : ''}`} key={ind}>{headName}</li>
             ))}
           </ul>
-          <ul className={style.leader_page__table_content}>
+          <ul className={style.leaderPage__tableContent}>
             {currentLeaders.map((leader, index) => (
-              <li className={style.leader_page__raw} key={index}>
-                <p className={`${style.leader_page__raw_text} ${style.leader_page__text}`}>{leader.place}</p>
-                <div className={style.leader_page__avatar_wrap}>
-                  <img className={style.leader_page__avatar} src={avatar} alt="Аватар" />
+              <li className={style.leaderPage__raw} key={index}>
+                <p className={`${style.leaderPage__rawText} ${style.leaderPage__text}`}>{leader.place}</p>
+                <div className={style.leaderPage__avatarWrap}>
+                  <img className={style.leaderPage__avatar} src={avatar} alt="Аватар" />
                 </div>
-                <p className={`${style.leader_page__raw_text} ${style.leader_page__text} ${style.leader_page__name}`}>{leader.name}</p>
-                <p className={`${style.leader_page__raw_text} ${style.leader_page__text} ${style.leader_page__last_child}`}>{leader.time}</p>
+                <p className={`${style.leaderPage__rawText} ${style.leaderPage__text} ${style.leaderPage__name}`}>{leader.name}</p>
+                <p className={`${style.leaderPage__rawText} ${style.leaderPage__text} ${style.leaderPage__lastChild}`}>{leader.time}</p>
               </li>
             ))}
           </ul>
