@@ -1,0 +1,146 @@
+.leaderPage {
+    position: relative;
+    max-width: 1280px;
+    width: 100%;
+    height: 100vh;
+    margin: auto;
+    display: flex;
+    background: url(../../../assets/images/numbers.png);
+
+    &__wrap {
+        max-width: 900px;
+        width: 70.31vw;
+        margin: auto;
+        box-shadow: 0 0 6px 0 $color-shadow;
+        border-radius: 12px;
+        padding: 69px 0 84px;
+        background-color: $white;
+    }
+
+    &__backWrap {
+        display: flex;
+        align-items: center;
+        margin: 0 0 0 11.1%;
+        padding: 0;
+        border: none;
+        background-color: inherit;
+
+        &:hover {
+            cursor: pointer;
+            opacity: 0.6;
+        }
+    }
+
+    &__backIcon {
+        margin-right: 10px;
+    }
+
+    &__backText {
+        color: $color-primary;
+        margin: 0;
+        font-size: 12px;
+    }
+
+    &__title {
+        text-align: center;
+        font-size: 40px;
+        color: $color-text;
+        margin: 0 auto 82px;
+    }
+
+    &__table {
+        width: 77.8%;
+        margin: auto;
+        border-collapse: collapse;
+    }
+
+    &__raw {
+        border-bottom: 1px solid $color-border;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__text {
+        font-size: 12px;
+        margin: 15px 0;
+    }
+
+    &__headText {
+        color: $color-secondary;
+        text-align: start;
+
+        &:last-child {
+            text-align: end;
+        }
+    }
+
+    &__tableContent {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    &__rawText {
+        color: $color-text;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__lastChild {
+        text-align: end;
+    }
+
+    &__name {
+        max-width: 500px;
+        width: 38vw;
+    }
+
+    &__avatarWrap {
+        width: 40px;
+        aspect-ratio: 1 / 1;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+    &__avatar {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .leaderPage {
+        &__wrap {
+            width: 88.54vw;
+        }
+
+        &__title {
+            font-size: 30px;
+        }
+
+        &__backWrap {
+            margin-left: 5.73%;
+        }
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .leaderPage {
+        &__wrap {
+            width: 94.44vw;
+        }
+
+        &__backWrap {
+            margin-left: 2.78%;
+        }
+
+        &__title {
+            font-size: 24px;
+        }
+    }
+}
