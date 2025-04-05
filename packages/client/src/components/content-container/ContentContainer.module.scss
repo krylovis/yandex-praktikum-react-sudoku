@@ -1,0 +1,11 @@
+.contentContainer {
+  align-self: center;
+  margin: 0 auto;
+  padding: 0;
+}
+
+@media screen and (width <= 360px) {
+  .contentContainer {
+    padding: 0 10px;
+  }
+}
