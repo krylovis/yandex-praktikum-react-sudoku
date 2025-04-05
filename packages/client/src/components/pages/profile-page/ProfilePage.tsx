@@ -7,6 +7,7 @@ import { IProfile } from '../../../models/Profile';
 import apiConfig from '../../../config/ApiConfig';
 import Popup from '../../popup/Popup';
 import usePrevious from '../../hooks/usePrevios';
+import ErrorBoundary from '../../utils';
 
 type field = { key: string; label: string; value?: string; };
 
@@ -100,69 +101,71 @@ export default function ProfilePage() {
 
   return (
     <section className="profile-page">
-      <div className="profile-page__card">
-        <div className="profile-page__avatar-container">
-          <img src={getAvatar(profile?.avatar)} alt="Avatar" className="profile-page__avatar" />
-        </div>
-        <div className="profile-page__actions">
-          <button className="button" type="button" onClick={() => setPopupOpen(true)}>
-            Изменить аватар
-          </button>
-          <button className="button" type="button" onClick={() => setPasswordMode(!isPasswordMode)}>
-            {!isPasswordMode ? 'Изменить пароль' : 'Данные пользователя'}
-          </button>
-          {!(isEditing || isPasswordMode) && (
-            <button className="button" type="button" onClick={() => setEditingMode(true)}>
-              Редактировать
-            </button>
-          )}
-        </div>
-        <form onSubmit={handleSubmit} className="profile-page__form">
-          <div className="profile-page__form-fields">
-            {isPasswordMode
-              ? fieldsUserPassword.map(({ label, key, value }) => (
-                <InputField
-                  label={label}
-                  value={value}
-                  key={key}
-                  name={key}
-                  isEditing={isPasswordMode}
-                  onChange={(e) => handleFieldChange(key, e)}
-                />
-              ))
-              : fieldsUserInfo.map(({ label, key, value }) => (
-                <InputField
-                  label={label}
-                  value={value}
-                  name={key}
-                  key={key}
-                  isEditing={isEditing}
-                  onChange={(e) => handleFieldChange(key, e)}
-                />
-              ))}
+      <ErrorBoundary>
+        <div className="profile-page__card">
+          <div className="profile-page__avatar-container">
+            <img src={getAvatar(profile?.avatar)} alt="Avatar" className="profile-page__avatar" />
           </div>
-          {(isEditing || isPasswordMode) && (
-            <div className="profile-page__form-actions">
-              <button
-                className="button button__cancel"
-                type="button"
-                onClick={() => handleCancel()}
-              >
-                Отмена
+          <div className="profile-page__actions">
+            <button className="button" type="button" onClick={() => setPopupOpen(true)}>
+              Изменить аватар
+            </button>
+            <button className="button" type="button" onClick={() => setPasswordMode(!isPasswordMode)}>
+              {!isPasswordMode ? 'Изменить пароль' : 'Данные пользователя'}
+            </button>
+            {!(isEditing || isPasswordMode) && (
+              <button className="button" type="button" onClick={() => setEditingMode(true)}>
+                Редактировать
               </button>
-              <button className="button" type="submit">
-                Сохранить
-              </button>
+            )}
+          </div>
+          <form onSubmit={handleSubmit} className="profile-page__form">
+            <div className="profile-page__form-fields">
+              {isPasswordMode
+                ? fieldsUserPassword.map(({ label, key, value }) => (
+                  <InputField
+                    label={label}
+                    value={value}
+                    key={key}
+                    name={key}
+                    isEditing={isPasswordMode}
+                    onChange={(e) => handleFieldChange(key, e)}
+                  />
+                ))
+                : fieldsUserInfo.map(({ label, key, value }) => (
+                  <InputField
+                    label={label}
+                    value={value}
+                    name={key}
+                    key={key}
+                    isEditing={isEditing}
+                    onChange={(e) => handleFieldChange(key, e)}
+                  />
+                ))}
             </div>
-          )}
-        </form>
-      </div>
-      <Popup isOpen={isPopupOpen} title="Загрузка аватара" onClose={() => setPopupOpen(false)}>
-        <label htmlFor="file">
-          Выберите файл:
-          <input type="file" id="file" onChange={handleFileChange} />
-        </label>
-      </Popup>
+            {(isEditing || isPasswordMode) && (
+              <div className="profile-page__form-actions">
+                <button
+                  className="button button__cancel"
+                  type="button"
+                  onClick={() => handleCancel()}
+                >
+                  Отмена
+                </button>
+                <button className="button" type="submit">
+                  Сохранить
+                </button>
+              </div>
+            )}
+          </form>
+        </div>
+        <Popup isOpen={isPopupOpen} title="Загрузка аватара" onClose={() => setPopupOpen(false)}>
+          <label htmlFor="file">
+            Выберите файл:
+            <input type="file" id="file" onChange={handleFileChange} />
+          </label>
+        </Popup>
+      </ErrorBoundary>
     </section>
   );
 }
