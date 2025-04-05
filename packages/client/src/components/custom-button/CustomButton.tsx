@@ -1,6 +1,6 @@
 import style from './CustomButton.module.scss';
 
-interface Props {
+interface IProps {
   type: 'submit' | 'reset' | 'button',
   color: 'primary' | 'secondary' | 'succes' | 'transparent',
   text?: string,
@@ -8,7 +8,7 @@ interface Props {
   onClick?: () => void,
 }
 
-export default function CustomButton({ text, title, type, color, onClick }: Props) {
+export default function CustomButton({ text, title, type, color, onClick }: IProps) {
   const className = [style.customButton];
   className.push(style[`customButton_${color}`]);
 
