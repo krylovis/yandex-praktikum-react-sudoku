@@ -1,9 +1,3 @@
-import ErrorBoundary from '../../utils';
-
 export default function MainPage() {
-  return (
-    <div className="main-page">
-      <ErrorBoundary>Главная страница</ErrorBoundary>
-    </div>
-  );
+  return <div className="main-page">Главная страница</div>;
 }
