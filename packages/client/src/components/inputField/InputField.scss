@@ -1,0 +1,30 @@
+.field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+
+  &__label {
+    color: #666;
+    font-size: 14px;
+    flex: 1;
+  }
+
+  &__value {
+    color: #000;
+    font-size: 16px;
+    text-align: right;
+    flex: 1;
+  }
+
+  &__input {
+    flex: 1;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    padding: 4px;
+    text-align: right;
+    border-radius: 4px;
+    outline: none;
+  }
+}

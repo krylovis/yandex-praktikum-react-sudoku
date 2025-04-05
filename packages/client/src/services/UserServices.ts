@@ -1,32 +1,18 @@
 import apiConfig from '../config/ApiConfig';
-import { IUser } from '../models/Profile';
+import { fetchWithCookies } from './BaseApi';
+import { IProfile } from '../models/Profile';
 
-const getUserInfo = async (): Promise<IUser> => {
-  const url = `${apiConfig.baseUrl}/user`;
-  const response = await fetch(url, {
-    method: 'GET',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+const endPoint: string = '/user';
+
+export const changeProfile = async (data: { [k: string]: unknown }) =>
+  fetchWithCookies<IProfile>(`${apiConfig.baseUrl}${endPoint}/profile`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
   });
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch user data');
-  }
-
-  return response.json();
-};
-
-const login = async (): Promise<IUser> => {
-  const url = `${apiConfig.baseUrl}/user`;
-  const response = await fetch(url);
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch user data');
-  }
-
-  return response.json();
-};
-
-export default { getUserInfo };
+export const changeAvatar = async (data: FormData) =>
+  fetchWithCookies<IProfile>(`${apiConfig.baseUrl}${endPoint}/profile/avatar`, {
+    method: 'PUT',
+    body: data,
+  });
