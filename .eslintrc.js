@@ -31,6 +31,11 @@ module.exports = {
     'no-unused-vars': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
+    'react/button-has-type': [0, {
+      button: true,
+      submit: true,
+      reset: true,
+    }],
     'import/extensions': [
       0,
       'ignorePackages',

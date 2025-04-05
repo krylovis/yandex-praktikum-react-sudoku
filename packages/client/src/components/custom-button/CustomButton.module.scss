@@ -1,0 +1,38 @@
+.customButton {
+  font-size: 13px;
+  font-weight: 400;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: .3s ease;
+
+  &:hover {
+    opacity: .6;
+  }
+
+  &_primary {
+    background-color: $color-primary;
+    color: white;
+  }
+
+  &_secondary {
+    background-color: $white;
+  }
+
+  &_succes {
+    background-color: $color-succes;
+  }
+
+  &_danger {
+    background-color: $color-danger;
+  }
+
+  &_transparent {
+    padding: 0;
+    background-color: transparent;
+    width: fit-content;
+    color: $color-primary;
+    font-size: 9px;
+  }
+}
