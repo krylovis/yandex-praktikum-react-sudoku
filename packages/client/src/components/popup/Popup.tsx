@@ -18,7 +18,7 @@ export default function Popup({ isOpen, title, children, onClose }: IProps) {
       <div className="popup-overlay__content">
         <div className="popup-overlay__header">
           <h2>{title}</h2>
-          <button className="close" onClick={onClose} aria-label="Закрыть" type="button">
+          <button className="close" onClick={onClose} type="button">
             &times;
           </button>
         </div>
