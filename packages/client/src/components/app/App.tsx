@@ -1,6 +1,5 @@
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import './app.scss';
 import {
   AuthPage,
   ForumPage,
@@ -42,7 +41,7 @@ function App() {
     fetchServerData();
   }, []);
   return (
-    <div className="app">
+    <>
       <Routes>
         <Route path={ROUTES.SIGN_UP} element={<AuthPage />} />
         <Route path={ROUTES.FORUM} element={<ForumPage />} />
@@ -65,7 +64,7 @@ function App() {
           </button>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
