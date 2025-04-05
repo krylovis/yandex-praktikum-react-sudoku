@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import InputField from '../../inputField/InputField';
 import './ProfilePage.scss';
-import { changeAvatar, changeProfile } from '../../../services/UserServices';
+import { changeAvatar, changePassword, changeProfile } from '../../../services/UserServices';
 import getUserInfo from '../../../services/AuthService';
 import { IProfile } from '../../../models/Profile';
 import apiConfig from '../../../config/ApiConfig';
@@ -22,10 +22,6 @@ export default function ProfilePage() {
     login: '',
   });
   const prevProfile = usePrevious(profile);
-  const [password] = useState({
-    oldPassword: 'Nikita12',
-    newPassword: 'Nikita123',
-  });
   const [isEditing, setEditingMode] = useState<boolean>(false);
   const [isPasswordMode, setPasswordMode] = useState<boolean>(false);
   const fieldsUserInfo: field[] = [
@@ -36,15 +32,21 @@ export default function ProfilePage() {
     { key: 'display_name', label: 'Никнейм', value: profile?.display_name },
   ];
   const fieldsUserPassword: field[] = [
-    { key: 'oldPassword', label: 'Старый пароль', value: password.oldPassword },
-    { key: 'newPassword', label: 'Новый пароль', value: password.newPassword },
+    { key: 'oldPassword', label: 'Старый пароль', value: '' },
+    { key: 'newPassword', label: 'Новый пароль', value: '' },
   ];
   const handleFieldChange = (key: string, value?: string) => {
     setProfile((prev) => ({ ...prev, [key]: value }));
   };
 
-  const cancel = () => {
-    setProfile(prevProfile as IProfile);
+  const handleCancel = () => {
+    if (isPasswordMode) {
+      setPasswordMode(false);
+    } else {
+      setProfile(prevProfile as IProfile);
+    }
+
+    setEditingMode(false);
   };
 
   useEffect(() => {
@@ -63,10 +65,17 @@ export default function ProfilePage() {
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
 
-      await changeProfile(data).then((res) => {
-        setProfile(res);
-        setEditingMode(false);
-      });
+      if (isPasswordMode) {
+        await changePassword(data).then(() => {
+          setEditingMode(false);
+          setPasswordMode(false);
+        });
+      } else if (isEditing) {
+        await changeProfile(data).then((res) => {
+          setProfile(res);
+          setEditingMode(false);
+        });
+      }
     }
   };
 
@@ -90,7 +99,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="profile-page">
+    <section className="profile-page">
       <div className="profile-page__card">
         <div className="profile-page__avatar-container">
           <img src={getAvatar(profile?.avatar)} alt="Avatar" className="profile-page__avatar" />
@@ -100,11 +109,13 @@ export default function ProfilePage() {
             Изменить аватар
           </button>
           <button className="button" type="button" onClick={() => setPasswordMode(!isPasswordMode)}>
-            {!isPasswordMode ? 'Пароль' : 'Данные пользователя'}
+            {!isPasswordMode ? 'Изменить пароль' : 'Данные пользователя'}
           </button>
-          <button className="button" type="button" onClick={() => setEditingMode(!isEditing)}>
-            Редактировать
-          </button>
+          {!(isEditing || isPasswordMode) && (
+            <button className="button" type="button" onClick={() => setEditingMode(true)}>
+              Редактировать
+            </button>
+          )}
         </div>
         <form onSubmit={handleSubmit} className="profile-page__form">
           <div className="profile-page__form-fields">
@@ -115,7 +126,7 @@ export default function ProfilePage() {
                   value={value}
                   key={key}
                   name={key}
-                  isEditing={isEditing}
+                  isEditing={isPasswordMode}
                   onChange={(e) => handleFieldChange(key, e)}
                 />
               ))
@@ -130,27 +141,16 @@ export default function ProfilePage() {
                 />
               ))}
           </div>
-          {isEditing && (
+          {(isEditing || isPasswordMode) && (
             <div className="profile-page__form-actions">
               <button
                 className="button button__cancel"
                 type="button"
-                onClick={() => {
-                  setEditingMode(!isEditing);
-                  cancel();
-                }}
+                onClick={() => handleCancel()}
               >
                 Отмена
               </button>
-              <button
-                className="button"
-                type="submit"
-                onClick={() => {
-                  if (!isEditing) {
-                    setEditingMode(!isEditing);
-                  }
-                }}
-              >
+              <button className="button" type="submit">
                 Сохранить
               </button>
             </div>
@@ -163,6 +163,6 @@ export default function ProfilePage() {
           <input type="file" id="file" onChange={handleFileChange} />
         </label>
       </Popup>
-    </div>
+    </section>
   );
 }

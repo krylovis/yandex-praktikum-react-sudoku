@@ -16,3 +16,10 @@ export const changeAvatar = async (data: FormData) =>
     method: 'PUT',
     body: data,
   });
+
+export const changePassword = async (data: { [k: string]: unknown }) =>
+  fetchWithCookies(`${apiConfig.baseUrl}${endPoint}/password`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
