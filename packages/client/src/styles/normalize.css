@@ -21,11 +21,6 @@ html {
  */
 
 body {
-  background-image: url('../assets/images/numbers.png');
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
-  height: 100vh;
   margin: 0;
 }
 
