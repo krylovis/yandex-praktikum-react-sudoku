@@ -1,8 +1,8 @@
 import { FormEvent, useCallback, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ContentContainer from '../../content-container/ContentContainer';
-import FormField from '../../form-field/FormField';
-import MainForm from '../../main-form/MainForm';
+import {
+  ContentContainer, FormField, MainForm,
+} from '../../index';
 import ROUTES from '../../../constants/constants';
 import useForm from '../../utils/hooks/useForm';
 

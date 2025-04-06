@@ -1,6 +1,6 @@
 import { FormEvent, ReactElement, memo } from 'react';
 import style from './MainForm.module.scss';
-import CustomButton from '../custom-button/CustomButton';
+import { CustomButton } from '../index';
 
 interface IProps {
   formTitle: string,

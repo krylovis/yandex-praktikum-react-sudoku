@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import style from './FormField.module.scss';
-import CustomInput from '../custom-input/CustomInput';
+import { CustomInput } from '../index';
 
 interface IProps {
   id: string,
