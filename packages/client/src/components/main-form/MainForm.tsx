@@ -1,33 +1,24 @@
-import { FormEvent, ReactElement } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { FormEvent, ReactElement, memo } from 'react';
 import style from './MainForm.module.scss';
 import CustomButton from '../custom-button/CustomButton';
-import ROUTES from '../../constants/constants';
 
 interface IProps {
   formTitle: string,
-  children: ReactElement,
+  children: ReactElement[],
   submitText: string,
   linkText: string,
+  onSubmit: (e: FormEvent) => void,
+  onNavigate: () => void,
 }
 
-export default function MainForm({ formTitle, children, submitText, linkText }: IProps) {
-  const navigate = useNavigate();
-
-  function onSubmit(e: FormEvent) {
-    e.preventDefault();
-    console.log('handleSubmit');
-  }
-
-  function handleNavigate() {
-    navigate(ROUTES.SIGN_UP);
-  }
-
+function MainForm({
+  formTitle, children, submitText, linkText, onSubmit, onNavigate,
+}: IProps) {
   return (
     <section className={style.mainForm}>
       <h1 className={style.mainForm__title}>{formTitle}</h1>
 
-      <form className={style.mainForm__form} action="" onSubmit={onSubmit}>
+      <form className={style.mainForm__form} action="action">
         {children}
 
         <div className={style.mainForm__btnContainer}>
@@ -35,6 +26,7 @@ export default function MainForm({ formTitle, children, submitText, linkText }: 
             type="submit"
             color="primary"
             text={submitText}
+            onClick={onSubmit}
           />
 
           <CustomButton
@@ -42,10 +34,12 @@ export default function MainForm({ formTitle, children, submitText, linkText }: 
             color="transparent"
             text={linkText}
             title="Перейти на страницу регистрации"
-            onClick={() => handleNavigate()}
+            onClick={onNavigate}
           />
         </div>
       </form>
     </section>
   );
 }
+
+export default memo(MainForm);
