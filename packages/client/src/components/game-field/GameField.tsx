@@ -4,6 +4,7 @@ import mockField from './mockField';
 
 import style from './GameField.module.scss';
 import addOrRemove from '../../utils/addOrRemove';
+import GameFieldButton from '../buttons/game-field-button';
 
 export interface CellInfo {
   colIndex: number;
@@ -79,7 +80,7 @@ function GameField() {
   }, [moveHistory]);
 
   return (
-    <section>
+    <section className={style.section}>
       <div className={style.main}>
         {field.map((row, rowIndex) =>
           row.map((item, colIndex) => (
@@ -102,11 +103,27 @@ function GameField() {
         )}
       </div>
 
-      <div className={style.main}>
-        <button onClick={() => undoLastMove()} type="button">отменить</button>
-        <button onClick={() => handleChangeValue(null)} type="button">стереть</button>
-        <button onClick={() => setIsEnabledNotes(!isEnabledNotes)} type="button">{`заметки ${isEnabledNotes}`}</button>
-        <button type="button">подсказка</button>
+      <div className={style.buttons}>
+        <GameFieldButton
+          srcImage="./clear-button.svg"
+          onClick={() => handleChangeValue(null)}
+          titleBtn="Очистить"
+        />
+        <GameFieldButton
+          srcImage="./back-move-button.svg"
+          onClick={() => undoLastMove()}
+          titleBtn="Восстановить"
+        />
+        <GameFieldButton
+          srcImage="./notes-button.svg"
+          onClick={() => setIsEnabledNotes(!isEnabledNotes)}
+          titleBtn="Заметки"
+        />
+        <GameFieldButton
+          srcImage="./help-button.svg"
+          onClick={() => console.log('Реализовать')}
+          titleBtn="Подсказка"
+        />
       </div>
 
       <div className={style.main}>
