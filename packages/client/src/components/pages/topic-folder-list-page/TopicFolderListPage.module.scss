@@ -1,6 +1,10 @@
 $border-color: #ccc;
+$background-color: #fff;
 $color-background: #fff;
+$button-text-color: #fff;
 $border-round: 25px;
+$button-color: black;
+$button-color-hover: rgb(55, 55, 55);
 
 .card {
   border: 1px solid $border-color;
@@ -8,6 +12,7 @@ $border-round: 25px;
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
+  background-color: $background-color;
 
   &:first-child {
     border-top-left-radius: $border-round;
@@ -46,7 +51,8 @@ $border-round: 25px;
       text-decoration: none;
 
       .createButton {
-        background-color: $color-background;
+        background-color: $button-color;
+        color: $button-text-color;
         border: 1px solid $border-color;
         border-radius: 50%;
         width: 24px;
@@ -59,7 +65,7 @@ $border-round: 25px;
         transition: background-color 0.3s;
 
         &:hover {
-          background-color: #f0f0f0;
+          background-color: $button-color-hover;
         }
       }
     }

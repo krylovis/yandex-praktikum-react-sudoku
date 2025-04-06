@@ -12,6 +12,7 @@
     gap: 10px; // Отступы между колонками
     margin-bottom: 10px;
     font-weight: bold;
+    padding-bottom: 20px;
 
     &Folder {
       grid-template-columns: 3fr 1.5fr 1fr 4fr;
