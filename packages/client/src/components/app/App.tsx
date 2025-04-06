@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import './app.scss';
 import {
   AuthPage,
-  ForumPage,
   GamePage,
   LeaderPage,
   LoginPage,
@@ -13,6 +12,7 @@ import {
 } from '../pages/index';
 import ROUTES from '../../constants/constants';
 import Navigation from '../navigation/NavigationComponent';
+import ForumPageWrapper from '../forum-wrapper/ForumPageWrapper';
 
 // eslint-disable-next-line object-curly-newline
 const hideNavigationOnRoutes: string[] = [
@@ -25,6 +25,7 @@ const hideNavigationOnRoutes: string[] = [
   ROUTES.TOPIC,
   ROUTES.MAIN,
   ROUTES.CREATE_TOPIC,
+  ROUTES.TOPICS_THEME,
 ];
 
 function App() {
@@ -46,7 +47,8 @@ function App() {
     <div className="app">
       <Routes>
         <Route path={ROUTES.SIGN_UP} element={<AuthPage />} />
-        <Route path={ROUTES.TOPICS} element={<ForumPage />} />
+        <Route path={ROUTES.TOPICS_THEME} element={<ForumPageWrapper />} />
+        <Route path={ROUTES.TOPICS} element={<ForumPageWrapper />} />
         <Route path={ROUTES.GAME} element={<GamePage />} />
         <Route path={ROUTES.LEADERBOARD} element={<LeaderPage />} />
         <Route path={ROUTES.LOGIN} element={<LoginPage />} />
@@ -54,10 +56,10 @@ function App() {
         <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
         <Route path={ROUTES.CREATE_TOPIC} element={<TopicCreatePage />} />
       </Routes>
-      {!hideNavigationOnRoutes.includes(location.pathname) && (
+      {location.pathname === '/' && (
         <div>Вот тут будет жить ваше приложение :)</div>
       )}
-      {!hideNavigationOnRoutes.includes(location.pathname) && <Navigation />}
+      {location.pathname === '/' && <Navigation />}
       {/* Кнопка "Назад" для определённых страниц */}
       {hideNavigationOnRoutes.includes(location.pathname) && (
         <div>

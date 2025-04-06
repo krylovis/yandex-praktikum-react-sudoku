@@ -1,29 +1,42 @@
-import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import TopicPage from '../topic-page/TopicPage';
-import { Topic } from './types/types';
-import { mockTopics } from '../../../constants/mocks';
+import { useParams } from 'react-router-dom';
+import styles from './ForumPage.module.scss';
+import BackButton from './components/BackButton';
+import { TopicFolderListPage, TopicListPage } from '..';
+import { IFolderTopic, ITopicList } from '../../../interfaces/interfaces';
 
-export default function ForumPage() {
-  const [topics, setTopics] = useState<Topic[]>([]);
+interface ForumPageProps {
+  folders: IFolderTopic[];
+  topics: ITopicList[];
+}
 
-  useEffect(() => {
-    // Моковые данные для примера
-    setTopics(mockTopics);
-  }, []);
-
+export default function ForumPage({ folders, topics }: ForumPageProps) {
+  const { id } = useParams<{ id: string }>();
+  const {
+    page,
+    headerRow,
+    topicList,
+    title,
+    headerRowList,
+    headerRowFolder,
+  } = styles;
+  const headerRowClass = id ? headerRowList : headerRowFolder;
   return (
-    <div className="forum-page">
-      <h1>Forum</h1>
-      <Link to="/create">
-        <button type="button" style={{ marginBottom: '20px' }}>
-          +
-        </button>
-      </Link>
-      <div>
-        {topics.map((topic) => (
-          <TopicPage key={topic.id} topic={topic} />
-        ))}
+    <div className={page}>
+      <BackButton />
+      <div className={`${headerRow} ${headerRowClass}`}>
+        {!id && <span className={title}>Форумы</span>}
+        <span className={id ? title : ''}>Темы</span>
+        <span>Ответы</span>
+        <span>Последняя тема</span>
+      </div>
+      <div className={topicList}>
+        {id ? (
+          <TopicListPage
+            topics={topics.filter((topic) => topic.parentId === Number(id))}
+          />
+        ) : (
+          <TopicFolderListPage folders={folders} />
+        )}
       </div>
     </div>
   );

@@ -1,21 +1,21 @@
-export interface Comment {
+export interface IComment {
   id: number;
   text: string;
 }
 
-export interface Topic {
+export interface ITopic {
   id: number;
   title: string;
   repliesCount: number;
 }
 
-export interface FolderTopic extends Topic{
+export interface IFolderTopic extends ITopic{
   topicsCount: number;
   lastPostPreview: string;
   createUrl: string;
 }
 
-export interface TopicList extends Topic {
+export interface ITopicList extends ITopic {
   parentId: number;
   lastPostPreview: string;
 }

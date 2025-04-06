@@ -1,0 +1,73 @@
+$border-color: #ccc;
+$color-background: #fff;
+$border-round: 25px;
+
+.card {
+  border: 1px solid $border-color;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+
+  &:first-child {
+    border-top-left-radius: $border-round;
+    border-top-right-radius: $border-round;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: $border-round;
+    border-bottom-right-radius: $border-round;
+  }
+
+  .info {
+    display: grid;
+    grid-template-columns: 3fr 1.5fr 1fr 4fr; // Разделение на 4 колонки
+    gap: 10px;
+    align-items: center;
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      align-items: baseline;
+      gap: 10px;
+      font-size: 0.9em;
+      color: #555;
+    }
+
+    .replies {
+      text-align: center;
+    }
+
+    .title {
+      text-align: start;
+    }
+
+    .link {
+      text-decoration: none;
+
+      .createButton {
+        background-color: $color-background;
+        border: 1px solid $border-color;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: #f0f0f0;
+        }
+      }
+    }
+  }
+
+  .preview {
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: #666;
+  }
+}

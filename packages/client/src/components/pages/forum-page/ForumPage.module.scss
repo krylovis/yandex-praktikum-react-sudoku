@@ -1,0 +1,39 @@
+/* ForumPage.module.scss */
+.page {
+  width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .headerRow {
+    display: grid; // Используем grid
+    gap: 10px; // Отступы между колонками
+    margin-bottom: 10px;
+    font-weight: bold;
+
+    &Folder {
+      grid-template-columns: 3fr 1.5fr 1fr 4fr;
+    }
+
+    &List {
+      grid-template-columns: 3fr 1.5fr 4fr;
+    }
+
+    .title {
+      text-align: start;
+    }
+
+    span {
+      flex-grow: 1;
+      text-align: center;
+    }
+  }
+
+  .topicList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}

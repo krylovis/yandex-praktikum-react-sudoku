@@ -8,6 +8,7 @@ enum ROUTES {
   TOPIC = '/forum/topic/:id',
   CREATE_TOPIC = '/forum/create',
   TOPICS = '/forum',
+  TOPICS_THEME = '/forum/:id'
 }
 
 export default ROUTES;
