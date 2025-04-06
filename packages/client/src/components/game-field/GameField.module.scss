@@ -1,0 +1,6 @@
+.main {
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(9, auto);
+  grid-template-rows: repeat(9, auto);
+}
