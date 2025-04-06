@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './InputField.scss';
+import style from './InputField.module.scss';
 import Input from '../input/Input';
 
 interface InputFieldProps {
@@ -28,20 +28,20 @@ function InputField({
   };
 
   return (
-    <div className="field">
-      <label htmlFor={name} className="field__label">{label}</label>
-      {isEditing ? (
+    <label className={style.wrapper} htmlFor={name}>
+      <span className={style.wrapper__label}>{label}</span>
+      <div className={style.wrapper__field}>
         <Input
-          value={inputValue}
           type="text"
           name={name}
+          value={inputValue}
+          disabled={!isEditing}
           onChange={setInputValue}
           onBlur={handleBlur}
+          className={style.wrapper__input}
         />
-      ) : (
-        <p className="field__value">{value}</p>
-      )}
-    </div>
+      </div>
+    </label>
   );
 }
 

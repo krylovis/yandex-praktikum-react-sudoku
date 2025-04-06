@@ -1,5 +1,5 @@
-import './Popup.scss';
 import { ReactNode } from 'react';
+import style from './Popup.module.scss';
 
 interface IProps {
   isOpen: boolean,
@@ -14,15 +14,15 @@ export default function Popup({ isOpen, title, children, onClose }: IProps) {
   }
 
   return (
-    <div className="popup-overlay">
-      <div className="popup-overlay__content">
-        <div className="popup-overlay__header">
+    <div className={style.popupOverlay}>
+      <div className={style.popupOverlay__content}>
+        <div className={style.popupOverlay__header}>
           <h2>{title}</h2>
-          <button className="close" onClick={onClose} type="button">
+          <button className={style.close} onClick={onClose} type="button">
             &times;
           </button>
         </div>
-        <div className="popup-overlay__body">
+        <div>
           <form>{children}</form>
         </div>
       </div>

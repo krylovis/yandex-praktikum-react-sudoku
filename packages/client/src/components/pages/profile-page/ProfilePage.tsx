@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import InputField from '../../inputField/InputField';
-import './ProfilePage.scss';
+import style from './ProfilePage.module.scss';
 import { changeAvatar, changePassword, changeProfile } from '../../../services/UserServices';
 import getUserInfo from '../../../services/AuthService';
 import { IProfile } from '../../../models/Profile';
@@ -100,27 +100,27 @@ export default function ProfilePage() {
   };
 
   return (
-    <section className="profile-page">
+    <section className={style.profilePage}>
       <ErrorBoundary>
-        <div className="profile-page__card">
-          <div className="profile-page__avatar-container">
-            <img src={getAvatar(profile?.avatar)} alt="Avatar" className="profile-page__avatar" />
+        <div className={style.profilePage__card}>
+          <div className={style.profilePage__card__avatarContainer}>
+            <img src={getAvatar(profile?.avatar)} alt="Avatar" className={style.profilePage__avatar} />
           </div>
-          <div className="profile-page__actions">
-            <button className="button" type="button" onClick={() => setPopupOpen(true)}>
+          <div className={style.profilePage__actions}>
+            <button className={style.button} type="button" onClick={() => setPopupOpen(true)}>
               Изменить аватар
             </button>
-            <button className="button" type="button" onClick={() => setPasswordMode(!isPasswordMode)}>
+            <button className={style.button} type="button" onClick={() => setPasswordMode(!isPasswordMode)}>
               {!isPasswordMode ? 'Изменить пароль' : 'Данные пользователя'}
             </button>
             {!(isEditing || isPasswordMode) && (
-              <button className="button" type="button" onClick={() => setEditingMode(true)}>
+              <button className={style.button} type="button" onClick={() => setEditingMode(true)}>
                 Редактировать
               </button>
             )}
           </div>
-          <form onSubmit={handleSubmit} className="profile-page__form">
-            <div className="profile-page__form-fields">
+          <form onSubmit={handleSubmit} className={style.profilePage__form}>
+            <div className={style.profilePage__fields}>
               {isPasswordMode
                 ? fieldsUserPassword.map(({ label, key, value }) => (
                   <InputField
@@ -144,15 +144,15 @@ export default function ProfilePage() {
                 ))}
             </div>
             {(isEditing || isPasswordMode) && (
-              <div className="profile-page__form-actions">
+              <div className={style.profilePage__form__actions}>
                 <button
-                  className="button button__cancel"
+                  className={`${style.button} ${style.button__cancel}`}
                   type="button"
                   onClick={() => handleCancel()}
                 >
                   Отмена
                 </button>
-                <button className="button" type="submit">
+                <button className={style.button} type="submit">
                   Сохранить
                 </button>
               </div>
