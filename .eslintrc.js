@@ -64,5 +64,8 @@ module.exports = {
     'function-paren-newline': 'off',
     'implicit-arrow-linebreak': 'off',
     'object-curly-newline': 'off',
+    'jsx-a11y/label-has-associated-control': 'off',
+    'jsx-a11y/label-has-for': 'off',
+    'react/require-default-props': 'off',
   },
 };
