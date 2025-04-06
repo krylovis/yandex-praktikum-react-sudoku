@@ -1,3 +1,4 @@
+import { FormEvent, memo } from 'react';
 import style from './CustomButton.module.scss';
 
 interface IProps {
@@ -5,10 +6,10 @@ interface IProps {
   color: 'primary' | 'secondary' | 'succes' | 'transparent',
   text?: string,
   title?: string,
-  onClick?: () => void,
+  onClick: (e: FormEvent) => void,
 }
 
-export default function CustomButton({ text, title, type, color, onClick }: IProps) {
+function CustomButton({ text = '', title = '', type, color, onClick }: IProps) {
   const className = [style.customButton];
   className.push(style[`customButton_${color}`]);
 
@@ -24,8 +25,4 @@ export default function CustomButton({ text, title, type, color, onClick }: IPro
   );
 }
 
-CustomButton.defaultProps = {
-  text: '',
-  title: '',
-  onClick: () => {},
-};
+export default memo(CustomButton);
