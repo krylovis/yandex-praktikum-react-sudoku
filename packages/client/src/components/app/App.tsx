@@ -1,6 +1,4 @@
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import './app.scss';
 import {
   AuthPage,
   GamePage,
@@ -14,7 +12,6 @@ import ROUTES from '../../constants/constants';
 import Navigation from '../navigation/NavigationComponent';
 import ForumPageWrapper from '../forum-wrapper/ForumPageWrapper';
 
-// eslint-disable-next-line object-curly-newline
 const hideNavigationOnRoutes: string[] = [
   ROUTES.SIGN_UP,
   ROUTES.TOPICS,
@@ -31,20 +28,8 @@ const hideNavigationOnRoutes: string[] = [
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
-  useEffect(() => {
-    const fetchServerData = async () => {
-      // eslint-disable-next-line no-undef
-      const url = `http://localhost:${__SERVER_PORT__}`;
-      const response = await fetch(url);
-      const data = await response.json();
-      // eslint-disable-next-line no-console
-      console.log(data);
-    };
-
-    fetchServerData();
-  }, []);
   return (
-    <div className="app">
+    <>
       <Routes>
         <Route path={ROUTES.SIGN_UP} element={<AuthPage />} />
         <Route path={ROUTES.TOPICS_THEME} element={<ForumPageWrapper />} />
@@ -68,7 +53,7 @@ function App() {
           </button>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
