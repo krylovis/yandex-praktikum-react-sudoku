@@ -1,15 +1,15 @@
-import { Comment } from '../types/types';
+import { IComment } from '../../../../interfaces/interfaces';
 
 interface CommentListProps {
-  comments: Comment[];
+  comments: IComment[];
 }
 
 function CommentList(props: CommentListProps) {
   const { comments } = props;
   return (
     <ul>
-      {comments.map((comment: Comment) => (
-        <li key={comment.id}>{comment.text}</li>
+      {comments.map((comment: IComment) => (
+        <li key={comment.id}>{comment.content}</li>
       ))}
     </ul>
   );

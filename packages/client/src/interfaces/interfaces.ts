@@ -1,21 +1,25 @@
 export interface IComment {
   id: number;
-  text: string;
+  author: { name: string; avatarUrl: string };
+  content: string;
 }
-
 export interface ITopic {
   id: number;
+  parentId?: number;
   title: string;
-  repliesCount: number;
+  content?: string;
+  author?: { name: string; avatarUrl: string };
+  comments?: IComment[];
 }
 
-export interface IFolderTopic extends ITopic{
+export interface IFolderTopic extends ITopic {
   topicsCount: number;
   lastPostPreview: string;
   createUrl: string;
+  repliesCount: number;
 }
 
 export interface ITopicList extends ITopic {
-  parentId: number;
   lastPostPreview: string;
+  repliesCount?: number;
 }

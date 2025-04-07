@@ -1,10 +1,6 @@
-import {
-  FolderTopic,
-  TopicList,
-} from '../components/pages/forum-page/types/types';
+import { IFolderTopic, ITopic, ITopicList } from '../interfaces/interfaces';
 
-// eslint-disable-next-line import/prefer-default-export
-export const mockFoldersTopics: FolderTopic[] = [
+export const mockFoldersTopics: IFolderTopic[] = [
   {
     id: 1,
     title: 'Новости и анонсы',
@@ -31,7 +27,7 @@ export const mockFoldersTopics: FolderTopic[] = [
   },
 ];
 
-export const mockTopics: TopicList[] = [
+export const mockTopics: ITopicList[] = [
   {
     id: 11,
     parentId: 1,
@@ -59,5 +55,38 @@ export const mockTopics: TopicList[] = [
     title: 'Стратегии для начинающих',
     repliesCount: 10,
     lastPostPreview: 'Обновление правил форума: чего ожидать в 2024 году...',
+  },
+];
+
+export const mockTopic: ITopic[] = [
+  {
+    id: 111,
+    parentId: 11,
+    title: 'Обновление правил форума: чего ожидать в 2024 году',
+    content:
+      'Информация о любых изменениях в правилах, политике модерации или функциональности форума...',
+    author: {
+      name: 'Ivan Ivanov',
+      avatarUrl: 'https://via.placeholder.com/50',
+    },
+    comments: [
+      {
+        id: 1,
+        author: {
+          name: 'Irina Smirnova',
+          avatarUrl: 'https://via.placeholder.com/50',
+        },
+        content:
+          'Спасибо за своевременное уведомление! Важно быть в курсе изменений.',
+      },
+      {
+        id: 2,
+        author: {
+          name: 'Ekaterina',
+          avatarUrl: 'https://via.placeholder.com/50',
+        },
+        content: 'Надеюсь, новые правила сделают форум еще более дружелюбным.',
+      },
+    ],
   },
 ];
