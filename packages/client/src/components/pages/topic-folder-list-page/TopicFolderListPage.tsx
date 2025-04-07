@@ -1,5 +1,5 @@
 import TopicFoldersList from './components/TopicFoldersList';
-import { IFolderTopic } from '../../../interfaces/interfaces';
+import { IFolderTopic } from '../../../models/Forum';
 
 export default function TopicFolderListPage(props: {
   folders: IFolderTopic[];

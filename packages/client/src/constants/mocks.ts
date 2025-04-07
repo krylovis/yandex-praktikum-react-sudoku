@@ -1,4 +1,5 @@
-import { IFolderTopic, ITopic, ITopicList } from '../interfaces/interfaces';
+import { IFolderTopic, ITopic, ITopicList } from '../models/Forum';
+import avatar from '../assets/images/avatar.jpg';
 
 export const mockFoldersTopics: IFolderTopic[] = [
   {
@@ -27,37 +28,6 @@ export const mockFoldersTopics: IFolderTopic[] = [
   },
 ];
 
-export const mockTopics: ITopicList[] = [
-  {
-    id: 11,
-    parentId: 1,
-    title: 'Правила форума',
-    repliesCount: 5,
-    lastPostPreview: 'Обновление правил форума: чего ожидать в 2024 году...',
-  },
-  {
-    id: 12,
-    parentId: 1,
-    title: 'Обсуждение нововведений',
-    repliesCount: 12,
-    lastPostPreview: 'Обновление правил форума: чего ожидать в 2024 году...',
-  },
-  {
-    id: 21,
-    parentId: 2,
-    title: 'Как решать сложные судоку',
-    repliesCount: 8,
-    lastPostPreview: 'Обновление правил форума: чего ожидать в 2024 году...',
-  },
-  {
-    id: 22,
-    parentId: 2,
-    title: 'Стратегии для начинающих',
-    repliesCount: 10,
-    lastPostPreview: 'Обновление правил форума: чего ожидать в 2024 году...',
-  },
-];
-
 export const mockTopic: ITopic[] = [
   {
     id: 111,
@@ -67,14 +37,14 @@ export const mockTopic: ITopic[] = [
       'Информация о любых изменениях в правилах, политике модерации или функциональности форума...',
     author: {
       name: 'Ivan Ivanov',
-      avatarUrl: 'https://via.placeholder.com/50',
+      avatarUrl: avatar,
     },
     comments: [
       {
         id: 1,
         author: {
           name: 'Irina Smirnova',
-          avatarUrl: 'https://via.placeholder.com/50',
+          avatarUrl: avatar,
         },
         content:
           'Спасибо за своевременное уведомление! Важно быть в курсе изменений.',
@@ -83,10 +53,73 @@ export const mockTopic: ITopic[] = [
         id: 2,
         author: {
           name: 'Ekaterina',
-          avatarUrl: 'https://via.placeholder.com/50',
+          avatarUrl: avatar,
         },
         content: 'Надеюсь, новые правила сделают форум еще более дружелюбным.',
       },
     ],
+  },
+  {
+    id: 112,
+    parentId: 12,
+    title: 'Новые правила игры и таблица рекордов',
+    content: 'Информация о новых правилах и таблице рекордов',
+    author: {
+      name: 'Ivan Ivanov',
+      avatarUrl: avatar,
+    },
+    comments: [
+      {
+        id: 1,
+        author: {
+          name: 'Irina Smirnova',
+          avatarUrl: avatar,
+        },
+        content: 'Ух ты! Это интересно!',
+      },
+      {
+        id: 2,
+        author: {
+          name: 'Ekaterina',
+          avatarUrl: avatar,
+        },
+        content: 'Надеюсь, это сделает игру лучше.',
+      },
+    ],
+  },
+];
+
+export const mockTopics: ITopicList[] = [
+  {
+    id: 11,
+    parentId: 1,
+    title: 'Правила форума',
+    repliesCount: 5,
+    lastPostPreview: 'Обновление правил форума: чего ожидать в 2024 году...',
+    children: mockTopic,
+  },
+  {
+    id: 12,
+    parentId: 1,
+    title: 'Обсуждение нововведений',
+    repliesCount: 12,
+    lastPostPreview: 'Новые правила игры и таблица рекордов',
+    children: mockTopic,
+  },
+  {
+    id: 21,
+    parentId: 2,
+    title: 'Как решать сложные судоку',
+    repliesCount: 8,
+    lastPostPreview: 'Советы и рекомендации',
+    children: mockTopic,
+  },
+  {
+    id: 22,
+    parentId: 2,
+    title: 'Стратегии для начинающих',
+    repliesCount: 10,
+    lastPostPreview: 'Пошаговое руководство для начинающих',
+    children: mockTopic,
   },
 ];

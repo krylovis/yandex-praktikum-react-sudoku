@@ -7,6 +7,7 @@ import {
   MainPage,
   ProfilePage,
   TopicCreatePage,
+  TopicPage,
 } from '../pages/index';
 import ROUTES from '../../constants/constants';
 import Navigation from '../navigation/NavigationComponent';
@@ -22,7 +23,8 @@ const hideNavigationOnRoutes: string[] = [
   ROUTES.TOPIC,
   ROUTES.MAIN,
   ROUTES.CREATE_TOPIC,
-  ROUTES.TOPICS_THEME,
+  ROUTES.TOPICS_LIST,
+  ROUTES.TOPIC,
 ];
 
 function App() {
@@ -32,7 +34,8 @@ function App() {
     <>
       <Routes>
         <Route path={ROUTES.SIGN_UP} element={<AuthPage />} />
-        <Route path={ROUTES.TOPICS_THEME} element={<ForumPageWrapper />} />
+        <Route path={ROUTES.TOPIC} element={<TopicPage />} />
+        <Route path={ROUTES.TOPICS_LIST} element={<ForumPageWrapper />} />
         <Route path={ROUTES.TOPICS} element={<ForumPageWrapper />} />
         <Route path={ROUTES.GAME} element={<GamePage />} />
         <Route path={ROUTES.LEADERBOARD} element={<LeaderPage />} />

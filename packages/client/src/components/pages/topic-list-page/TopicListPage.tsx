@@ -1,4 +1,4 @@
-import { ITopicList } from '../../../interfaces/interfaces';
+import { ITopicList } from '../../../models/Forum';
 import TopicList from './components/TopicList';
 
 export default function TopicListPage(props: { topics: ITopicList[] }) {

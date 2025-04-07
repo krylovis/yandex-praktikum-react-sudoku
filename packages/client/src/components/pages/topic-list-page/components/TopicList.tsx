@@ -1,10 +1,17 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useMemo } from 'react';
 import styles from '../TopicListPage.module.scss';
-import { ITopicList } from '../../../../interfaces/interfaces';
+import { ITopic, ITopicList } from '../../../../models/Forum';
 
 export default function TopicList(props: { topic: ITopicList }) {
   const { topic } = props;
-  const { id } = useParams<{ id: string }>();
+  const topicCardId = useMemo(
+    () =>
+      topic.children.find(
+        (topicCard: ITopic) => topicCard.parentId === Number(topic.id)
+      )?.id,
+    [topic.children, topic.id]
+  );
   const { card, info, preview, link, replies, title } = styles;
 
   if (!topic) return <div>Loading...</div>;
@@ -12,7 +19,7 @@ export default function TopicList(props: { topic: ITopicList }) {
   return (
     <div className={card}>
       <div className={info}>
-        <Link className={link} to={`/forum/${id}`}>
+        <Link className={link} to={`/forum/topic/${topicCardId}`}>
           <h3 className={title}>{topic.title}</h3>
         </Link>
 

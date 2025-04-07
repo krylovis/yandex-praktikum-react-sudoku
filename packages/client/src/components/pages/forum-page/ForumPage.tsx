@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
 import styles from './ForumPage.module.scss';
-import BackButton from './components/BackButton';
 import { TopicFolderListPage, TopicListPage } from '..';
-import { IFolderTopic, ITopicList } from '../../../interfaces/interfaces';
+import { IFolderTopic, ITopicList } from '../../../models/Forum';
+import BackButton from '../../back-button/BackButton';
 
 interface ForumPageProps {
   folders: IFolderTopic[];

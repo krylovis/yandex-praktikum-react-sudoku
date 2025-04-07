@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import style from '../TopicFolderListPage.module.scss';
-import { IFolderTopic } from '../../../../interfaces/interfaces';
+import { IFolderTopic } from '../../../../models/Forum';
 
 export default function TopicFoldersList(props: { folder: IFolderTopic }) {
   const { folder } = props;

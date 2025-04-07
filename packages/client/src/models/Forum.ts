@@ -22,4 +22,5 @@ export interface IFolderTopic extends ITopic {
 export interface ITopicList extends ITopic {
   lastPostPreview: string;
   repliesCount?: number;
+  children: ITopic[];
 }
