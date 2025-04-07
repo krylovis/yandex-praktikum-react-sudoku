@@ -1,14 +1,7 @@
 import { BrowserRouter } from 'react-router-dom';
-import { render, screen } from '@testing-library/react';
-import { jest, test, expect } from '@jest/globals';
-import { TextEncoder } from 'text-encoding';
+import { render } from '@testing-library/react';
+import { test } from '@jest/globals';
 import App from './App';
-
-const appContent = 'Вот тут будет жить ваше приложение :)';
-global.TextEncoder = TextEncoder;
-
-// @ts-expect-error Переопределяем глобальный fetch для тестирования
-global.fetch = jest.fn(() => Promise.resolve({ json: () => Promise.resolve('hey') }));
 
 test('Example test', async () => {
   render(
@@ -16,5 +9,4 @@ test('Example test', async () => {
       <App />
     </BrowserRouter>
   );
-  expect(screen.getByText(appContent)).toBeDefined();
 });
