@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useState } from 'react';
-import GameCell from '../game-cell';
+import React, { useCallback, useState } from 'react';
+import { GameCell } from '../index';
 import mockField from './mockField';
 
 import style from './GameField.module.scss';
 import addOrRemove from '../../utils/addOrRemove';
-import GameFieldButton from '../buttons/game-field-button';
+import GameFieldButton from '../buttons';
 
 export interface CellInfo {
   colIndex: number;
@@ -52,19 +52,11 @@ function GameField() {
     [selectedCell, isEnabledNotes]
   );
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key >= '1' && e.key <= '9') {
-        handleChangeValue(parseInt(e.key, 10));
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [selectedCell, isEnabledNotes]);
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
+    if (event.key >= '1' && event.key <= '9') {
+      handleChangeValue(parseInt(event.key, 10));
+    }
+  };
 
   const undoLastMove = useCallback(() => {
     if (moveHistory.length === 0) return;
@@ -80,7 +72,12 @@ function GameField() {
   }, [moveHistory]);
 
   return (
-    <section className={style.section}>
+    <div
+      role="button"
+      tabIndex={0}
+      className={style.section}
+      onKeyDown={handleKeyDown}
+    >
       <div className={style.main}>
         {field.map((row, rowIndex) =>
           row.map((item, colIndex) => (
@@ -140,7 +137,7 @@ function GameField() {
           />
         ))}
       </div>
-    </section>
+    </div>
   );
 }
 
