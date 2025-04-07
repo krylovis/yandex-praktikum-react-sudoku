@@ -1,0 +1,23 @@
+.formField {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-weight: 500;
+  font-size: 9px;
+  padding-bottom: 16px;
+  color: #1E1E1E;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  &__error {
+    position: absolute;
+    font-size: 12px;
+    color: red;
+    opacity: 0;
+    transition: .3s;
+    z-index: 10;
+  }
+}
