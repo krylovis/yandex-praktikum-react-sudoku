@@ -12,20 +12,25 @@ export default function TopicList(props: { topic: ITopicList }) {
       )?.id,
     [topic.children, topic.id]
   );
-  const { card, info, preview, link, replies, title } = styles;
 
-  if (!topic) return <div>Loading...</div>;
+  if (!topic) {
+    return (
+      <div className={styles.overlay}>
+        <p className={styles.overlay__text}>Loading...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className={card}>
-      <div className={info}>
-        <Link className={link} to={`/forum/topic/${topicCardId}`}>
-          <h3 className={title}>{topic.title}</h3>
+    <li className={styles.card}>
+      <div className={styles.info}>
+        <Link className={styles.link} to={`/forum/topic/${topicCardId}`}>
+          <h3 className={styles.title}>{topic.title}</h3>
         </Link>
 
-        <span className={replies}>{topic.repliesCount}</span>
-        <p className={preview}>{topic.lastPostPreview}</p>
+        <span className={styles.replies}>{topic.repliesCount}</span>
+        <p className={styles.preview}>{topic.lastPostPreview}</p>
       </div>
-    </div>
+    </li>
   );
 }

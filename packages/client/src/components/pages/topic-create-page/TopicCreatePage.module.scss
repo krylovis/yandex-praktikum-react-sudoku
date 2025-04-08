@@ -4,37 +4,36 @@
   margin: 0 auto;
   padding: 20px;
 
-  .createTopicForm {
-    border: 1px solid #ccc;
+  &__createTopicForm {
+    border: 1px solid $color-border;
     border-radius: 8px;
     padding: 20px;
-    background-color: #fff;
+    background-color: $color-background;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
 
-    .saveButton {
-      width: fit-content;
-      padding: 0 20px;
-    }
+  &__saveButton {
+    width: fit-content;
+    padding: 0 20px;
+  }
 
-    .formGroup {
-      margin-bottom: 10px;
-      padding: 0 20px;
+  &__formGroup {
+    margin-bottom: 10px;
+    padding: 0 20px;
+  }
 
-      label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-      }
+  &__label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
 
-      input,
-      textarea {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        outline: none;
-        resize: none;
-      }
-    }
+  &__input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid $color-border;
+    border-radius: 4px;
+    outline: none;
+    resize: none;
   }
 }

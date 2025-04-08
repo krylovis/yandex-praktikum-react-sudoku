@@ -6,7 +6,6 @@ import CustomButton from '../../custom-button/CustomButton';
 export default function TopicCreatePage() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const { page, createTopicForm, formGroup, saveButton } = styles;
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -15,13 +14,14 @@ export default function TopicCreatePage() {
     setContent('');
   };
   return (
-    <div className={page}>
+    <div className={styles.page}>
       <h1>Создать новую тему</h1>
       <BackButton />
-      <form className={createTopicForm} onSubmit={handleSubmit}>
-        <div className={formGroup}>
+      <form className={styles.page__createTopicForm} onSubmit={handleSubmit}>
+        <div className={styles.page__formGroup}>
           <label htmlFor="title">Заголовок</label>
           <input
+            className={styles.page__input}
             id="title"
             type="text"
             placeholder="Введите заголовок топика"
@@ -31,9 +31,12 @@ export default function TopicCreatePage() {
           />
         </div>
 
-        <div className={formGroup}>
-          <label htmlFor="content">Содержимое</label>
+        <div className={styles.page__formGroup}>
+          <label className={styles.page__label} htmlFor="content">
+            Содержимое
+          </label>
           <textarea
+            className={styles.page__input}
             id="content"
             placeholder="Введите содержимое топика"
             value={content}
@@ -41,7 +44,7 @@ export default function TopicCreatePage() {
             required
           />
         </div>
-        <div className={saveButton}>
+        <div className={styles.page__saveButton}>
           <CustomButton
             type="submit"
             color="primary"

@@ -1,5 +1,6 @@
-import TopicFoldersList from './components/TopicFoldersList';
+import TopicFoldersItem from './components/TopicFoldersItem';
 import { IFolderTopic } from '../../../models/Forum';
+import styles from './TopicFolderListPage.module.scss';
 
 export default function TopicFolderListPage(props: {
   folders: IFolderTopic[];
@@ -7,10 +8,10 @@ export default function TopicFolderListPage(props: {
   const { folders } = props;
 
   return (
-    <>
+    <ul className={styles.topic__container}>
       {folders.map((folder) => (
-        <TopicFoldersList key={folder.id} folder={folder} />
+        <TopicFoldersItem key={folder.id} folder={folder} />
       ))}
-    </>
+    </ul>
   );
 }

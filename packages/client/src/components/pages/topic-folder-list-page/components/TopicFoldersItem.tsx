@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import style from '../TopicFolderListPage.module.scss';
+import styles from '../TopicFolderListPage.module.scss';
 import { IFolderTopic } from '../../../../models/Forum';
 
-export default function TopicFoldersList(props: { folder: IFolderTopic }) {
+export default function TopicFoldersItem(props: { folder: IFolderTopic }) {
   const { folder } = props;
   const {
-    card,
+    topic,
     info,
     stats,
     preview,
@@ -13,10 +13,10 @@ export default function TopicFoldersList(props: { folder: IFolderTopic }) {
     link,
     replies,
     title,
-  } = style;
+  } = styles;
 
   return (
-    <div className={card}>
+    <li className={topic}>
       <div className={info}>
         <Link className={link} to={`/forum/${folder.id}`}>
           <h3 className={title}>{folder.title}</h3>
@@ -38,6 +38,6 @@ export default function TopicFoldersList(props: { folder: IFolderTopic }) {
         <span className={replies}>{folder.repliesCount}</span>
         <p className={preview}>{folder.lastPostPreview}</p>
       </div>
-    </div>
+    </li>
   );
 }

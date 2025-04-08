@@ -9,17 +9,6 @@ import BackButton from '../../back-button/BackButton';
 
 export default function TopicPage() {
   const { id } = useParams<{ id: string }>();
-  const {
-    page,
-    container,
-    authorInfo,
-    authorAvatar,
-    comments,
-    comment,
-    commentForm,
-    sendButton,
-    commentInput,
-  } = styles;
   const [topic, setTopic] = useState<ITopic | null>(null);
 
   useEffect(() => {
@@ -35,17 +24,23 @@ export default function TopicPage() {
     console.log(`Submit comment: ${value}`);
   }, []);
 
-  if (!topic) return <div>Loading...</div>;
+  if (!topic) {
+    return (
+      <div className={styles.overlay}>
+        <p className={styles.overlay__text}>Loading...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className={page}>
+    <div className={styles.page}>
       <BackButton />
-      <div className={container}>
-        <div className={authorInfo}>
+      <div className={styles.page__container}>
+        <div className={styles.page__authorInfo}>
           <img
             src={topic.author?.avatarUrl}
             alt={topic.author?.name}
-            className={authorAvatar}
+            className={styles.page__authorAvatar}
           />
         </div>
 
@@ -56,14 +51,14 @@ export default function TopicPage() {
 
         <CommentList
           comments={topic.comments}
-          commentsListClass={comments}
-          commentClass={comment}
+          commentsListClass={styles.comments}
+          commentClass={styles.comments__comment}
         />
         <CommentForm
           onSubmit={handleSubmit}
-          inputClass={commentInput}
-          formButtonClass={sendButton}
-          formClass={commentForm}
+          inputClass={styles.comments__commentInput}
+          formButtonClass={styles.comments__sendButton}
+          formClass={styles.comments__commentForm}
         />
       </div>
     </div>
