@@ -6,7 +6,6 @@ import {
 import ROUTES from '../../../constants/constants';
 import useForm from '../../utils/hooks/useForm';
 
-// Регистрация с формой, имена полей: first_name, second_name, login, email, password, phone.
 interface IProps {
   id: string,
   placeholder: string,
@@ -92,6 +91,7 @@ function SignupPage() {
         formTitle={formText.formTitle}
         submitText={formText.submitText}
         linkText={formText.linkText}
+        type="signup"
         onSubmit={handleSubmit}
         onNavigate={handleNavigate}
       >

@@ -53,6 +53,7 @@ function LoginPage() {
         formTitle={formText.formTitle}
         submitText={formText.submitText}
         linkText={formText.linkText}
+        type="login"
         onSubmit={handleSubmit}
         onNavigate={handleNavigate}
       >
