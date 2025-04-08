@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { FC, FormEvent, useState } from 'react';
 import { PiPaperPlaneRightBold } from 'react-icons/pi';
 
 interface CommentFormProps {
@@ -7,6 +7,8 @@ interface CommentFormProps {
   formClass: string;
   inputClass: string;
 }
+
+const PaperPlaneIcon = PiPaperPlaneRightBold as FC<{ size: number }>;
 
 function CommentForm(props: CommentFormProps) {
   const { onSubmit, formClass, formButtonClass, inputClass } = props;
@@ -28,7 +30,7 @@ function CommentForm(props: CommentFormProps) {
         onChange={(event) => setText(event.target.value)}
       />
       <button type="submit" className={formButtonClass}>
-        <PiPaperPlaneRightBold size={25} />
+        <PaperPlaneIcon size={25} />
       </button>
     </form>
   );
