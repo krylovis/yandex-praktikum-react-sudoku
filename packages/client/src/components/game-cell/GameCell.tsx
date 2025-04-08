@@ -13,15 +13,9 @@ interface GameCellProps {
   value: number | null;
 }
 
-function GameCell({
-  onClick,
-  value,
-  isSelected,
-  rowIndex,
-  colIndex,
-  isHighlight,
-  notes,
-}: GameCellProps) {
+function GameCell(props: GameCellProps) {
+  const { onClick, value, isSelected, rowIndex, colIndex, isHighlight, notes } = props;
+
   const className = useMemo(() => {
     const names = [style.main];
 

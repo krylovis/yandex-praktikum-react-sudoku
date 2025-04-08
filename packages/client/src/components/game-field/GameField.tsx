@@ -5,6 +5,7 @@ import mockField from './mockField';
 import style from './GameField.module.scss';
 import addOrRemove from '../../utils/addOrRemove';
 import GameFieldButton from '../buttons';
+import { GAME_BUTTONS } from '../../constants/constants';
 
 export interface CellInfo {
   colIndex: number;
@@ -72,9 +73,8 @@ function GameField() {
   }, [moveHistory]);
 
   return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
-      role="button"
-      tabIndex={0}
       className={style.section}
       onKeyDown={handleKeyDown}
     >
@@ -124,7 +124,7 @@ function GameField() {
       </div>
 
       <div className={style.main}>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (
+        {GAME_BUTTONS.map((item) => (
           <GameCell
             value={item}
             key={item}
