@@ -1,6 +1,6 @@
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import {
-  AuthPage,
+  SignupPage,
   ForumPage,
   GamePage,
   LeaderPage,
@@ -29,7 +29,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path={ROUTES.SIGN_UP} element={<AuthPage />} />
+        <Route path={ROUTES.SIGN_UP} element={<SignupPage />} />
         <Route path={ROUTES.FORUM} element={<ForumPage />} />
         <Route path={ROUTES.GAME} element={<GamePage />} />
         <Route path={ROUTES.LEADERBOARD} element={<LeaderPage />} />

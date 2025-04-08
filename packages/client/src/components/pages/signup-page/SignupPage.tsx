@@ -1,8 +1,8 @@
 import ErrorBoundary from '../../utils';
 
-export default function AuthPage() {
+export default function SignupPage() {
   return (
-    <div className="auth-page">
+    <div className="signup-page">
       <ErrorBoundary>Страница регистрации</ErrorBoundary>
     </div>
   );
