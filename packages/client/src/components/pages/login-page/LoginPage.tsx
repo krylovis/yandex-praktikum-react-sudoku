@@ -9,6 +9,7 @@ import useForm from '../../utils/hooks/useForm';
 interface IProps {
   id: string,
   placeholder: string,
+  text: string,
   type: 'number' | 'email' | 'text' | 'password' | 'tel',
 }
 
@@ -23,11 +24,13 @@ const loginInputs: IProps[] = [
     id: 'email',
     placeholder: 'Введите почту',
     type: 'text',
+    text: 'Почта',
   },
   {
     id: 'password',
     placeholder: 'Введите пароль',
     type: 'password',
+    text: 'Пароль',
   },
 ];
 
@@ -54,12 +57,13 @@ function LoginPage() {
         onNavigate={handleNavigate}
       >
 
-        {loginInputs.map(({ id, type, placeholder }) => (
+        {loginInputs.map(({ id, type, placeholder, text }) => (
           <FormField
             key={id}
             id={id}
             type={type}
             placeholder={placeholder}
+            text={text}
             value={values[id]}
             onChange={handleChange}
           />
