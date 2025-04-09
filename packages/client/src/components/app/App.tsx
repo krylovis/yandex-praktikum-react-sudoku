@@ -1,6 +1,6 @@
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import {
-  AuthPage,
+  SignupPage,
   GamePage,
   LeaderPage,
   LoginPage,
@@ -33,7 +33,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path={ROUTES.SIGN_UP} element={<AuthPage />} />
+        <Route path={ROUTES.SIGN_UP} element={<SignupPage />} />
         <Route path={ROUTES.TOPIC} element={<TopicPage />} />
         <Route path={ROUTES.TOPICS_LIST} element={<ForumPageWrapper />} />
         <Route path={ROUTES.TOPICS} element={<ForumPageWrapper />} />
