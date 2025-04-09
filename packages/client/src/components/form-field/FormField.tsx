@@ -10,9 +10,12 @@ interface IProps {
   errorMessage: string,
   type: 'text' | 'email' | 'tel' | 'password' | 'number',
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+  onBlur: (e: React.ChangeEvent<HTMLInputElement>) => void,
 }
 
-function FormField({ id, placeholder, value, type, text, errorMessage, onChange }: IProps) {
+function FormField({
+  id, placeholder, value, type, text, errorMessage, onChange, onBlur,
+}: IProps) {
   return (
     <label className={style.formField} htmlFor={id}>
       <span className={style.formField__text}>{text}</span>
@@ -24,6 +27,7 @@ function FormField({ id, placeholder, value, type, text, errorMessage, onChange 
         value={value}
         isError={!!errorMessage}
         onChange={onChange}
+        onBlur={onBlur}
       />
 
       {errorMessage && (

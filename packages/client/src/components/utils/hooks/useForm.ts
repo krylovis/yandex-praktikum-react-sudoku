@@ -15,5 +15,11 @@ export default function useForm(inputValues: IValues) {
     setErrors((oldErrors) => ({ ...oldErrors, [name]: validationMessage }));
   }, []);
 
-  return { values, errors, handleChange, setValues };
+  const handleBlur = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, validationMessage } = event.target;
+
+    setErrors((oldErrors) => ({ ...oldErrors, [name]: validationMessage }));
+  }, []);
+
+  return { values, errors, handleChange, handleBlur, setValues };
 }

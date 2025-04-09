@@ -35,7 +35,7 @@ const loginInputs: IProps[] = [
 ];
 
 function LoginPage() {
-  const { values, errors, handleChange } = useForm({ email: '', password: '' });
+  const { values, errors, handleChange, handleBlur } = useForm({ email: '', password: '' });
   const navigate = useNavigate();
 
   const handleNavigate = useCallback(() => {
@@ -68,6 +68,7 @@ function LoginPage() {
             errorMessage={errors[id]}
             value={values[id]}
             onChange={handleChange}
+            onBlur={handleBlur}
           />
         ))}
       </MainForm>

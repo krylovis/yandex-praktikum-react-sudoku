@@ -8,9 +8,12 @@ interface IProps {
   value: string,
   isError: boolean,
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+  onBlur: (e: React.ChangeEvent<HTMLInputElement>) => void,
 }
 
-function CustomInput({ id, placeholder, value, type, isError, onChange }: IProps) {
+function CustomInput({
+  id, placeholder, value, type, isError, onChange, onBlur,
+}: IProps) {
   const className = [style.customInput];
 
   if (isError) className.push(style.customInput_typeError);
@@ -27,6 +30,7 @@ function CustomInput({ id, placeholder, value, type, isError, onChange }: IProps
       value={value}
       placeholder={placeholder}
       required
+      onBlur={onBlur}
       onChange={onChange}
     />
   );

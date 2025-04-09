@@ -65,7 +65,7 @@ const loginInputs: IProps[] = [
 ];
 
 function SignupPage() {
-  const { values, errors, handleChange } = useForm({
+  const { values, errors, handleChange, handleBlur } = useForm({
     first_name: '',
     second_name: '',
     email: '',
@@ -106,6 +106,7 @@ function SignupPage() {
             errorMessage={errors[id]}
             value={values[id]}
             onChange={handleChange}
+            onBlur={handleBlur}
           />
         ))}
       </MainForm>
