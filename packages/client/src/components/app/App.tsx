@@ -1,26 +1,30 @@
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import {
-  AuthPage,
-  ForumPage,
+  SignupPage,
   GamePage,
   LeaderPage,
   LoginPage,
   MainPage,
   ProfilePage,
+  TopicCreatePage,
   TopicPage,
 } from '../pages/index';
 import ROUTES from '../../constants/constants';
 import Navigation from '../navigation/NavigationComponent';
+import ForumPageWrapper from '../forum-wrapper/ForumPageWrapper';
 
 const hideNavigationOnRoutes: string[] = [
   ROUTES.SIGN_UP,
-  ROUTES.FORUM,
+  ROUTES.TOPICS,
   ROUTES.GAME,
   ROUTES.LEADERBOARD,
   ROUTES.LOGIN,
   ROUTES.PROFILE,
   ROUTES.TOPIC,
   ROUTES.MAIN,
+  ROUTES.CREATE_TOPIC,
+  ROUTES.TOPICS_LIST,
+  ROUTES.TOPIC,
 ];
 
 function App() {
@@ -29,19 +33,21 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path={ROUTES.SIGN_UP} element={<AuthPage />} />
-        <Route path={ROUTES.FORUM} element={<ForumPage />} />
+        <Route path={ROUTES.SIGN_UP} element={<SignupPage />} />
+        <Route path={ROUTES.TOPIC} element={<TopicPage />} />
+        <Route path={ROUTES.TOPICS_LIST} element={<ForumPageWrapper />} />
+        <Route path={ROUTES.TOPICS} element={<ForumPageWrapper />} />
         <Route path={ROUTES.GAME} element={<GamePage />} />
         <Route path={ROUTES.LEADERBOARD} element={<LeaderPage />} />
         <Route path={ROUTES.LOGIN} element={<LoginPage />} />
         <Route path={ROUTES.MAIN} element={<MainPage />} />
         <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
-        <Route path={ROUTES.TOPIC} element={<TopicPage />} />
+        <Route path={ROUTES.CREATE_TOPIC} element={<TopicCreatePage />} />
       </Routes>
-      {!hideNavigationOnRoutes.includes(location.pathname) && (
+      {location.pathname === '/' && (
         <div>Вот тут будет жить ваше приложение :)</div>
       )}
-      {!hideNavigationOnRoutes.includes(location.pathname) && <Navigation />}
+      {location.pathname === '/' && <Navigation />}
       {/* Кнопка "Назад" для определённых страниц */}
       {hideNavigationOnRoutes.includes(location.pathname) && (
         <div>

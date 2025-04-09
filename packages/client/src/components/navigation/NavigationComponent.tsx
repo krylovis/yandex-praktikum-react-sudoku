@@ -6,8 +6,8 @@ const navigationLinks = {
   [ROUTES.GAME]: 'Страница игры',
   [ROUTES.SIGN_UP]: 'Страница регистрации',
   [ROUTES.LOGIN]: 'Страница входа',
-  [ROUTES.FORUM]: 'Страница форума',
-  [ROUTES.TOPIC]: 'Страница топика форума',
+  [ROUTES.TOPICS]: 'Страница форума',
+  [ROUTES.CREATE_TOPIC]: 'Страница создания топика',
   [ROUTES.PROFILE]: 'Страница профиля пользователя',
   [ROUTES.LEADERBOARD]: 'Страница лидерборда',
 };

@@ -1,9 +1,11 @@
-import ErrorBoundary from '../../utils';
+import { GameField } from '../../index';
+
+import style from './GamePage.module.scss';
 
 export default function GamePage() {
   return (
-    <div className="game-page">
-      <ErrorBoundary>Страница игры</ErrorBoundary>
-    </div>
+    <main className={style.main}>
+      <GameField />
+    </main>
   );
 }

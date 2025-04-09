@@ -12,6 +12,11 @@
     border-bottom: none;
   }
 
+  &__text {
+    font-size: 9px;
+    color: $color-secondary;
+  }
+
   &__error {
     position: absolute;
     font-size: 12px;

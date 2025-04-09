@@ -1,4 +1,4 @@
-export { default as AuthPage } from './auth-page/AuthPage';
+export { default as SignupPage } from './signup-page/SignupPage';
 export { default as ForumPage } from './forum-page/ForumPage';
 export { default as GamePage } from './game-page/GamePage';
 export { default as LeaderPage } from './leader-page/LeaderPage';
@@ -6,3 +6,6 @@ export { default as LoginPage } from './login-page/LoginPage';
 export { default as MainPage } from './main-page/MainPage';
 export { default as ProfilePage } from './profile-page/ProfilePage';
 export { default as TopicPage } from './topic-page/TopicPage';
+export { default as TopicCreatePage } from './topic-create-page/TopicCreatePage';
+export { default as TopicFolderListPage } from './topic-folder-list-page/TopicFolderListPage';
+export { default as TopicListPage } from './topic-list-page/TopicListPage';

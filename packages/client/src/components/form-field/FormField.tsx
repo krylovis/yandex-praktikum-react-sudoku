@@ -6,13 +6,16 @@ interface IProps {
   id: string,
   placeholder: string,
   value: string,
+  text: string,
   type: 'text' | 'email' | 'tel' | 'password' | 'number',
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
 }
 
-function FormField({ id, placeholder, value, type, onChange }: IProps) {
+function FormField({ id, placeholder, value, type, text, onChange }: IProps) {
   return (
     <label className={style.formField} htmlFor={id}>
+      <span className={style.formField__text}>{text}</span>
+
       <CustomInput
         id={id}
         placeholder={placeholder}
@@ -21,7 +24,7 @@ function FormField({ id, placeholder, value, type, onChange }: IProps) {
         onChange={onChange}
       />
 
-      <span className={style.formField} />
+      <span className={style.formField__error} />
     </label>
   );
 }

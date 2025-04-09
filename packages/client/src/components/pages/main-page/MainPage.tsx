@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import ErrorBoundary from '../../utils';
 import style from './MainPage.module.scss';
 import ROUTES from '../../../constants/constants';
 import CustomButton from '../../custom-button/CustomButton';
@@ -38,25 +37,26 @@ export default function MainPage() {
 
   return (
     <section className={style.mainPage}>
-      <ErrorBoundary>
-        <span className={style.mainPage__title}>
-          SUDOKU
-        </span>
-        <div className={style.mainPage__resultContainer}>
-          <img src="src/assets/images/mainPage.png" alt="Result game" className={style.mainPage__result} />
-        </div>
-        <div className={style.mainPage__actions}>
-          {actions.map(({ text, onNavigate }) => (
-            <CustomButton
-              className={[style.button]}
-              type="button"
-              color="secondary"
-              text={text}
-              onClick={onNavigate}
-            />
-          ))}
-        </div>
-      </ErrorBoundary>
+      <span className={style.mainPage__title}>
+        SUDOKU
+      </span>
+      <div className={style.mainPage__resultContainer}>
+        <img src="src/assets/images/mainPage.png" alt="Result game" className={style.mainPage__result} />
+      </div>
+      <div className={style.mainPage__actions}>
+        {actions.map(({ text, onNavigate }) => (
+          <CustomButton
+            className={[style.button]}
+            type="button"
+            color="secondary"
+            text={text}
+            onClick={onNavigate}
+          />
+        ))}
+      </div>
     </section>
   );
+
+export default function MainPage() {
+  return <div className="main-page">Главная страница</div>;
 }
