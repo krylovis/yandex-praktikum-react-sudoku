@@ -1,0 +1,39 @@
+.page {
+  width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &__header {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    padding-bottom: 20px;
+  }
+
+  &__headerTitle {
+    text-align: start;
+  }
+
+  &__headerSpan {
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  &__headerFolder {
+    grid-template-columns: 3fr 1.5fr 1fr 4fr;
+  }
+
+  &__headerList {
+    grid-template-columns: 3fr 1.5fr 4fr;
+  }
+
+  &__topicList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
