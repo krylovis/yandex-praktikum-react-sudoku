@@ -7,6 +7,8 @@ enum ROUTES {
   LOGIN = '/login',
   PROFILE = '/profile',
   TOPIC = '/forum/topic',
+  UNDEFINED = '*',
+  NOT_FOUND_404 = '/404',
 }
 
 export default ROUTES;

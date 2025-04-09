@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import {
   SignupPage,
   ForumPage,
@@ -8,6 +8,7 @@ import {
   MainPage,
   ProfilePage,
   TopicPage,
+  NotFoundPage,
 } from '../pages/index';
 import ROUTES from '../../constants/constants';
 import Navigation from '../navigation/NavigationComponent';
@@ -29,6 +30,7 @@ function App() {
   return (
     <>
       <Routes>
+        <Route path="/" element={<Navigation />} />
         <Route path={ROUTES.SIGN_UP} element={<SignupPage />} />
         <Route path={ROUTES.FORUM} element={<ForumPage />} />
         <Route path={ROUTES.GAME} element={<GamePage />} />
@@ -37,11 +39,13 @@ function App() {
         <Route path={ROUTES.MAIN} element={<MainPage />} />
         <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
         <Route path={ROUTES.TOPIC} element={<TopicPage />} />
+        <Route path={ROUTES.NOT_FOUND_404} element={<NotFoundPage />} />
+        <Route
+          path={ROUTES.UNDEFINED}
+          element={<Navigate to={ROUTES.NOT_FOUND_404} state={{ from: location }} replace />}
+        />
       </Routes>
-      {!hideNavigationOnRoutes.includes(location.pathname) && (
-        <div>Вот тут будет жить ваше приложение :)</div>
-      )}
-      {!hideNavigationOnRoutes.includes(location.pathname) && <Navigation />}
+
       {/* Кнопка "Назад" для определённых страниц */}
       {hideNavigationOnRoutes.includes(location.pathname) && (
         <div>

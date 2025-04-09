@@ -6,3 +6,4 @@ export { default as LoginPage } from './login-page/LoginPage';
 export { default as MainPage } from './main-page/MainPage';
 export { default as ProfilePage } from './profile-page/ProfilePage';
 export { default as TopicPage } from './topic-page/TopicPage';
+export { default as NotFoundPage } from './not-found-page/NotFoundPage';
