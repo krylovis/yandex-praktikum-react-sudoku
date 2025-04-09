@@ -9,8 +9,8 @@ export default function useForm(inputValues: IValues) {
 
   const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
-    setValues({ ...values, [name]: value });
-  }, [values]);
+    setValues((oldValues) => ({ ...oldValues, [name]: value }));
+  }, []);
 
   return { values, handleChange, setValues };
 }
