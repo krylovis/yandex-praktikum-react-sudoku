@@ -9,7 +9,11 @@
   border-bottom: 1px solid #3369f3;
   padding: 8px 0 7px;
 
-  &_type_error {
-    border-bottom-color: red;
+  &_typeSucces {
+    border-bottom-color: $color-succes;
+  }
+
+  &_typeError {
+    border-bottom-color: $color-danger;
   }
 }

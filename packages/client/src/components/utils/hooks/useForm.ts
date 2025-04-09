@@ -6,11 +6,14 @@ export interface IValues {
 
 export default function useForm(inputValues: IValues) {
   const [values, setValues] = React.useState(inputValues);
+  const [errors, setErrors] = React.useState(inputValues);
 
   const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = event.target;
+    const { value, name, validationMessage } = event.target;
+
     setValues((oldValues) => ({ ...oldValues, [name]: value }));
+    setErrors((oldErrors) => ({ ...oldErrors, [name]: validationMessage }));
   }, []);
 
-  return { values, handleChange, setValues };
+  return { values, errors, handleChange, setValues };
 }

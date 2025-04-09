@@ -65,7 +65,7 @@ const loginInputs: IProps[] = [
 ];
 
 function SignupPage() {
-  const { values, handleChange } = useForm({
+  const { values, errors, handleChange } = useForm({
     first_name: '',
     second_name: '',
     email: '',
@@ -103,6 +103,7 @@ function SignupPage() {
             type={type}
             placeholder={placeholder}
             text={text}
+            errorMessage={errors[id]}
             value={values[id]}
             onChange={handleChange}
           />

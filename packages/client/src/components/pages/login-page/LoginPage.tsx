@@ -35,7 +35,7 @@ const loginInputs: IProps[] = [
 ];
 
 function LoginPage() {
-  const { values, handleChange } = useForm({ email: '', password: '' });
+  const { values, errors, handleChange } = useForm({ email: '', password: '' });
   const navigate = useNavigate();
 
   const handleNavigate = useCallback(() => {
@@ -65,6 +65,7 @@ function LoginPage() {
             type={type}
             placeholder={placeholder}
             text={text}
+            errorMessage={errors[id]}
             value={values[id]}
             onChange={handleChange}
           />
