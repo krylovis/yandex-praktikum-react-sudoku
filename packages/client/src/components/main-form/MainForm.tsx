@@ -7,13 +7,17 @@ interface IProps {
   children: ReactElement[],
   submitText: string,
   linkText: string,
+  type: string,
   onSubmit: (e: FormEvent) => void,
   onNavigate: () => void,
 }
 
 function MainForm({
-  formTitle, children, submitText, linkText, onSubmit, onNavigate,
+  formTitle, children, submitText, linkText, type, onSubmit, onNavigate,
 }: IProps) {
+  const btnContainerClass = [style.mainForm__btnContainer];
+  btnContainerClass.push(style[`mainForm__btnContainer_${type}`]);
+
   return (
     <section className={style.mainForm}>
       <h1 className={style.mainForm__title}>{formTitle}</h1>
@@ -21,7 +25,7 @@ function MainForm({
       <form className={style.mainForm__form} action="action">
         {children}
 
-        <div className={style.mainForm__btnContainer}>
+        <div className={btnContainerClass.join(' ')}>
           <CustomButton
             type="submit"
             color="primary"

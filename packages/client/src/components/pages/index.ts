@@ -1,4 +1,4 @@
-export { default as AuthPage } from './auth-page/AuthPage';
+export { default as SignupPage } from './signup-page/SignupPage';
 export { default as ForumPage } from './forum-page/ForumPage';
 export { default as GamePage } from './game-page/GamePage';
 export { default as LeaderPage } from './leader-page/LeaderPage';

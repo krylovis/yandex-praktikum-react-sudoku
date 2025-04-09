@@ -9,22 +9,46 @@ import useForm from '../../utils/hooks/useForm';
 interface IProps {
   id: string,
   placeholder: string,
-  text: string,
   type: 'number' | 'email' | 'text' | 'password' | 'tel',
+  text: string,
 }
 
 const formText = {
-  formTitle: 'Вход',
-  submitText: 'Авторизоваться',
-  linkText: 'Нет аккаунта?',
+  formTitle: 'Регистрация',
+  submitText: 'Зарегистрироваться',
+  linkText: 'Войти',
 };
 
 const loginInputs: IProps[] = [
   {
+    id: 'first_name',
+    placeholder: 'Введите имя',
+    type: 'text',
+    text: 'Имя',
+  },
+  {
+    id: 'second_name',
+    placeholder: 'Введите фамилию',
+    type: 'text',
+    text: 'Фамилия',
+  },
+  {
     id: 'email',
     placeholder: 'Введите почту',
-    type: 'text',
+    type: 'email',
     text: 'Почта',
+  },
+  {
+    id: 'phone',
+    placeholder: 'Введите телефон',
+    type: 'tel',
+    text: 'Телефон',
+  },
+  {
+    id: 'login',
+    placeholder: 'Придумайте логин',
+    type: 'text',
+    text: 'Логин',
   },
   {
     id: 'password',
@@ -32,14 +56,28 @@ const loginInputs: IProps[] = [
     type: 'password',
     text: 'Пароль',
   },
+  {
+    id: 'password_confirmation',
+    placeholder: 'Повторите пароль',
+    type: 'password',
+    text: 'Пароль (ещё раз)',
+  },
 ];
 
-function LoginPage() {
-  const { values, handleChange } = useForm({ email: '', password: '' });
+function SignupPage() {
+  const { values, handleChange } = useForm({
+    first_name: '',
+    second_name: '',
+    email: '',
+    phone: '',
+    login: '',
+    password: '',
+    password_confirmation: '',
+  });
   const navigate = useNavigate();
 
   const handleNavigate = useCallback(() => {
-    navigate(ROUTES.SIGN_UP);
+    navigate(ROUTES.LOGIN);
   }, []);
 
   const handleSubmit = useCallback((e: FormEvent) => {
@@ -53,7 +91,7 @@ function LoginPage() {
         formTitle={formText.formTitle}
         submitText={formText.submitText}
         linkText={formText.linkText}
-        type="login"
+        type="signup"
         onSubmit={handleSubmit}
         onNavigate={handleNavigate}
       >
@@ -74,4 +112,4 @@ function LoginPage() {
   );
 }
 
-export default memo(LoginPage);
+export default memo(SignupPage);
