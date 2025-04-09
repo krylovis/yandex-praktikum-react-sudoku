@@ -7,6 +7,7 @@ enum ROUTES {
   LOGIN = '/login',
   PROFILE = '/profile',
   TOPIC = '/forum/topic',
+  INTERNAL_SERVER_ERROR = '/500',
   UNDEFINED = '*',
   NOT_FOUND_404 = '/404',
 }

@@ -9,6 +9,7 @@ import {
   ProfilePage,
   TopicPage,
   NotFoundPage,
+  InternalServerErrorPage,
 } from '../pages/index';
 import ROUTES from '../../constants/constants';
 import Navigation from '../navigation/NavigationComponent';
@@ -39,6 +40,7 @@ function App() {
         <Route path={ROUTES.MAIN} element={<MainPage />} />
         <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
         <Route path={ROUTES.TOPIC} element={<TopicPage />} />
+        <Route path={ROUTES.INTERNAL_SERVER_ERROR} element={<InternalServerErrorPage />} />
         <Route path={ROUTES.NOT_FOUND_404} element={<NotFoundPage />} />
         <Route
           path={ROUTES.UNDEFINED}
