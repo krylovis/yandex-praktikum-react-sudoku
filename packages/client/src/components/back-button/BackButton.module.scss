@@ -1,0 +1,15 @@
+.back {
+  margin-bottom: 20px;
+  font-size: 0.9em;
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s;
+  border: none;
+  padding: 0;
+  background: none;
+  text-align: start;
+
+  &:hover {
+    color: #0056b3;
+  }
+}

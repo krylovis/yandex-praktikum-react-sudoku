@@ -4,4 +4,5 @@ export { default as MainForm } from './main-form/MainForm';
 export { default as FormField } from './form-field/FormField';
 export { default as CustomButton } from './custom-button/CustomButton';
 export { default as CustomInput } from './custom-input/CustomInput';
+export { default as BackButton } from './back-button/BackButton';
 export { default as ErrorComponent } from './error-component/ErrorComponent';
