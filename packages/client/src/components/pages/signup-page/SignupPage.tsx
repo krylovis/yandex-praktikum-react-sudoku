@@ -65,7 +65,7 @@ const loginInputs: IProps[] = [
 ];
 
 function SignupPage() {
-  const { values, errors, handleChange, handleBlur } = useForm({
+  const { values, errors, isFormValid, handleChange, handleBlur } = useForm({
     first_name: '',
     second_name: '',
     email: '',
@@ -88,10 +88,11 @@ function SignupPage() {
   return (
     <ContentContainer>
       <MainForm
+        type="signup"
         formTitle={formText.formTitle}
         submitText={formText.submitText}
         linkText={formText.linkText}
-        type="signup"
+        isFormValid={isFormValid}
         onSubmit={handleSubmit}
         onNavigate={handleNavigate}
       >

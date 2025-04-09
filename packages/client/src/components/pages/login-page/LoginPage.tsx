@@ -35,7 +35,7 @@ const loginInputs: IProps[] = [
 ];
 
 function LoginPage() {
-  const { values, errors, handleChange, handleBlur } = useForm({ email: '', password: '' });
+  const { values, errors, isFormValid, handleChange, handleBlur } = useForm({ email: '', password: '' });
   const navigate = useNavigate();
 
   const handleNavigate = useCallback(() => {
@@ -50,10 +50,11 @@ function LoginPage() {
   return (
     <ContentContainer>
       <MainForm
+        type="login"
         formTitle={formText.formTitle}
         submitText={formText.submitText}
         linkText={formText.linkText}
-        type="login"
+        isFormValid={isFormValid}
         onSubmit={handleSubmit}
         onNavigate={handleNavigate}
       >
