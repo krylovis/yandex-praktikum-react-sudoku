@@ -5,75 +5,11 @@ import {
 } from '../../index';
 import ROUTES from '../../../constants/constants';
 import useForm from '../../utils/hooks/useForm';
-
-interface IProps {
-  id: string,
-  placeholder: string,
-  type: 'number' | 'email' | 'text' | 'password' | 'tel',
-  text: string,
-}
-
-const formText = {
-  formTitle: 'Регистрация',
-  submitText: 'Зарегистрироваться',
-  linkText: 'Войти',
-};
-
-const loginInputs: IProps[] = [
-  {
-    id: 'first_name',
-    placeholder: 'Введите имя',
-    type: 'text',
-    text: 'Имя',
-  },
-  {
-    id: 'second_name',
-    placeholder: 'Введите фамилию',
-    type: 'text',
-    text: 'Фамилия',
-  },
-  {
-    id: 'email',
-    placeholder: 'Введите почту',
-    type: 'email',
-    text: 'Почта',
-  },
-  {
-    id: 'phone',
-    placeholder: 'Введите телефон',
-    type: 'tel',
-    text: 'Телефон',
-  },
-  {
-    id: 'login',
-    placeholder: 'Придумайте логин',
-    type: 'text',
-    text: 'Логин',
-  },
-  {
-    id: 'password',
-    placeholder: 'Введите пароль',
-    type: 'password',
-    text: 'Пароль',
-  },
-  {
-    id: 'password_confirmation',
-    placeholder: 'Повторите пароль',
-    type: 'password',
-    text: 'Пароль (ещё раз)',
-  },
-];
+import { signupFormText, signupInputs, getFormData } from '../../utils/form-helper';
 
 function SignupPage() {
-  const { values, errors, isFormValid, handleChange, handleBlur } = useForm({
-    first_name: '',
-    second_name: '',
-    email: '',
-    phone: '',
-    login: '',
-    password: '',
-    password_confirmation: '',
-  });
+  const ids = signupInputs.map(({ id }) => id);
+  const { formData, isFormValid, handleChange, handleBlur } = useForm(getFormData(ids));
   const navigate = useNavigate();
 
   const handleNavigate = useCallback(() => {
@@ -82,30 +18,31 @@ function SignupPage() {
 
   const handleSubmit = useCallback((e: FormEvent) => {
     e.preventDefault();
-    console.log('handleSubmit', values);
-  }, [values]);
+    console.log('handleSubmit', formData);
+  }, [formData]);
 
+  const { formTitle, submitText, linkText } = signupFormText;
   return (
     <ContentContainer>
       <MainForm
         type="signup"
-        formTitle={formText.formTitle}
-        submitText={formText.submitText}
-        linkText={formText.linkText}
+        formTitle={formTitle}
+        submitText={submitText}
+        linkText={linkText}
         isFormValid={isFormValid}
         onSubmit={handleSubmit}
         onNavigate={handleNavigate}
       >
 
-        {loginInputs.map(({ id, type, placeholder, text }) => (
+        {signupInputs.map(({ id, type, placeholder, text }) => (
           <FormField
             key={id}
             id={id}
             type={type}
             placeholder={placeholder}
             text={text}
-            errorMessage={errors[id]}
-            value={values[id]}
+            errorMessage={formData[id].errorText}
+            value={formData[id].value}
             onChange={handleChange}
             onBlur={handleBlur}
           />
