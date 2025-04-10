@@ -29,7 +29,6 @@ function CustomInput({
       name={id}
       value={value}
       placeholder={placeholder}
-      required
       onBlur={onBlur}
       onChange={onChange}
     />
