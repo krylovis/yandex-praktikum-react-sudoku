@@ -5,37 +5,11 @@ import {
 } from '../../index';
 import ROUTES from '../../../constants/constants';
 import useForm from '../../utils/hooks/useForm';
-
-interface IProps {
-  id: string,
-  placeholder: string,
-  text: string,
-  type: 'number' | 'email' | 'text' | 'password' | 'tel',
-}
-
-const formText = {
-  formTitle: 'Вход',
-  submitText: 'Авторизоваться',
-  linkText: 'Нет аккаунта?',
-};
-
-const loginInputs: IProps[] = [
-  {
-    id: 'email',
-    placeholder: 'Введите почту',
-    type: 'text',
-    text: 'Почта',
-  },
-  {
-    id: 'password',
-    placeholder: 'Введите пароль',
-    type: 'password',
-    text: 'Пароль',
-  },
-];
+import { loginFormText, loginInputs, getFormData } from '../../utils/form-helper';
 
 function LoginPage() {
-  const { values, errors, isFormValid, handleChange, handleBlur } = useForm({ email: '', password: '' });
+  const ids = loginInputs.map(({ id }) => id);
+  const { formData, isFormValid, handleChange, handleBlur } = useForm(getFormData(ids));
   const navigate = useNavigate();
 
   const handleNavigate = useCallback(() => {
@@ -44,16 +18,17 @@ function LoginPage() {
 
   const handleSubmit = useCallback((e: FormEvent) => {
     e.preventDefault();
-    console.log('handleSubmit', values);
-  }, [values]);
+    console.log('handleSubmit', formData);
+  }, [formData]);
 
+  const { formTitle, submitText, linkText } = loginFormText;
   return (
     <ContentContainer>
       <MainForm
         type="login"
-        formTitle={formText.formTitle}
-        submitText={formText.submitText}
-        linkText={formText.linkText}
+        formTitle={formTitle}
+        submitText={submitText}
+        linkText={linkText}
         isFormValid={isFormValid}
         onSubmit={handleSubmit}
         onNavigate={handleNavigate}
@@ -63,11 +38,11 @@ function LoginPage() {
           <FormField
             key={id}
             id={id}
-            type={type}
             placeholder={placeholder}
+            type={type}
             text={text}
-            errorMessage={errors[id]}
-            value={values[id]}
+            errorMessage={formData[id].errorText}
+            value={formData[id].value}
             onChange={handleChange}
             onBlur={handleBlur}
           />
