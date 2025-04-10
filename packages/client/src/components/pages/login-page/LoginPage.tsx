@@ -5,6 +5,8 @@ import {
 } from '../../index';
 import ROUTES from '../../../constants/constants';
 import useForm from '../../utils/hooks/useForm';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { setUser } from '../../../store/slices/userSlice';
 
 interface IProps {
   id: string,
@@ -35,6 +37,8 @@ const loginInputs: IProps[] = [
 ];
 
 function LoginPage() {
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.user);
   const { values, handleChange } = useForm({ email: '', password: '' });
   const navigate = useNavigate();
 
@@ -45,7 +49,29 @@ function LoginPage() {
   const handleSubmit = useCallback((e: FormEvent) => {
     e.preventDefault();
     console.log('handleSubmit', values);
-  }, [values]);
+    try {
+      // TODO: Здесь должна быть реальная логика авторизации, например:
+      // const response = await authService.signIn(values.login, values.password);
+
+      // Моковые данные для примера:
+      const mockUser = {
+        first_name: 'Ivan',
+        second_name: 'Ivanov',
+        display_name: 'Iv',
+        email: 'ivan_ivanov@mail.ru',
+        phone: '+1234567890',
+        avatar: '',
+        login: 'IvanIvanov',
+      };
+
+      dispatch(setUser(mockUser));
+      console.log('mockUser from store', user);
+      navigate(ROUTES.MAIN);
+    } catch (error) {
+      console.error('Login error:', error);
+      // Можно добавить обработку ошибок
+    }
+  }, [values, dispatch, navigate]);
 
   return (
     <ContentContainer>
