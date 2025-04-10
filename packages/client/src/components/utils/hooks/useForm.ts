@@ -1,40 +1,63 @@
 import React, { useCallback } from 'react';
-
-export interface IValues {
-  [key: string]: string,
-}
+import { IValues, RULES, inputsRules, IGetErrorText } from '../form-helper';
 
 export default function useForm(inputValues: IValues) {
-  const [values, setValues] = React.useState(inputValues);
-  const [errors, setErrors] = React.useState(inputValues);
+  const [formData, setValues] = React.useState(inputValues);
   const [isFormValid, setFormValid] = React.useState(false);
+
+  function getErrorText({ name, value, message }: IGetErrorText): string {
+    let errorText = '';
+    // eslint-disable-next-line no-restricted-syntax
+    for (const rule of inputsRules[name]) {
+      if (rule === 'required' && value.length === 0) {
+        errorText = RULES[rule].text;
+        break;
+      } else if (!RULES[rule].regExp?.test(value)) {
+        errorText = RULES[rule].text;
+        if (RULES[rule].break) break;
+      } else if (message) {
+        errorText = message;
+      } else {
+        errorText = '';
+      }
+    }
+
+    return errorText;
+  }
+
+  const getFormValid = (items: IValues) => Object.values((items)).every(({ isValid }) => isValid);
 
   const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name, validationMessage } = event.target;
+    const errorText = getErrorText({ value, name, message: validationMessage });
 
-    setValues((oldValues) => ({ ...oldValues, [name]: value }));
+    setValues((oldValues) => {
+      const newValues = { ...oldValues,
+        [name]: {
+          ...oldValues[name], value, errorText, isValid: !errorText,
+        },
+      };
 
-    setErrors((oldErrors) => {
-      const newValues = { ...oldErrors, [name]: validationMessage };
-      const valid = Object.values((newValues)).every((item) => !item);
-      setFormValid(valid);
-
+      setFormValid(getFormValid(newValues));
       return newValues;
     });
   }, []);
 
   const handleBlur = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, validationMessage } = event.target;
+    const { value, name, validationMessage } = event.target;
+    const errorText = getErrorText({ value, name, message: validationMessage });
 
-    // setErrors((oldErrors) => ({ ...oldErrors, [name]: validationMessage }));
-    setErrors((oldErrors) => {
-      const newValues = { ...oldErrors, [name]: validationMessage };
-      const valid = Object.values((newValues)).every((item) => !item);
-      setFormValid(valid);
+    setValues((oldValues) => {
+      const newValues = { ...oldValues,
+        [name]: {
+          ...oldValues[name], errorText, isValid: !errorText,
+        },
+      };
 
+      setFormValid(getFormValid(newValues));
       return newValues;
     });
   }, []);
 
-  return { values, errors, isFormValid, handleChange, handleBlur, setValues };
+  return { formData, isFormValid, handleChange, handleBlur, setValues };
 }
