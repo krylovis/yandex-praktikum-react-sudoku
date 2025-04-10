@@ -10,3 +10,4 @@ export { default as TopicCreatePage } from './topic-create-page/TopicCreatePage'
 export { default as TopicFolderListPage } from './topic-folder-list-page/TopicFolderListPage';
 export { default as TopicListPage } from './topic-list-page/TopicListPage';
 export { default as NotFoundPage } from './not-found-page/NotFoundPage';
+export { default as InternalServerErrorPage } from './internal-server-error-page/InternalServerErrorPage';

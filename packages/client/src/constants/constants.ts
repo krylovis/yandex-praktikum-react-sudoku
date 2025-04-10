@@ -9,6 +9,7 @@ enum ROUTES {
   CREATE_TOPIC = '/forum/create',
   TOPICS = '/forum',
   TOPICS_LIST = '/forum/:id',
+  INTERNAL_SERVER_ERROR = '/500',
   UNDEFINED = '*',
   NOT_FOUND_404 = '/404',
 }
