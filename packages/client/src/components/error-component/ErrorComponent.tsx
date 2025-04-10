@@ -9,10 +9,10 @@ export type TErrorProps = {
 
 export default function ErrorComponent({ code, subtitle }: TErrorProps) {
   return (
-    <div className={style.error}>
+    <section className={style.error}>
       <h1 className={style.error__title}>{code}</h1>
       <p className={style.error__subtitle}>{subtitle}</p>
       <Link className={style.error__link} to={ROUTES.MAIN}>На главную</Link>
-    </div>
+    </section>
   );
 }
