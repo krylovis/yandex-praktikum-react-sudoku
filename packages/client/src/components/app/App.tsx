@@ -14,6 +14,7 @@ import {
 import ROUTES from '../../constants/constants';
 import Navigation from '../navigation/NavigationComponent';
 import ForumPageWrapper from '../forum-wrapper/ForumPageWrapper';
+import { AppHeader } from '..';
 
 const hideNavigationOnRoutes: string[] = [
   ROUTES.SIGN_UP,
@@ -34,6 +35,7 @@ function App() {
   const location = useLocation();
   return (
     <>
+      <AppHeader />
       <Routes>
         <Route path={ROUTES.SIGN_UP} element={<SignupPage />} />
         <Route path={ROUTES.TOPIC} element={<TopicPage />} />
@@ -54,17 +56,17 @@ function App() {
         <Route
           path="/"
           element={(
-            <>
+            <div style={{ marginTop: '100px' }}>
               <div>Вот тут будет жить ваше приложение :)</div>
               <Navigation />
-            </>
+            </div>
           )}
         />
       </Routes>
 
       {/* Кнопка "Назад" для определённых страниц */}
       {hideNavigationOnRoutes.includes(location.pathname) && (
-        <div>
+        <div style={{ position: 'absolute', top: '100px', left: 0, zIndex: 5 }}>
           <button type="button" onClick={() => navigate('/')}>
             Назад
           </button>
