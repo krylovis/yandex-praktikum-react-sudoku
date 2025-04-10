@@ -28,7 +28,7 @@ export default function LeaderPage() {
 
   return (
     <ErrorBoundary>
-      <main className={style.leaderPage}>
+      <section className={style.leaderPage}>
         <div className={style.leaderPage__wrap}>
           <button className={style.leaderPage__backWrap} type="button" onClick={handleBackBtnClick}>
             <img className={style.leaderPage__backIcon} src={leftBlueArrow} alt="Стрелка назад" />
@@ -62,7 +62,7 @@ export default function LeaderPage() {
             onPageChange={setCurrentPage}
           />
         </div>
-      </main>
+      </section>
     </ErrorBoundary>
   );
 }
