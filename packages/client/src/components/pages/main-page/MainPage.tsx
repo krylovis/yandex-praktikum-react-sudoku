@@ -39,7 +39,7 @@ export default function MainPage() {
   return (
     <section className={style.mainPage}>
       <ErrorBoundary>
-        <span className={style.mainPage__title}>SUDOKU</span>
+        <h1 className={style.mainPage__title}>SUDOKU</h1>
         <div className={style.mainPage__resultContainer}>
           <img
             src="src/assets/images/mainPage.png"
