@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@namics/stylelint-bem": "^10.1.0",
+    "classnames": "^2.5.1",
     "@reduxjs/toolkit": "^2.6.1",
     "dotenv": "^16.0.2",
     "eslint-config-prettier": "^8.5.0",
