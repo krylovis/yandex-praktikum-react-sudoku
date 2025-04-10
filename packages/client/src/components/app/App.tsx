@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import {
   SignupPage,
   GamePage,
@@ -8,6 +8,7 @@ import {
   ProfilePage,
   TopicCreatePage,
   TopicPage,
+  NotFoundPage,
 } from '../pages/index';
 import ROUTES from '../../constants/constants';
 import Navigation from '../navigation/NavigationComponent';
@@ -43,11 +44,22 @@ function App() {
         <Route path={ROUTES.MAIN} element={<MainPage />} />
         <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
         <Route path={ROUTES.CREATE_TOPIC} element={<TopicCreatePage />} />
+        <Route path={ROUTES.NOT_FOUND_404} element={<NotFoundPage />} />
+        <Route
+          path={ROUTES.UNDEFINED}
+          element={<Navigate to={ROUTES.NOT_FOUND_404} state={{ from: location }} replace />}
+        />
+        <Route
+          path="/"
+          element={(
+            <>
+              <div>Вот тут будет жить ваше приложение :)</div>
+              <Navigation />
+            </>
+          )}
+        />
       </Routes>
-      {location.pathname === '/' && (
-        <div>Вот тут будет жить ваше приложение :)</div>
-      )}
-      {location.pathname === '/' && <Navigation />}
+
       {/* Кнопка "Назад" для определённых страниц */}
       {hideNavigationOnRoutes.includes(location.pathname) && (
         <div>
