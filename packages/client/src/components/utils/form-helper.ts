@@ -1,5 +1,5 @@
 const PASSWORD_REGEXP = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$/;
-const EMAIL_REGEXP = /^[a-z0-9._%+-]+@[a-z0-9.\\-]+\.[a-z]{2}$/;
+const EMAIL_REGEXP = /^[a-z0-9._%+-]+@[a-z0-9.\\-]+\.[a-z]{2,3}$/;
 const SPASE_CHARACTERS = /^\S*$/;
 const PHONE_REGEXP = /^((\+7|7|8)+([0-9]){10,15})$/;
 const NAME_REGEXP = /^[A-ZА-ЯЁ]{1}[a-zа-яё]+$/;
@@ -26,18 +26,7 @@ export interface IRules {
 }
 
 export interface IInputsRules {
-  login: {
-    [key: string]: string[],
-  },
-  signup: {
-    [key: string]: string[],
-  },
-}
-
-export interface IGetErrorText {
-  name: string,
-  value: string,
-  message: string,
+  [key: string]: { [key: string]: string[] },
 }
 
 export const RULES: IRules = {
@@ -45,11 +34,11 @@ export const RULES: IRules = {
     text: 'Вы пропустили это поле',
   },
   isEmail: {
-    text: 'Пример почты "example@example.com"',
+    text: 'Пример почты "example@example.ru"',
     regExp: EMAIL_REGEXP,
   },
   isPassword: {
-    text: 'Слишком простой пароль',
+    text: 'Мин. 8 знаков. Мин. 1 заглав. буква, 1 строч., 1 цифра, 1 символ',
     regExp: PASSWORD_REGEXP,
   },
   isSpaceCharacters: {
@@ -62,7 +51,7 @@ export const RULES: IRules = {
     regExp: PHONE_REGEXP,
   },
   isName: {
-    text: 'Кириллица. С большой буквы',
+    text: 'С большой буквы. Мин. 2 символа',
     regExp: NAME_REGEXP,
   },
   isLogin: {
@@ -89,14 +78,31 @@ export const inputsRules: IInputsRules = {
 
   signup: {
     email: ['required', 'isEmail'],
-    password: ['required', 'isSpaceCharacters', 'isPassword'],
     first_name: ['required', 'isName'],
     second_name: ['required', 'isName'],
     phone: ['required', 'isPhone'],
     login: ['required', 'isLogin'],
+    password: ['required', 'isSpaceCharacters', 'isPassword'],
+    password_confirmation: ['required'],
+  },
+
+  profile: {
+    password: ['required', 'isSpaceCharacters', 'isPassword'],
+    password_confirmation: ['required'],
+  },
+
+  password: {
+    password: ['required', 'isSpaceCharacters', 'isPassword'],
     password_confirmation: ['required'],
   },
 };
+
+export interface IGetErrorText {
+  name: string,
+  value: string,
+  message: string,
+  type: keyof IInputsRules,
+}
 
 export const loginFormText: IFormText = {
   formTitle: 'Вход',
@@ -169,3 +175,23 @@ export const signupInputs: IProps[] = [
     text: 'Пароль (ещё раз)',
   },
 ];
+
+export function getErrorText({ name, value, message, type }: IGetErrorText): string {
+  let errorText = '';
+  // eslint-disable-next-line no-restricted-syntax
+  for (const rule of inputsRules[type][name]) {
+    if (rule === 'required' && value.length === 0) {
+      errorText = RULES[rule].text;
+      break;
+    } else if (RULES[rule].regExp && !RULES[rule]?.regExp?.test(value)) {
+      errorText = RULES[rule].text;
+      if (RULES[rule].break) break;
+    } else if (message) {
+      errorText = message;
+    } else {
+      errorText = '';
+    }
+  }
+
+  return errorText;
+}
