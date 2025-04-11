@@ -9,7 +9,7 @@ import { signupFormText, signupInputs, getFormData } from '../../utils/form-help
 
 function SignupPage() {
   const ids = signupInputs.map(({ id }) => id);
-  const { formData, isFormValid, handleChange, handleBlur } = useForm(getFormData(ids));
+  const { formData, isFormValid, handleChange, handleBlur } = useForm(getFormData(ids), 'signup');
   const navigate = useNavigate();
 
   const handleNavigate = useCallback(() => {

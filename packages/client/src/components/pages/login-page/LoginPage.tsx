@@ -9,7 +9,7 @@ import { loginFormText, loginInputs, getFormData } from '../../utils/form-helper
 
 function LoginPage() {
   const ids = loginInputs.map(({ id }) => id);
-  const { formData, isFormValid, handleChange, handleBlur } = useForm(getFormData(ids));
+  const { formData, isFormValid, handleChange, handleBlur } = useForm(getFormData(ids), 'login');
   const navigate = useNavigate();
 
   const handleNavigate = useCallback(() => {

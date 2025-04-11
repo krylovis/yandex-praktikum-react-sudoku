@@ -25,8 +25,13 @@ export interface IRules {
   [key: string]: { text: string, regExp?: RegExp, break?: boolean},
 }
 
-export interface IData {
-  [key: string]: string[],
+export interface IInputsRules {
+  login: {
+    [key: string]: string[],
+  },
+  signup: {
+    [key: string]: string[],
+  },
 }
 
 export interface IGetErrorText {
@@ -76,15 +81,21 @@ export const getFormData = (ids: string[]): IValues => {
   return object;
 };
 
-export const inputsRules: IData = {
-  email: ['required', 'isEmail'],
-  password: ['required', 'isSpaceCharacters', 'isPassword'],
+export const inputsRules: IInputsRules = {
+  login: {
+    email: ['required', 'isEmail'],
+    password: ['required'],
+  },
 
-  first_name: ['required', 'isName'],
-  second_name: ['required', 'isName'],
-  phone: ['required', 'isPhone'],
-  login: ['required', 'isLogin'],
-  password_confirmation: ['required'],
+  signup: {
+    email: ['required', 'isEmail'],
+    password: ['required', 'isSpaceCharacters', 'isPassword'],
+    first_name: ['required', 'isName'],
+    second_name: ['required', 'isName'],
+    phone: ['required', 'isPhone'],
+    login: ['required', 'isLogin'],
+    password_confirmation: ['required'],
+  },
 };
 
 export const loginFormText: IFormText = {

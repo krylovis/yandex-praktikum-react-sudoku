@@ -1,14 +1,14 @@
 import React, { useCallback } from 'react';
 import { IValues, RULES, inputsRules, IGetErrorText } from '../form-helper';
 
-export default function useForm(inputValues: IValues) {
+export default function useForm(inputValues: IValues, type: 'login' | 'signup') {
   const [formData, setValues] = React.useState(inputValues);
   const [isFormValid, setFormValid] = React.useState(false);
 
   function getErrorText({ name, value, message }: IGetErrorText): string {
     let errorText = '';
     // eslint-disable-next-line no-restricted-syntax
-    for (const rule of inputsRules[name]) {
+    for (const rule of inputsRules[type][name]) {
       if (rule === 'required' && value.length === 0) {
         errorText = RULES[rule].text;
         break;
