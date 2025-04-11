@@ -12,28 +12,24 @@ export default function useWithPasswordForm(inputValues: IValues, type: keyof II
     let errorText = getErrorText({ value, name, message: validationMessage, type });
 
     setValues((oldValues) => {
-      let obj = {};
+      const newValues = { ...oldValues };
+
       if (name === 'password_confirmation') {
         if (oldValues.password.value !== value && !errorText) {
           errorText = 'Пароли не совпадают';
         }
       } else if (name === 'password') {
-        if (oldValues.password_confirmation.value !== value) {
-          obj = { password_confirmation: {
-            ...oldValues.password_confirmation, errorText: 'Пароли не совпадают', isValid: false,
-          } };
-        } else {
-          obj = { password_confirmation: {
-            ...oldValues.password_confirmation, errorText: '', isValid: true,
-          } };
-        }
+        const isSame = oldValues.password_confirmation.value === value;
+
+        newValues.password_confirmation = {
+          ...oldValues.password_confirmation,
+          errorText: isSame ? '' : 'Пароли не совпадают',
+          isValid: isSame,
+        };
       }
 
-      const newValues = { ...oldValues,
-        ...obj,
-        [name]: {
-          ...oldValues[name], value, errorText, isValid: !errorText,
-        },
+      newValues[name] = {
+        ...oldValues[name], value, errorText, isValid: !errorText,
       };
 
       setFormValid(getFormValid(newValues));
