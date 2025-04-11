@@ -29,9 +29,15 @@ export default function useForm(inputValues: IValues) {
 
   const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name, validationMessage } = event.target;
-    const errorText = getErrorText({ value, name, message: validationMessage });
+    let errorText = getErrorText({ value, name, message: validationMessage });
 
     setValues((oldValues) => {
+      if (name === 'password_confirmation') {
+        if (oldValues.password.value !== value && !errorText) {
+          errorText = 'Пароли не совпадают';
+        }
+      }
+
       const newValues = { ...oldValues,
         [name]: {
           ...oldValues[name], value, errorText, isValid: !errorText,
@@ -45,9 +51,15 @@ export default function useForm(inputValues: IValues) {
 
   const handleBlur = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name, validationMessage } = event.target;
-    const errorText = getErrorText({ value, name, message: validationMessage });
+    let errorText = getErrorText({ value, name, message: validationMessage });
 
     setValues((oldValues) => {
+      if (name === 'password_confirmation') {
+        if (oldValues.password.value !== value && !errorText) {
+          errorText = 'Пароли не совпадают';
+        }
+      }
+
       const newValues = { ...oldValues,
         [name]: {
           ...oldValues[name], errorText, isValid: !errorText,
