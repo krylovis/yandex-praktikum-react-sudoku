@@ -1,7 +1,9 @@
-export const PASSWORD_REGEXP = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$/;
-export const EMAIL_REGEXP = /^[a-z0-9._%+-]+@[a-z0-9.\\-]+\.[a-z]{2}$/;
-export const REQUIRED_REGEXP = /\S/;
-export const SPASE_CHARACTERS = /^\S*$/;
+const PASSWORD_REGEXP = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$/;
+const EMAIL_REGEXP = /^[a-z0-9._%+-]+@[a-z0-9.\\-]+\.[a-z]{2}$/;
+const SPASE_CHARACTERS = /^\S*$/;
+const PHONE_REGEXP = /^((\+7|7|8)+([0-9]){10,15})$/;
+const NAME_REGEXP = /^[A-ZА-ЯЁ]{1}[a-zа-яё]+$/;
+const LOGIN_REGEXP = /^[0-9a-zA-Z\-_]{3,20}$/;
 
 export interface IProps {
   id: string,
@@ -50,6 +52,18 @@ export const RULES: IRules = {
     regExp: SPASE_CHARACTERS,
     break: true,
   },
+  isPhone: {
+    text: 'Пример телефона (+7|7|8)1234567',
+    regExp: PHONE_REGEXP,
+  },
+  isName: {
+    text: 'Кириллица. С большой буквы',
+    regExp: NAME_REGEXP,
+  },
+  isLogin: {
+    text: 'Латиница. Мин. 3 символа',
+    regExp: LOGIN_REGEXP,
+  },
 };
 
 export const getFormData = (ids: string[]): IValues => {
@@ -66,11 +80,11 @@ export const inputsRules: IData = {
   email: ['required', 'isEmail'],
   password: ['required', 'isSpaceCharacters', 'isPassword'],
 
-  first_name: [],
-  second_name: [],
-  phone: [],
-  login: [],
-  password_confirmation: [],
+  first_name: ['required', 'isName'],
+  second_name: ['required', 'isName'],
+  phone: ['required', 'isPhone'],
+  login: ['required', 'isLogin'],
+  password_confirmation: ['required'],
 };
 
 export const loginFormText: IFormText = {
