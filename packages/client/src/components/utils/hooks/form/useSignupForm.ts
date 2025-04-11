@@ -12,13 +12,25 @@ export default function useSignupForm(inputValues: IValues, type = 'signup') {
     let errorText = getErrorText({ value, name, message: validationMessage, type });
 
     setValues((oldValues) => {
+      let obj = {};
       if (name === 'password_confirmation') {
         if (oldValues.password.value !== value && !errorText) {
           errorText = 'Пароли не совпадают';
         }
+      } else if (name === 'password') {
+        if (oldValues.password_confirmation.value !== value) {
+          obj = { password_confirmation: {
+            ...oldValues.password_confirmation, errorText: 'Пароли не совпадают', isValid: false,
+          } };
+        } else {
+          obj = { password_confirmation: {
+            ...oldValues.password_confirmation, errorText: '', isValid: true,
+          } };
+        }
       }
 
       const newValues = { ...oldValues,
+        ...obj,
         [name]: {
           ...oldValues[name], value, errorText, isValid: !errorText,
         },
@@ -34,13 +46,25 @@ export default function useSignupForm(inputValues: IValues, type = 'signup') {
     let errorText = getErrorText({ value, name, message: validationMessage, type });
 
     setValues((oldValues) => {
+      let obj = {};
       if (name === 'password_confirmation') {
         if (oldValues.password.value !== value && !errorText) {
           errorText = 'Пароли не совпадают';
         }
+      } else if (name === 'password') {
+        if (oldValues.password_confirmation.value !== value) {
+          obj = { password_confirmation: {
+            ...oldValues.password_confirmation, errorText: 'Пароли не совпадают', isValid: false,
+          } };
+        } else {
+          obj = { password_confirmation: {
+            ...oldValues.password_confirmation, errorText: '', isValid: true,
+          } };
+        }
       }
 
       const newValues = { ...oldValues,
+        ...obj,
         [name]: {
           ...oldValues[name], errorText, isValid: !errorText,
         },
