@@ -1,25 +1,22 @@
-import { FormEvent, useCallback, memo } from 'react';
+import { useCallback, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   ContentContainer, FormField, MainForm,
 } from '../../index';
 import ROUTES from '../../../constants/constants';
-import useForm from '../../utils/hooks/useForm';
+import useSignupForm from '../../utils/hooks/form/useSignupForm';
 import { signupFormText, signupInputs, getFormData } from '../../utils/form-helper';
 
 function SignupPage() {
   const ids = signupInputs.map(({ id }) => id);
-  const { formData, isFormValid, handleChange, handleBlur } = useForm(getFormData(ids), 'signup');
+  const {
+    formData, isFormValid, handleChange, handleBlur, handleSubmit,
+  } = useSignupForm(getFormData(ids));
   const navigate = useNavigate();
 
   const handleNavigate = useCallback(() => {
     navigate(ROUTES.LOGIN);
   }, []);
-
-  const handleSubmit = useCallback((e: FormEvent) => {
-    e.preventDefault();
-    console.log('handleSubmit', formData);
-  }, [formData]);
 
   const { formTitle, submitText, linkText } = signupFormText;
   return (
