@@ -1,0 +1,76 @@
+.card {
+  border: 1px solid $color-border;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: $color-background;
+
+  &:first-child {
+    border-top-left-radius: $border-round;
+    border-top-right-radius: $border-round;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: $border-round;
+    border-bottom-right-radius: $border-round;
+  }
+
+  &__container {
+    padding: 0;
+  }
+}
+
+.info {
+  display: grid;
+  grid-template-columns: 3fr 1.5fr 4fr; // Разделение на 3 колонки
+  gap: 10px;
+  align-items: center;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 0.9em;
+  color: $gray;
+}
+
+.replies {
+  text-align: center;
+}
+
+.title {
+  text-align: start;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.preview {
+  margin-top: 5px;
+  font-size: 0.9em;
+  color: $gray;
+}
+
+.overlay {
+  background: $gray;
+  height: 100%;
+  width: 100%;
+  opacity: 50%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  padding: 0;
+  transition: opacity 0.5s;
+
+  &__text {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+}

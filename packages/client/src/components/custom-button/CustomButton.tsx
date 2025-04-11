@@ -1,29 +1,35 @@
 import { FormEvent, memo } from 'react';
+import classNames from 'classnames';
 import style from './CustomButton.module.scss';
 
 interface IProps {
-  type: 'submit' | 'reset' | 'button',
-  color: 'primary' | 'secondary' | 'succes' | 'transparent',
-  text?: string,
-  title?: string,
+  type: 'submit' | 'reset' | 'button';
+  color: 'primary' | 'secondary' | 'success' | 'transparent';
+  text?: string;
+  className?: string[];
+  title?: string;
   isDisabled?: boolean,
-  onClick: (e: FormEvent) => void,
+  onClick: (e: FormEvent) => void;
 }
 
-function CustomButton({ text = '', title = '', type, color, isDisabled = false, onClick }: IProps) {
-  const className = [style.customButton];
-
-  className.push(style[`customButton_${color}`]);
-  if (isDisabled) className.push(style.customButton_disabled);
+function CustomButton({
+  text = '',
+  title = '',
+  type,
+  color,
+  isDisabled = false,
+  className = [],
+  onClick,
+}: IProps) {
+  const classList = classNames(
+    ...className,
+    style.customButton,
+    style[`customButton_${color}`]
+  );
+  if (isDisabled) classList.push(style.customButton_disabled);
 
   return (
-    <button
-      className={className.join(' ')}
-      type={type}
-      title={title}
-      disabled={isDisabled}
-      onClick={onClick}
-    >
+    <button className={classList} type={type} title={title} disabled={isDisabled} onClick={onClick}>
       {text}
     </button>
   );
