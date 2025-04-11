@@ -1,10 +1,9 @@
 import React, { useCallback } from 'react';
-import { IValues, getErrorText } from '../../form-helper';
+import { IValues, IInputsRules, getErrorText } from '../../form-helper';
 
-export default function useLoginForm(inputValues: IValues, type = 'login') {
+export default function useForm(inputValues: IValues, type: keyof IInputsRules) {
   const [formData, setValues] = React.useState(inputValues);
   const [isFormValid, setFormValid] = React.useState(false);
-  // const type = 'login';
 
   const getFormValid = (items: IValues) => Object.values((items)).every(({ isValid }) => isValid);
 
@@ -40,10 +39,5 @@ export default function useLoginForm(inputValues: IValues, type = 'login') {
     });
   }, []);
 
-  const handleSubmit = useCallback((event: React.FormEvent) => {
-    event.preventDefault();
-    console.log('useLoginForm', formData);
-  }, [formData]);
-
-  return { formData, isFormValid, handleChange, handleBlur, handleSubmit };
+  return { formData, isFormValid, handleChange, handleBlur };
 }

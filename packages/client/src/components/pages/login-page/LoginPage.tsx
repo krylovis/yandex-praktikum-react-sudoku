@@ -1,28 +1,32 @@
-import { useCallback, memo } from 'react';
+import { useCallback, FormEvent, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   ContentContainer, FormField, MainForm,
 } from '../../index';
 import ROUTES from '../../../constants/constants';
-import useLoginForm from '../../utils/hooks/form/useLoginForm';
+import useForm from '../../utils/hooks/form/useForm';
 import { loginFormText, loginInputs, getFormData } from '../../utils/form-helper';
 
 function LoginPage() {
+  const formType = 'login';
   const ids = loginInputs.map(({ id }) => id);
-  const {
-    formData, isFormValid, handleChange, handleBlur, handleSubmit,
-  } = useLoginForm(getFormData(ids));
+  const { formData, isFormValid, handleChange, handleBlur } = useForm(getFormData(ids), formType);
   const navigate = useNavigate();
 
   const handleNavigate = useCallback(() => {
     navigate(ROUTES.SIGN_UP);
   }, []);
 
+  const handleSubmit = useCallback((event: FormEvent) => {
+    event.preventDefault();
+    console.log('useLoginForm', formData);
+  }, [formData]);
+
   const { formTitle, submitText, linkText } = loginFormText;
   return (
     <ContentContainer>
       <MainForm
-        type="login"
+        type={formType}
         formTitle={formTitle}
         submitText={submitText}
         linkText={linkText}
