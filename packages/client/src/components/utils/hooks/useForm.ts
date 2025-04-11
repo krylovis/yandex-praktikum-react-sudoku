@@ -12,7 +12,7 @@ export default function useForm(inputValues: IValues) {
       if (rule === 'required' && value.length === 0) {
         errorText = RULES[rule].text;
         break;
-      } else if (!RULES[rule].regExp?.test(value)) {
+      } else if (RULES[rule].regExp && !RULES[rule]?.regExp?.test(value)) {
         errorText = RULES[rule].text;
         if (RULES[rule].break) break;
       } else if (message) {
