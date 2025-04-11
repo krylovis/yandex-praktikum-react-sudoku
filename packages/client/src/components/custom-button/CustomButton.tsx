@@ -21,12 +21,13 @@ function CustomButton({
   className = [],
   onClick,
 }: IProps) {
-  const classList = classNames(
+  let classList = classNames(
     ...className,
     style.customButton,
     style[`customButton_${color}`]
   );
-  if (isDisabled) classList.push(style.customButton_disabled);
+
+  if (isDisabled) classList += ` ${style.customButton_disabled}`;
 
   return (
     <button className={classList} type={type} title={title} disabled={isDisabled} onClick={onClick}>
