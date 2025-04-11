@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
-import { IValues, getErrorText } from '../../form-helper';
+import { IValues, IInputsRules, getErrorText } from '../../form-helper';
 
-export default function useSignupForm(inputValues: IValues, type = 'signup') {
+export default function useWithPasswordForm(inputValues: IValues, type: keyof IInputsRules) {
   const [formData, setValues] = React.useState(inputValues);
   const [isFormValid, setFormValid] = React.useState(false);
 
@@ -75,10 +75,5 @@ export default function useSignupForm(inputValues: IValues, type = 'signup') {
     });
   }, []);
 
-  const handleSubmit = useCallback((event: React.FormEvent) => {
-    event.preventDefault();
-    console.log('useSignupForm', formData);
-  }, [formData]);
-
-  return { formData, isFormValid, handleChange, handleBlur, handleSubmit };
+  return { formData, isFormValid, handleChange, handleBlur };
 }
