@@ -70,6 +70,19 @@ export const getFormData = (ids: string[]): IValues => {
   return object;
 };
 
+const profileRules = {
+  email: ['required', 'isEmail'],
+  first_name: ['required', 'isName'],
+  second_name: ['required', 'isName'],
+  phone: ['required', 'isPhone'],
+  login: ['required', 'isLogin'],
+};
+
+const passwordRules = {
+  password: ['required', 'isSpaceCharacters', 'isPassword'],
+  password_confirmation: ['required'],
+};
+
 export const inputsRules: IInputsRules = {
   login: {
     email: ['required', 'isEmail'],
@@ -77,23 +90,16 @@ export const inputsRules: IInputsRules = {
   },
 
   signup: {
-    email: ['required', 'isEmail'],
-    first_name: ['required', 'isName'],
-    second_name: ['required', 'isName'],
-    phone: ['required', 'isPhone'],
-    login: ['required', 'isLogin'],
-    password: ['required', 'isSpaceCharacters', 'isPassword'],
-    password_confirmation: ['required'],
+    ...profileRules,
+    ...passwordRules,
   },
 
   profile: {
-    password: ['required', 'isSpaceCharacters', 'isPassword'],
-    password_confirmation: ['required'],
+    ...profileRules,
   },
 
   password: {
-    password: ['required', 'isSpaceCharacters', 'isPassword'],
-    password_confirmation: ['required'],
+    ...passwordRules,
   },
 };
 
