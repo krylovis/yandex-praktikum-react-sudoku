@@ -134,12 +134,12 @@ function GameField() {
             <GameCell
               colIndex={colIndex}
               isHighlight={
-                selectedCell?.rowIndex === rowIndex ||
-                selectedCell?.colIndex === colIndex
+                selectedCell?.rowIndex === rowIndex
+                || selectedCell?.colIndex === colIndex
               }
               isSelected={
-                selectedCell?.rowIndex === rowIndex &&
-                selectedCell?.colIndex === colIndex
+                selectedCell?.rowIndex === rowIndex
+                && selectedCell?.colIndex === colIndex
               }
               notes={item.notes}
               onClick={() => setSelectedCell(item)}
