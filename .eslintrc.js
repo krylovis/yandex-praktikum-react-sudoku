@@ -66,6 +66,7 @@ module.exports = {
     'object-curly-newline': 'off',
     'jsx-a11y/label-has-associated-control': 'off',
     'jsx-a11y/label-has-for': 'off',
-    'react/require-default-props': 'off'
+    'react/require-default-props': 'off',
+    'operator-linebreak': ['error', 'after']
   },
 };
