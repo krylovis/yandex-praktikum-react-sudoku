@@ -4,9 +4,12 @@ const URLS = [
   './',
   './index.html',
   './src/main.tsx',
-  './src/components/index.ts',
-  './src/components/utils/index.ts',
   './src/styles/index.scss',
+  './vite.svg',
+  './notes-button.svg',
+  './help-button.svg',
+  './clear-button.svg',
+  './back-move-button.svg',
 ];
 
 this.addEventListener('install', (event) => {
@@ -26,26 +29,29 @@ this.addEventListener('install', (event) => {
 
 this.addEventListener('fetch', (event) => {
   event.respondWith(
-    (async () => {
-      // Try to get the response from a cache.
-      const cachedResponse = await caches.match(event.request);
-      // Return it if we found one.
-      if (cachedResponse) return cachedResponse;
-      // If we didn't find a match in the cache, use the network.
-      return fetch(event.request);
-    })()
+    caches.open(CACHE_NAME).then((cache) => cache.match(event.request)
+      .then((response) => {
+        const fetchPromise = fetch(event.request).then((networkResponse) => {
+          cache.put(event.request, networkResponse.clone());
+          return networkResponse;
+        });
+        return response || fetchPromise;
+      })
+    )
   );
 });
 
 this.addEventListener('activate', (event) => {
   console.log('activate');
   event.waitUntil(
-    caches.keys().then((cacheNames) =>
-      Promise.all(
-        cacheNames
-          .filter((cacheName) => cacheName !== CACHE_NAME)
-          .map((cacheName) => caches.delete(cacheName))
+    caches
+      .keys()
+      .then((cacheNames) =>
+        Promise.all(
+          cacheNames
+            .filter((cacheName) => cacheName !== CACHE_NAME)
+            .map((cacheName) => caches.delete(cacheName))
+        )
       )
-    )
   );
 });
