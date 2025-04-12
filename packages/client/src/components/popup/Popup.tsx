@@ -2,10 +2,10 @@ import { ReactNode } from 'react';
 import style from './Popup.module.scss';
 
 interface IProps {
-  isOpen: boolean,
-  title: string,
-  children: ReactNode,
-  onClose: () => void
+  isOpen: boolean;
+  title: string;
+  children: ReactNode;
+  onClose: () => void;
 }
 
 export default function Popup({ isOpen, title, children, onClose }: IProps) {

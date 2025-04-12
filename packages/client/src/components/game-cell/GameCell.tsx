@@ -39,12 +39,8 @@ function GameCell(props: GameCellProps) {
   }, [style, isSelected, isHighlight]);
 
   return (
-    <button
-      className={className}
-      onClick={() => onClick()}
-      type="button"
-    >
-      {value ? (<NumbersCanvas value={value} color="black" />) : notes }
+    <button className={className} onClick={() => onClick()} type="button">
+      {value ? <NumbersCanvas value={value} color="black" /> : notes}
     </button>
   );
 }

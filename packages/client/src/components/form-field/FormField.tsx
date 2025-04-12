@@ -1,14 +1,14 @@
 import React, { memo } from 'react';
 import style from './FormField.module.scss';
-import { CustomInput } from '../index';
+import CustomInput from '../custom-input/CustomInput';
 
 interface IProps {
-  id: string,
-  placeholder: string,
-  value: string,
-  text: string,
-  type: 'text' | 'email' | 'tel' | 'password' | 'number',
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+  id: string;
+  placeholder: string;
+  value: string;
+  text: string;
+  type: 'text' | 'email' | 'tel' | 'password' | 'number';
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 function FormField({ id, placeholder, value, type, text, onChange }: IProps) {

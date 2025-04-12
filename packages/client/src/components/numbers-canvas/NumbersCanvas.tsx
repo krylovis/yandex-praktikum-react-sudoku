@@ -1,8 +1,8 @@
 import { useRef, useEffect } from 'react';
 
 interface NumbersCanvasProps {
-    value: number;
-    color: string;
+  value: number;
+  color: string;
 }
 
 function NumbersCanvas({ value, color }: NumbersCanvasProps) {

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { GameCell } from '../index';
+import GameCell from '../game-cell/GameCell';
 import mockField from './mockField';
 
 import style from './GameField.module.scss';
@@ -74,10 +74,7 @@ function GameField() {
 
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div
-      className={style.section}
-      onKeyDown={handleKeyDown}
-    >
+    <div className={style.section} onKeyDown={handleKeyDown}>
       <div className={style.main}>
         {field.map((row, rowIndex) =>
           row.map((item, colIndex) => (
