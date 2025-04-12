@@ -82,9 +82,6 @@
             top: 0;
             left: 0;
             z-index: 11;
-            margin: 0;
-            border: none;
-            padding: 0;
         }
 
         &__modal {
@@ -105,7 +102,7 @@
             height: 20px;
             position: absolute;
             top: 10px;
-            right: 10px;
+            left: 10px;
         }
 
         &__modalLinksWrap {

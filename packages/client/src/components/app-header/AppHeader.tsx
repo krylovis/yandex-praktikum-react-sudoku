@@ -1,13 +1,12 @@
-import { Link, useLocation } from 'react-router-dom';
-import { SyntheticEvent, useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import ROUTES from '../../constants/constants';
 import style from './AppHeader.module.scss';
 import burgerMenuIcon from '../../assets/icons/burger_menu.svg';
 import closeIcon from '../../assets/icons/close.svg';
+import useModal from '../../hooks/useModal';
 
 export default function AppHeader() {
-  const location = useLocation();
-  const [isModalOpen, setModalOpen] = useState(false);
+  const { isModalOpen, toggleModal, closeModal } = useModal(style.header__overlay);
 
   const tabs = [
     {
@@ -32,57 +31,52 @@ export default function AppHeader() {
     },
   ];
 
-  const isActive = (path: string) => location.pathname === path;
-
-  const handleMenuClick = () => {
-    setModalOpen(!isModalOpen);
-  };
-
-  const closeModalOverlay = (evt: SyntheticEvent<HTMLButtonElement>) => {
-    const target = evt.target as HTMLButtonElement;
-    if (target.classList.contains(style.header__overlay)) {
-      setModalOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    function onKeyDown(e: KeyboardEvent) {
-      if (e.key === 'Escape') {
-        setModalOpen(false);
-      }
-    }
-
-    document.addEventListener('keydown', onKeyDown);
-
-    return () => {
-      document.removeEventListener('keydown', onKeyDown);
-    };
-  }, []);
-
   return (
     <>
       <section className={style.header}>
-        <button className={style.header__menu} onClick={handleMenuClick}>
+        <button className={style.header__menu} onClick={toggleModal}>
           <img src={burgerMenuIcon} alt="Меню" />
         </button>
-        <div className={style.header__linksWrap}>
+        <nav className={style.header__linksWrap}>
           {tabs.map((tab) => (
-            <Link className={`${style.header__link} ${isActive(tab.route) ? style.header__link_active : ''}`} to={tab.route} key={tab.title}>{tab.title}</Link>
+            <NavLink
+              className={({ isActive, isPending }) => {
+                let className = style.header__link;
+                if (isPending) return className;
+                if (isActive) className += ` ${style.header__link_active}`;
+                return className;
+              }}
+              to={tab.route}
+              key={tab.title}
+            >
+              {tab.title}
+            </NavLink>
           ))}
-        </div>
+        </nav>
       </section>
       {isModalOpen && (
         <>
-          <button className={style.header__overlay} onClick={closeModalOverlay} aria-label="Закрыть меню" />
+          <div className={style.header__overlay} />
           <div className={style.header__modal}>
-            <button className={style.header__closeBtn} onClick={() => setModalOpen(false)}>
+            <button className={style.header__closeBtn} onClick={closeModal}>
               <img src={closeIcon} alt="Закрыть" />
             </button>
-            <div className={style.header__modalLinksWrap}>
+            <nav className={style.header__modalLinksWrap}>
               {tabs.map((tab) => (
-                <Link className={`${style.header__link} ${isActive(tab.route) ? style.header__link_active : ''}`} to={tab.route} key={tab.title}>{tab.title}</Link>
+                <NavLink
+                  className={({ isActive, isPending }) => {
+                    let className = style.header__link;
+                    if (isPending) return className;
+                    if (isActive) className += ` ${style.header__link_active}`;
+                    return className;
+                  }}
+                  to={tab.route}
+                  key={tab.title}
+                >
+                  {tab.title}
+                </NavLink>
               ))}
-            </div>
+            </nav>
           </div>
         </>
       )}
