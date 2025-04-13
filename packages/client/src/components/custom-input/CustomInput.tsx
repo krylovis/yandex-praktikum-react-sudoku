@@ -6,11 +6,20 @@ interface IProps {
   placeholder: string,
   type: 'text' | 'email' | 'tel' | 'password' | 'number',
   value: string,
+  isError: boolean,
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+  onBlur: (e: React.ChangeEvent<HTMLInputElement>) => void,
 }
 
-function CustomInput({ id, placeholder, value, type, onChange }: IProps) {
+function CustomInput({
+  id, placeholder, value, type, isError, onChange, onBlur,
+}: IProps) {
   const className = [style.customInput];
+
+  if (isError) className.push(style.customInput_typeError);
+  if (value && !isError) {
+    className.push(style.customInput_typeSucces);
+  }
 
   return (
     <input
@@ -20,6 +29,7 @@ function CustomInput({ id, placeholder, value, type, onChange }: IProps) {
       name={id}
       value={value}
       placeholder={placeholder}
+      onBlur={onBlur}
       onChange={onChange}
     />
   );

@@ -1,46 +1,21 @@
-import { FormEvent, useCallback, memo } from 'react';
+import { useCallback, FormEvent, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   ContentContainer, FormField, MainForm,
 } from '../../index';
 import ROUTES from '../../../constants/constants';
-import useForm from '../../utils/hooks/useForm';
+import useForm from '../../utils/hooks/form/useForm';
+import { loginFormText, loginInputs, getFormData } from '../../utils/form-helper';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { setUser } from '../../../store/slices/userSlice';
 
-interface IProps {
-  id: string,
-  placeholder: string,
-  text: string,
-  type: 'number' | 'email' | 'text' | 'password' | 'tel',
-}
-
-const formText = {
-  formTitle: 'Вход',
-  submitText: 'Авторизоваться',
-  linkText: 'Нет аккаунта?',
-};
-
-const loginInputs: IProps[] = [
-  {
-    id: 'email',
-    placeholder: 'Введите почту',
-    type: 'text',
-    text: 'Почта',
-  },
-  {
-    id: 'password',
-    placeholder: 'Введите пароль',
-    type: 'password',
-    text: 'Пароль',
-  },
-];
-
 function LoginPage() {
+  const formType = 'login';
+  const ids = loginInputs.map(({ id }) => id);
+  const { formData, isFormValid, handleChange, handleBlur } = useForm(getFormData(ids), formType);
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.user);
-  const { values, handleChange } = useForm({ email: '', password: '' });
-  const navigate = useNavigate();
 
   const handleNavigate = useCallback(() => {
     navigate(ROUTES.SIGN_UP);
@@ -48,7 +23,7 @@ function LoginPage() {
 
   const handleSubmit = useCallback((e: FormEvent) => {
     e.preventDefault();
-    console.log('handleSubmit', values);
+    console.log('useLoginForm', formData);
     try {
       // TODO: Здесь должна быть реальная логика авторизации, например:
       // const response = await authService.signIn(values.login, values.password);
@@ -71,15 +46,17 @@ function LoginPage() {
       console.error('Login error:', error);
       // Можно добавить обработку ошибок
     }
-  }, [values, dispatch, navigate]);
+  }, [formData, dispatch, navigate]);
 
+  const { formTitle, submitText, linkText } = loginFormText;
   return (
     <ContentContainer>
       <MainForm
-        formTitle={formText.formTitle}
-        submitText={formText.submitText}
-        linkText={formText.linkText}
-        type="login"
+        type={formType}
+        formTitle={formTitle}
+        submitText={submitText}
+        linkText={linkText}
+        isFormValid={isFormValid}
         onSubmit={handleSubmit}
         onNavigate={handleNavigate}
       >
@@ -88,11 +65,13 @@ function LoginPage() {
           <FormField
             key={id}
             id={id}
-            type={type}
             placeholder={placeholder}
+            type={type}
             text={text}
-            value={values[id]}
+            errorMessage={formData[id].errorText}
+            value={formData[id].value}
             onChange={handleChange}
+            onBlur={handleBlur}
           />
         ))}
       </MainForm>

@@ -8,6 +8,7 @@ interface IProps {
   text?: string;
   className?: string[];
   title?: string;
+  isDisabled?: boolean,
   onClick: (e: FormEvent) => void;
 }
 
@@ -16,17 +17,20 @@ function CustomButton({
   title = '',
   type,
   color,
-  onClick,
+  isDisabled = false,
   className = [],
+  onClick,
 }: IProps) {
-  const classList = classNames(
+  let classList = classNames(
     ...className,
     style.customButton,
     style[`customButton_${color}`]
   );
 
+  if (isDisabled) classList += ` ${style.customButton_disabled}`;
+
   return (
-    <button className={classList} type={type} title={title} onClick={onClick}>
+    <button className={classList} type={type} title={title} disabled={isDisabled} onClick={onClick}>
       {text}
     </button>
   );
