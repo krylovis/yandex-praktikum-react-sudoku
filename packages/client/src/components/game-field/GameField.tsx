@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { GameCell } from '../index';
 import mockField from './mockField';
 
@@ -13,6 +13,19 @@ export interface CellInfo {
   notes: number[];
   rowIndex: number;
   value: number | null;
+}
+
+interface IFullscreenElement extends HTMLElement {
+  webkitRequestFullscreen?: () => void;
+  mozRequestFullScreen?: () => void;
+  msRequestFullscreen?: () => void;
+}
+
+interface IDocument {
+  webkitExitFullscreen?: () => void;
+  mozCancelFullScreen?: () => void;
+  msExitFullscreen?: () => void;
+  exitFullscreen?: () => void;
 }
 
 function GameField() {
@@ -36,7 +49,9 @@ function GameField() {
       const currentCell = newField[rowIndex][colIndex];
       const copyCurrentCell = structuredClone(currentCell);
 
-      setMoveHistory((prevState) => [...prevState, copyCurrentCell].slice(-50));
+      setMoveHistory((prevState: CellInfo[]) =>
+        [...prevState, copyCurrentCell].slice(-50)
+      );
 
       if (isEnabledNotes) {
         if (!newValue) {
@@ -69,15 +84,50 @@ function GameField() {
     setField(newField);
 
     setSelectedCell(lastState);
-    setMoveHistory((prevState) => prevState.slice(0, -1));
+    setMoveHistory((prevState: CellInfo[]) => prevState.slice(0, -1));
   }, [moveHistory]);
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const enterFullscreen = () => {
+    const fullscreenElement = containerRef.current as IFullscreenElement;
+
+    if (fullscreenElement.requestFullscreen) {
+      fullscreenElement.requestFullscreen();
+    } else if (fullscreenElement.webkitRequestFullscreen) {
+      fullscreenElement.webkitRequestFullscreen();
+    } else if (fullscreenElement.mozRequestFullScreen) {
+      fullscreenElement.mozRequestFullScreen();
+    } else if (fullscreenElement.msRequestFullscreen) {
+      fullscreenElement.msRequestFullscreen();
+    }
+  };
+
+  const exitFullscreen = () => {
+    const documentF = document as IDocument;
+
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (documentF.webkitExitFullscreen) {
+      documentF.webkitExitFullscreen();
+    } else if (documentF.mozCancelFullScreen) {
+      documentF.mozCancelFullScreen();
+    } else if (documentF.msExitFullscreen) {
+      documentF.msExitFullscreen();
+    }
+  };
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      enterFullscreen();
+    } else {
+      exitFullscreen();
+    }
+  };
 
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div
-      className={style.section}
-      onKeyDown={handleKeyDown}
-    >
+    <div className={style.section} onKeyDown={handleKeyDown} ref={containerRef}>
       <div className={style.main}>
         {field.map((row, rowIndex) =>
           row.map((item, colIndex) => (
@@ -121,10 +171,15 @@ function GameField() {
           onClick={() => console.log('Реализовать')}
           titleBtn="Подсказка"
         />
+        <GameFieldButton
+          srcImage="./fullscreen.svg"
+          onClick={toggleFullscreen}
+          titleBtn="На весь экран"
+        />
       </div>
 
       <div className={style.main}>
-        {GAME_BUTTONS.map((item) => (
+        {GAME_BUTTONS.map((item: number) => (
           <GameCell
             value={item}
             key={item}
