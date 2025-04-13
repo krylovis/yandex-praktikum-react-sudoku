@@ -24,9 +24,9 @@
     "declaration": true,
     "jsx": "react-jsx",
     "paths": {
-      "@/*": ["./*"],
+      "@/*": ["./*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "public/sw.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

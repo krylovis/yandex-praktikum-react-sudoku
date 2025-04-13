@@ -1,7 +1,7 @@
 import './Input.module.scss';
 
 interface InputProps {
-  value: string|undefined;
+  value: string | undefined;
   name: string;
   className: string;
   disabled: boolean;
@@ -10,7 +10,15 @@ interface InputProps {
   onBlur: () => void;
 }
 
-function Input({ value, type, onChange, onBlur, name, disabled, className }: InputProps) {
+function Input({
+  value,
+  type,
+  onChange,
+  onBlur,
+  name,
+  disabled,
+  className,
+}: InputProps) {
   return (
     <input
       type={type}
