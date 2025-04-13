@@ -3,17 +3,18 @@ import style from './MainForm.module.scss';
 import { CustomButton } from '../index';
 
 interface IProps {
+  type: string,
   formTitle: string,
   children: ReactElement[],
   submitText: string,
   linkText: string,
-  type: string,
+  isFormValid: boolean,
   onSubmit: (e: FormEvent) => void,
   onNavigate: () => void,
 }
 
 function MainForm({
-  formTitle, children, submitText, linkText, type, onSubmit, onNavigate,
+  formTitle, children, submitText, linkText, type, isFormValid, onSubmit, onNavigate,
 }: IProps) {
   const btnContainerClass = [style.mainForm__btnContainer];
   btnContainerClass.push(style[`mainForm__btnContainer_${type}`]);
@@ -30,6 +31,7 @@ function MainForm({
             type="submit"
             color="primary"
             text={submitText}
+            isDisabled={!isFormValid}
             onClick={onSubmit}
           />
 

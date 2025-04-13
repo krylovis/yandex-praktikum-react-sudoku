@@ -1,59 +1,36 @@
-import { FormEvent, useCallback, memo } from 'react';
+import { useCallback, FormEvent, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   ContentContainer, FormField, MainForm,
 } from '../../index';
 import ROUTES from '../../../constants/constants';
-import useForm from '../../utils/hooks/useForm';
-
-interface IProps {
-  id: string,
-  placeholder: string,
-  text: string,
-  type: 'number' | 'email' | 'text' | 'password' | 'tel',
-}
-
-const formText = {
-  formTitle: 'Вход',
-  submitText: 'Авторизоваться',
-  linkText: 'Нет аккаунта?',
-};
-
-const loginInputs: IProps[] = [
-  {
-    id: 'email',
-    placeholder: 'Введите почту',
-    type: 'text',
-    text: 'Почта',
-  },
-  {
-    id: 'password',
-    placeholder: 'Введите пароль',
-    type: 'password',
-    text: 'Пароль',
-  },
-];
+import useForm from '../../utils/hooks/form/useForm';
+import { loginFormText, loginInputs, getFormData } from '../../utils/form-helper';
 
 function LoginPage() {
-  const { values, handleChange } = useForm({ email: '', password: '' });
+  const formType = 'login';
+  const ids = loginInputs.map(({ id }) => id);
+  const { formData, isFormValid, handleChange, handleBlur } = useForm(getFormData(ids), formType);
   const navigate = useNavigate();
 
   const handleNavigate = useCallback(() => {
     navigate(ROUTES.SIGN_UP);
   }, []);
 
-  const handleSubmit = useCallback((e: FormEvent) => {
-    e.preventDefault();
-    console.log('handleSubmit', values);
-  }, [values]);
+  const handleSubmit = useCallback((event: FormEvent) => {
+    event.preventDefault();
+    console.log('useLoginForm', formData);
+  }, [formData]);
 
+  const { formTitle, submitText, linkText } = loginFormText;
   return (
     <ContentContainer>
       <MainForm
-        formTitle={formText.formTitle}
-        submitText={formText.submitText}
-        linkText={formText.linkText}
-        type="login"
+        type={formType}
+        formTitle={formTitle}
+        submitText={submitText}
+        linkText={linkText}
+        isFormValid={isFormValid}
         onSubmit={handleSubmit}
         onNavigate={handleNavigate}
       >
@@ -62,11 +39,13 @@ function LoginPage() {
           <FormField
             key={id}
             id={id}
-            type={type}
             placeholder={placeholder}
+            type={type}
             text={text}
-            value={values[id]}
+            errorMessage={formData[id].errorText}
+            value={formData[id].value}
             onChange={handleChange}
+            onBlur={handleBlur}
           />
         ))}
       </MainForm>
