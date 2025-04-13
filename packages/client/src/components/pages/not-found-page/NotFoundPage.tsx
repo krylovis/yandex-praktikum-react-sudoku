@@ -1,4 +1,4 @@
-import { ErrorComponent } from '../..';
+import ErrorComponent from '../../error-component/ErrorComponent';
 
 export default function NotFoundPage() {
   return (

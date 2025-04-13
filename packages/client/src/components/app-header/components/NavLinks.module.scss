@@ -1,0 +1,29 @@
+.link {
+    text-decoration: none;
+    color: $black;
+    font-size: 16px;
+    padding: 6px 0;
+    width: max-content;
+
+    &:hover {
+        cursor: pointer;
+        opacity: 0.5;
+    }
+
+    &_active {
+        border-bottom: 2px solid $color-primary;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .link {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .link {
+        margin: 0 0 30px 0;
+        font-size: 16px;
+    }
+}
