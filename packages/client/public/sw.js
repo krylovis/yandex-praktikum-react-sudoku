@@ -3,13 +3,13 @@ const CACHE_NAME = 'sudoku-site-cache-v1';
 const URLS = [
   './',
   './index.html',
-  './src/main.tsx',
   './src/styles/index.scss',
   './vite.svg',
   './notes-button.svg',
   './help-button.svg',
   './clear-button.svg',
   './back-move-button.svg',
+  './fullscreen.svg',
 ];
 
 this.addEventListener('install', (event) => {
@@ -29,9 +29,11 @@ this.addEventListener('install', (event) => {
 
 this.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.open(CACHE_NAME).then((cache) => cache.match(event.request)
-      .then((response) => {
-        const fetchPromise = fetch(event.request).then((networkResponse) => {
+    caches.open(CACHE_NAME).then((cache) =>
+      cache.match(event.request).then((response) => {
+        const fetchPromise = fetch(event.request).then((
+          networkResponse
+        ) => {
           cache.put(event.request, networkResponse.clone());
           return networkResponse;
         });

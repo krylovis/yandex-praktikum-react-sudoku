@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { GameCell } from '../index';
+import GameCell from '../game-cell/GameCell';
 import mockField from './mockField';
 
 import style from './GameField.module.scss';
