@@ -1,9 +1,9 @@
 import style from './GameFieldButton.module.scss';
 
 interface GameFieldButtonProps {
-    srcImage: string;
-    titleBtn: string;
-    onClick: () => void;
+  srcImage: string;
+  titleBtn: string;
+  onClick: () => void;
 }
 
 function GameFieldButton({
@@ -17,7 +17,11 @@ function GameFieldButton({
       onClick={() => onClick()}
       type="button"
     >
-      <img src={srcImage} alt="Иконка кнопки" className={style.gameButton_image} />
+      <img
+        src={srcImage}
+        alt="Иконка кнопки"
+        className={style.gameButton_image}
+      />
       <p className={style.gameButton_title}>{titleBtn}</p>
     </button>
   );

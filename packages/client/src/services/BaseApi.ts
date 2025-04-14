@@ -18,7 +18,10 @@ export const handleResponse = async (response: Response) => {
   throw new Error(`Ошибка - ${text}`);
 };
 
-export const fetchWithCookies = async <T>(url: string, options?: object) : Promise<T> => {
+export const fetchWithCookies = async <T>(
+  url: string,
+  options?: object
+): Promise<T> => {
   const response = await fetch(url, {
     ...options,
     credentials: 'include',

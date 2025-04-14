@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { mockFoldersTopics, mockTopics } from '../../constants/mocks';
-import { ForumPage } from '../pages';
+
 import { IFolderTopic, ITopicList } from '../../models/Forum';
+import ForumPage from '../../pages/forum-page/ForumPage';
 
 export default function ForumPageWrapper() {
   const [folders, setFolders] = useState<IFolderTopic[]>([]);
