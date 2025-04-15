@@ -1,8 +1,8 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { store } from '../../store';
-import SignupPage from '../pages/signup-page/SignupPage';
+import { store } from '../store';
+import SignupPage from '../components/pages/signup-page/SignupPage';
 
 describe('SignupPage inputs validation', () => {
   beforeEach(() => {
