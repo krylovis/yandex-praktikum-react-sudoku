@@ -25,6 +25,7 @@ function NumbersCanvas({ value, color }: NumbersCanvasProps) {
 
   return (
     <canvas
+      data-testid="sudoku-canvas"
       ref={canvasRef}
       width={40}
       height={40}
