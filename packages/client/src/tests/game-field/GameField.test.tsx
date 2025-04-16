@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import GameField from '../components/game-field/GameField';
-import NumbersCanvas from '../components/numbers-canvas/NumbersCanvas';
+import GameField from '../../components/game-field/GameField';
+import NumbersCanvas from '../../components/numbers-canvas/NumbersCanvas';
 import 'jest-canvas-mock';
 
-describe('Game sudoku', () => {
+describe('GameField', () => {
   it('game sudoku draws', async () => {
     render(
       <MemoryRouter>
