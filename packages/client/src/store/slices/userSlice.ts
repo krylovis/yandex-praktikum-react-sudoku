@@ -10,12 +10,12 @@ const initialState: UserState = {
   error: null,
 };
 
-// Асинхронный запрос для загрузки данных пользователя
-export const fetchUserData = createAsyncThunk(
-  'user/fetchUserData',
-  async (_, { rejectWithValue }) => {
+export const fetchUserData = createAsyncThunk('user/fetchUserData',
+  async (_, { rejectWithValue, dispatch }) => {
     try {
-      return await getUserInfo();
+      const response = await authApi.getUser();
+      dispatch(setUser(response));
+      return response;
     } catch (error) {
       if (error instanceof Error) {
         return rejectWithValue(error.message);

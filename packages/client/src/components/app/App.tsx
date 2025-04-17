@@ -1,4 +1,8 @@
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { fetchUserData } from '../../store/slices/userSlice';
+import { AppDispatch } from '../../store/index';
 import {
   SignupPage,
   GamePage,
@@ -33,6 +37,12 @@ const hideNavigationOnRoutes: string[] = [
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUserData());
+  }, [dispatch]);
+
   return (
     <>
       <AppHeader />
