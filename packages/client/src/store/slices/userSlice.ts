@@ -3,10 +3,9 @@ import { IProfile } from '../../models/Profile';
 import { UserState } from '../types';
 import getUserInfo from '../../services/AuthService';
 
-// Начальное состояние хранилища пользователя
 const initialState: UserState = {
   user: null,
-  isAuthenticated: false,
+  isAuth: false,
   loading: false,
   error: null,
 };
@@ -34,7 +33,7 @@ const userSlice = createSlice({
     // Синхронные действия для управления состоянием
     setUser(state, action: PayloadAction<IProfile>) {
       state.user = action.payload;
-      state.isAuthenticated = true;
+      state.isAuth = true;
       state.loading = false;
       state.error = null;
     },
@@ -47,7 +46,7 @@ const userSlice = createSlice({
     },
     logoutUser(state) {
       state.user = null;
-      state.isAuthenticated = false;
+      state.isAuth = false;
     },
     updateUser(state, action: PayloadAction<Partial<IProfile>>) {
       if (state.user) {
@@ -63,7 +62,7 @@ const userSlice = createSlice({
       })
       .addCase(fetchUserData.fulfilled, (state, action) => {
         state.user = action.payload;
-        state.isAuthenticated = true;
+        state.isAuth = true;
         state.loading = false;
       })
       .addCase(fetchUserData.rejected, (state, action) => {
