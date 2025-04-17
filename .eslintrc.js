@@ -27,6 +27,8 @@ module.exports = {
   rules: {
     '@typescript-eslint/ban-ts-comment': 1,
     '@typescript-eslint/no-unused-vars': ['off'],
+    'class-methods-use-this': 'off',
+    '@typescript-eslint/class-methods-use-this': ['off'],
     quotes: ['error', 'single'],
     'no-unused-vars': 'off',
     'react/react-in-jsx-scope': 'off',
