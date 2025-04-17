@@ -24,6 +24,11 @@ module.exports = {
       },
     },
   },
+  languageOptions: {
+    globals: {
+      RequestInit: true
+    },
+  },
   rules: {
     '@typescript-eslint/ban-ts-comment': 1,
     '@typescript-eslint/no-unused-vars': ['off'],

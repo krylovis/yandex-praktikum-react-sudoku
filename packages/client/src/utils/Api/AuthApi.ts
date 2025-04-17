@@ -1,5 +1,5 @@
 import { BASE_URL } from '../../config/ApiConfig';
-import { BaseApi, IReqData } from './BaseApi';
+import { BaseApi } from './BaseApi';
 
 const HEADERS = {
   'Content-Type': 'application/json; charset=utf-8',
@@ -14,12 +14,12 @@ class AuthApi extends BaseApi {
     });
   }
 
-  public signUp({ data }: IReqData) {
-    return this.post('/signup', { data });
+  public signUp(data: string) {
+    return this.post('/signup', { body: JSON.stringify(data) });
   }
 
-  public signIn({ data }: IReqData) {
-    return this.post('/signin', { data });
+  public signIn(data: string) {
+    return this.post('/signin', { body: JSON.stringify(data) });
   }
 
   public getUser() {
@@ -27,7 +27,7 @@ class AuthApi extends BaseApi {
   }
 
   public logout() {
-    return this.post('/logout', {});
+    return this.post('/logout');
   }
 }
 

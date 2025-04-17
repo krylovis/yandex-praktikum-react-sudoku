@@ -11,13 +11,9 @@ export interface IParams {
   endpoint?: string,
 }
 
-export interface IReqData {
-  [key: string]: string | number | FormData,
-}
-
 export interface IRequest {
   path: string,
-  options?: IReqData,
+  options?: RequestInit,
 }
 
 export class BaseApi {
@@ -29,9 +25,7 @@ export class BaseApi {
 
   _headers: Record<string, string>;
 
-  _baseOptions: {
-    [key: string]: string | number | Record<string, string>,
-  };
+  _baseOptions: RequestInit;
 
   constructor({ baseUrl, headers, endpoint = '' }: IParams) {
     this._baseUrl = baseUrl;
@@ -58,15 +52,15 @@ export class BaseApi {
     return this._request({ path, options: { method: METHODS.GET } });
   }
 
-  public post(path: string, { data }: IReqData) {
-    return this._request({ path, options: { method: METHODS.POST, data } });
+  public post(path: string, data?: RequestInit) {
+    return this._request({ path, options: { method: METHODS.POST, ...data } });
   }
 
-  public put(path: string, { data }: IReqData) {
-    return this._request({ path, options: { method: METHODS.PUT, data } });
+  public put(path: string, data: RequestInit) {
+    return this._request({ path, options: { method: METHODS.PUT, ...data } });
   }
 
-  public delete(path: string, { data }: IReqData) {
-    return this._request({ path, options: { method: METHODS.DELETE, data } });
+  public delete(path: string, data: RequestInit) {
+    return this._request({ path, options: { method: METHODS.DELETE, ...data } });
   }
 }
