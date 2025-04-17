@@ -70,7 +70,16 @@ const userSlice = createSlice({
         state.loading = false;
       });
   },
+  selectors: {
+    selectUser: (state) => state.user,
+    selectAuth: (state) => state.isAuth,
+    selectError: (state) => state.error,
+    selectLoading: (state) => state.loading,
+  },
 });
 
+
 export const { setUser, setLoading, setError, logoutUser, updateUser } = userSlice.actions;
+export const { selectUser, selectAuth, selectError, selectLoading } = userSlice.selectors;
+
 export default userSlice.reducer;
