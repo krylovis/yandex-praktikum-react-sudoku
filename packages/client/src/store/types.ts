@@ -2,7 +2,7 @@ import { IProfile } from '../models/Profile';
 
 export interface UserState {
   user: IProfile | null;
-  isAuthenticated: boolean;
+  isAuth: boolean;
   loading: boolean;
   error: string | null;
 }
