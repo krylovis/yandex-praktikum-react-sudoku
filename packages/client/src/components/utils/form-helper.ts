@@ -85,7 +85,7 @@ const passwordRules = {
 
 export const inputsRules: IInputsRules = {
   login: {
-    email: ['required', 'isEmail'],
+    login: ['required', 'isLogin'],
     password: ['required'],
   },
 
@@ -124,10 +124,10 @@ export const signupFormText = {
 
 export const loginInputs: IProps[] = [
   {
-    id: 'email',
-    placeholder: 'Введите почту',
+    id: 'login',
+    placeholder: 'Введите логин',
     type: 'text',
-    text: 'Почта',
+    text: 'Логин',
   },
   {
     id: 'password',
