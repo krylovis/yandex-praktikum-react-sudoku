@@ -38,9 +38,18 @@ export class BaseApi {
     };
   }
 
-  _getResponse(res: Response) {
-    if (res.ok) return res.json();
-    return Promise.reject(new Error(`Ошибка: ${res.status}`));
+  async _getResponse(res: Response) {
+    const contentType = res.headers.get('Content-Type');
+
+    if (!res.ok) {
+      return Promise.reject(new Error(`Ошибка: ${res.status}`));
+    }
+    
+    if (contentType?.includes('json')) {
+      return await res.json();
+    } else if (contentType?.includes('text')) {
+      return await res.text();
+    }
   }
 
   _request({ path, options }: IRequest) {
