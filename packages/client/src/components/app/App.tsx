@@ -1,8 +1,10 @@
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchUserData } from '../../store/slices/userSlice';
+import { fetchUserData, selectAuth } from '../../store/slices/userSlice';
 import { AppDispatch } from '../../store/index';
+import ProtectedRoute from '../route/ProtectedRoute';
+import { useAppSelector } from '../../store/hooks';
 import {
   SignupPage,
   GamePage,
@@ -38,6 +40,7 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch: AppDispatch = useDispatch();
+  const loggedIn = useAppSelector((state) => selectAuth(state));
 
   useEffect(() => {
     dispatch(fetchUserData());
@@ -55,7 +58,11 @@ function App() {
         <Route path={ROUTES.LEADERBOARD} element={<LeaderPage />} />
         <Route path={ROUTES.LOGIN} element={<LoginPage />} />
         <Route path={ROUTES.MAIN} element={<MainPage />} />
-        <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
+
+        <Route path={ROUTES.PROFILE} element={
+          <ProtectedRoute loggedIn={loggedIn} element={() => (<ProfilePage />)} />
+        } />
+
         <Route path={ROUTES.CREATE_TOPIC} element={<TopicCreatePage />} />
         <Route path={ROUTES.INTERNAL_SERVER_ERROR} element={<InternalServerErrorPage />} />
         <Route path={ROUTES.NOT_FOUND_404} element={<NotFoundPage />} />
