@@ -25,12 +25,52 @@ export const fetchUserData = createAsyncThunk('user/fetchUserData',
   }
 );
 
-// Создание слайса пользователя с редьюсерами
+export const fetchAuthorize = createAsyncThunk('user/fetchAuthorize',
+  async (data: IReqData, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await authApi.signIn(data);
+      await dispatch(fetchUserData());
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue('Произошла неизвестная ошибка');
+    }
+  });
+
+export const fetchSignUp = createAsyncThunk('user/fetchSignUp',
+  async (data: IReqData, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await authApi.signUp(data);
+      await dispatch(fetchUserData());
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue('Произошла неизвестная ошибка');
+    }
+  });
+
+export const fetchLogout = createAsyncThunk('user/fetchLogout',
+  async (_, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await authApi.logout();
+      dispatch(logoutUser());
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue('Произошла неизвестная ошибка');
+    }
+  });
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    // Синхронные действия для управления состоянием
     setUser(state, action: PayloadAction<IProfile>) {
       state.user = action.payload;
       state.isAuth = true;
@@ -54,18 +94,27 @@ const userSlice = createSlice({
       }
     },
   },
-  // Обработка асинхронных действий
   extraReducers: (builder) => {
     builder
       .addCase(fetchUserData.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchUserData.fulfilled, (state, action) => {
-        state.user = action.payload;
+      .addCase(fetchUserData.fulfilled, (state) => {
         state.isAuth = true;
         state.loading = false;
       })
       .addCase(fetchUserData.rejected, (state, action) => {
+        state.error = action.payload as string;
+        state.loading = false;
+      })
+      .addCase(fetchAuthorize.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchAuthorize.fulfilled, (state) => {
+        state.isAuth = true;
+        state.loading = false;
+      })
+      .addCase(fetchAuthorize.rejected, (state, action) => {
         state.error = action.payload as string;
         state.loading = false;
       });
