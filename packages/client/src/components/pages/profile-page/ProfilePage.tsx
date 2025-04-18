@@ -9,6 +9,7 @@ import apiConfig from '../../../config/ApiConfig';
 import Popup from '../../popup/Popup';
 import usePrevious from '../../hooks/usePrevios';
 import ErrorBoundary from '../../utils';
+import { CustomButton } from '../../index';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { fetchLogout, selectUser } from '../../../store/slices/userSlice';
 
@@ -50,7 +51,7 @@ function ProfilePage() {
       const data = await dispatch(fetchLogout()).unwrap();
       if (data) navigate(ROUTES.LOGIN);
     } catch (error) {
-      console.error('LoginPage error:', error);
+      console.error('ProfilePage error:', error);
     }
   }, [dispatch]);
 
@@ -116,17 +117,39 @@ function ProfilePage() {
           <div className={style.profilePage__card__avatarContainer}>
             <img src={getAvatar(profile?.avatar)} alt="Avatar" className={style.profilePage__avatar} />
           </div>
+
           <div className={style.profilePage__actions}>
-            <button className={style.button} type="button" onClick={() => setPopupOpen(true)}>
-              Изменить аватар
-            </button>
-            <button className={style.button} type="button" onClick={() => setPasswordMode(!isPasswordMode)}>
-              {!isPasswordMode ? 'Изменить пароль' : 'Данные пользователя'}
-            </button>
+            <CustomButton
+              type="button"
+              color="transparent"
+              text="Изменить аватар"
+              onClick={() => setPopupOpen(true)}
+            />
+
+            <CustomButton
+              type="button"
+              color="transparent"
+              text={!isPasswordMode ? 'Изменить пароль' : 'Данные пользователя'}
+              onClick={() => setPasswordMode(!isPasswordMode)}
+            />
+
             {!(isEditing || isPasswordMode) && (
-              <button className={style.button} type="button" onClick={() => setEditingMode(true)}>
-                Редактировать
-              </button>
+              <>
+                <CustomButton
+                  type="button"
+                  color="transparent"
+                  text="Редактировать"
+                  onClick={() => setEditingMode(true)}
+                />
+
+                <CustomButton
+                  className={[style.button__cancel]}
+                  type="button"
+                  color="transparent"
+                  text="Выйти"
+                  onClick={handleLogout}
+                />
+              </>
             )}
           </div>
           <form onSubmit={handleSubmit} className={style.profilePage__form}>
