@@ -4,9 +4,20 @@ import burgerMenuIcon from '../../assets/icons/burger_menu.svg';
 import closeIcon from '../../assets/icons/close.svg';
 import useModal from '../../hooks/useModal';
 import NavLinks from './components/NavLinks';
+import { useAppSelector } from '../../store/hooks';
+import { selectAuth } from '../../store/slices/userSlice';
 
 export default function AppHeader() {
   const { isModalOpen, toggleModal, closeModal } = useModal(style.header__overlay);
+  const loggedIn = useAppSelector((state) => selectAuth(state));
+
+  function getRoute() {
+    if (loggedIn) {
+      return { route: ROUTES.PROFILE, title: 'Личный кабинет' };
+    } else {
+      return { route: ROUTES.LOGIN, title: 'Войти' };
+    }
+  }
 
   const tabs = [
     {
@@ -22,8 +33,7 @@ export default function AppHeader() {
       title: 'Форум',
     },
     {
-      route: ROUTES.PROFILE,
-      title: 'Личный кабинет',
+      ...getRoute(),
     },
     {
       route: ROUTES.GAME,
