@@ -16,7 +16,7 @@ describe('GameField', () => {
     const gameCells = cells.slice(0, 81);
     const canvases = screen.getAllByTestId('sudoku-canvas');
 
-    expect(cells.length).toBe(95);
+    expect(cells.length).toBe(96);
 
     gameCells.forEach((cell) => {
       expect(cell).toBeInTheDocument();
