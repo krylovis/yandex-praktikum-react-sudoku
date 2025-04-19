@@ -1,16 +1,17 @@
 .main {
   align-items: center;
+  background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.3);
+  cursor: pointer;
   display: flex;
   height: 40px;
   justify-content: center;
-  width: 40px;
-  cursor: pointer;
-  background-color: #fff;
   outline: none;
+  width: 40px;
+  padding: 0;
 
   &:hover {
-    background-color: rgba(128, 128, 128, 0.2);
+    background-color: rgba(230, 230, 230, 0.8);
   }
 
   &.marginRight {
@@ -21,13 +22,15 @@
     margin-bottom: 2px;
   }
 
-  &.highlight {
-    background-color: rgba(182, 182, 182, 0.5);
-    color: white;
+  &.selectedAxis {
+    background-color: rgba(230, 230, 230, 0.8);
   }
 
-  &.selected {
-    background-color: $color-primary;
-    color: white;
+  &.matched {
+    background-color: rgba(41, 255, 255, 1);
+  }
+
+  &.selectedCell {
+    background-color: rgba(41, 141, 255, 1);
   }
 }
