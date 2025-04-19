@@ -1,21 +1,24 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useCallback, useState, memo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import ROUTES from '../../constants/constants';
 import InputField from '../../components/inputField/InputField';
 import style from './ProfilePage.module.scss';
-import {
-  changeAvatar,
-  changePassword,
-  changeProfile,
-} from '../../services/UserServices';
-import getUserInfo from '../../services/AuthService';
+import { changeAvatar, changePassword, changeProfile } from '../../services/UserServices';
 import { IProfile } from '../../models/Profile';
 import apiConfig from '../../config/ApiConfig';
 import Popup from '../../components/popup/Popup';
 import usePrevious from '../../components/hooks/usePrevios';
 import ErrorBoundary from '../../components/utils';
+import { CustomButton } from '../../components';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { fetchLogout } from '../../store/slices/userExtraReducers';
+import { selectUser } from '../../store/slices/userSlice';
 
 type field = { key: string; label: string; value?: string; };
 
-export default function ProfilePage() {
+function ProfilePage() {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [isPopupOpen, setPopupOpen] = useState<boolean>(false);
   const [profile, setProfile] = useState<IProfile>({
     first_name: '',
@@ -26,6 +29,10 @@ export default function ProfilePage() {
     avatar: '',
     login: '',
   });
+
+  const user = useAppSelector((state) => selectUser(state));
+  console.log('user', user);
+
   const prevProfile = usePrevious(profile);
   const [isEditing, setEditingMode] = useState<boolean>(false);
   const [isPasswordMode, setPasswordMode] = useState<boolean>(false);
@@ -40,6 +47,16 @@ export default function ProfilePage() {
     { key: 'oldPassword', label: 'Старый пароль', value: '' },
     { key: 'newPassword', label: 'Новый пароль', value: '' },
   ];
+
+  const handleLogout = useCallback(async () => {
+    try {
+      const data = await dispatch(fetchLogout()).unwrap();
+      if (data) navigate(ROUTES.LOGIN);
+    } catch (error) {
+      console.error('ProfilePage error:', error);
+    }
+  }, [dispatch]);
+
   const handleFieldChange = (key: string, value?: string) => {
     setProfile((prev) => ({ ...prev, [key]: value }));
   };
@@ -53,14 +70,6 @@ export default function ProfilePage() {
 
     setEditingMode(false);
   };
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      await getUserInfo().then((data: IProfile) => setProfile(data));
-    };
-
-    fetchUserData();
-  }, []);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -84,7 +93,7 @@ export default function ProfilePage() {
     }
   };
 
-  const getAvatar = (url: string|undefined) =>
+  const getAvatar = (url: string | undefined) =>
     (url ? `${apiConfig.baseUrlResource}${url}` : '');
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -110,17 +119,39 @@ export default function ProfilePage() {
           <div className={style.profilePage__card__avatarContainer}>
             <img src={getAvatar(profile?.avatar)} alt="Avatar" className={style.profilePage__avatar} />
           </div>
+
           <div className={style.profilePage__actions}>
-            <button className={style.button} type="button" onClick={() => setPopupOpen(true)}>
-              Изменить аватар
-            </button>
-            <button className={style.button} type="button" onClick={() => setPasswordMode(!isPasswordMode)}>
-              {!isPasswordMode ? 'Изменить пароль' : 'Данные пользователя'}
-            </button>
+            <CustomButton
+              type="button"
+              color="transparent"
+              text="Изменить аватар"
+              onClick={() => setPopupOpen(true)}
+            />
+
+            <CustomButton
+              type="button"
+              color="transparent"
+              text={!isPasswordMode ? 'Изменить пароль' : 'Данные пользователя'}
+              onClick={() => setPasswordMode(!isPasswordMode)}
+            />
+
             {!(isEditing || isPasswordMode) && (
-              <button className={style.button} type="button" onClick={() => setEditingMode(true)}>
-                Редактировать
-              </button>
+              <>
+                <CustomButton
+                  type="button"
+                  color="transparent"
+                  text="Редактировать"
+                  onClick={() => setEditingMode(true)}
+                />
+
+                <CustomButton
+                  className={[style.button__cancel]}
+                  type="button"
+                  color="transparent"
+                  text="Выйти"
+                  onClick={handleLogout}
+                />
+              </>
             )}
           </div>
           <form onSubmit={handleSubmit} className={style.profilePage__form}>
@@ -163,6 +194,7 @@ export default function ProfilePage() {
             )}
           </form>
         </div>
+
         <Popup isOpen={isPopupOpen} title="Загрузка аватара" onClose={() => setPopupOpen(false)}>
           <label htmlFor="file">
             Выберите файл:
@@ -173,3 +205,5 @@ export default function ProfilePage() {
     </section>
   );
 }
+
+export default memo(ProfilePage);

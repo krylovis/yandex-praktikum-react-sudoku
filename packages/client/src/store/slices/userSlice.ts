@@ -1,40 +1,22 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IProfile } from '../../models/Profile';
 import { UserState } from '../types';
-import getUserInfo from '../../services/AuthService';
+import { fetchUserData, fetchAuthorize } from './userExtraReducers';
 
-// Начальное состояние хранилища пользователя
 const initialState: UserState = {
   user: null,
-  isAuthenticated: false,
+  isAuth: false,
   loading: false,
   error: null,
 };
 
-// Асинхронный запрос для загрузки данных пользователя
-export const fetchUserData = createAsyncThunk(
-  'user/fetchUserData',
-  async (_, { rejectWithValue }) => {
-    try {
-      return await getUserInfo();
-    } catch (error) {
-      if (error instanceof Error) {
-        return rejectWithValue(error.message);
-      }
-      return rejectWithValue('Произошла неизвестная ошибка');
-    }
-  }
-);
-
-// Создание слайса пользователя с редьюсерами
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    // Синхронные действия для управления состоянием
     setUser(state, action: PayloadAction<IProfile>) {
       state.user = action.payload;
-      state.isAuthenticated = true;
+      state.isAuth = true;
       state.loading = false;
       state.error = null;
     },
@@ -47,7 +29,7 @@ const userSlice = createSlice({
     },
     logoutUser(state) {
       state.user = null;
-      state.isAuthenticated = false;
+      state.isAuth = false;
     },
     updateUser(state, action: PayloadAction<Partial<IProfile>>) {
       if (state.user) {
@@ -55,23 +37,40 @@ const userSlice = createSlice({
       }
     },
   },
-  // Обработка асинхронных действий
   extraReducers: (builder) => {
     builder
       .addCase(fetchUserData.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchUserData.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.isAuthenticated = true;
+      .addCase(fetchUserData.fulfilled, (state) => {
+        state.isAuth = true;
         state.loading = false;
       })
       .addCase(fetchUserData.rejected, (state, action) => {
         state.error = action.payload as string;
         state.loading = false;
+      })
+      .addCase(fetchAuthorize.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchAuthorize.fulfilled, (state) => {
+        state.isAuth = true;
+        state.loading = false;
+      })
+      .addCase(fetchAuthorize.rejected, (state, action) => {
+        state.error = action.payload as string;
+        state.loading = false;
       });
+  },
+  selectors: {
+    selectUser: (state) => state.user,
+    selectAuth: (state) => state.isAuth,
+    selectError: (state) => state.error,
+    selectLoading: (state) => state.loading,
   },
 });
 
 export const { setUser, setLoading, setError, logoutUser, updateUser } = userSlice.actions;
+export const { selectUser, selectAuth, selectError, selectLoading } = userSlice.selectors;
+
 export default userSlice.reducer;

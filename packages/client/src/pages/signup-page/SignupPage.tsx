@@ -6,6 +6,9 @@ import {
 import ROUTES from '../../constants/constants';
 import useWithPasswordForm from '../../components/utils/hooks/form/useWithPasswordForm';
 import { signupFormText, signupInputs, getFormData } from '../../components/utils/form-helper';
+import { useAppDispatch } from '../../store/hooks';
+import { fetchSignUp } from '../../store/slices/userExtraReducers';
+import { IReqData } from '../../utils/Api/AuthApi';
 
 function SignupPage() {
   const formType = 'signup';
@@ -14,14 +17,27 @@ function SignupPage() {
     formData, isFormValid, handleChange, handleBlur,
   } = useWithPasswordForm(getFormData(ids), formType);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleNavigate = useCallback(() => {
     navigate(ROUTES.LOGIN);
   }, []);
 
-  const handleSubmit = useCallback((event: FormEvent) => {
-    event.preventDefault();
-    console.log('useSignupForm', formData);
+  const handleSubmit = useCallback(async (e: FormEvent) => {
+    e.preventDefault();
+    const reqData: IReqData = {};
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const [key, { value }] of Object.entries(formData)) {
+      reqData[key] = value;
+    }
+
+    try {
+      const data = await dispatch(fetchSignUp(reqData));
+      if (data) navigate(ROUTES.LOGIN);
+    } catch (error) {
+      console.error('Login error:', error);
+    }
   }, [formData]);
 
   const { formTitle, submitText, linkText } = signupFormText;

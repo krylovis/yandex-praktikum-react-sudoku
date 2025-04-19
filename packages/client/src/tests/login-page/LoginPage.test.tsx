@@ -15,11 +15,11 @@ describe('LoginPage', () => {
     );
   });
   it('show error validate for input', async () => {
-    const emailInput = screen.getByLabelText(/Почта/i);
+    const loginInput = screen.getByLabelText(/Логин/i);
 
-    fireEvent.change(emailInput, { target: { value: 'wrong-email' } });
+    fireEvent.change(loginInput, { target: { value: 'j' } });
     await waitFor(() => {
-      expect(screen.getByText(/Пример почты "example@example.ru/i)).toBeInTheDocument();
+      expect(screen.getByText(/Латиница. Мин. 3 символа/i)).toBeInTheDocument();
     });
   });
 

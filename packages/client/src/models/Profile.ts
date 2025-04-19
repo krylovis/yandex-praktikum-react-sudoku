@@ -1,12 +1,12 @@
 export interface IProfile {
-  id?: number;
-  display_name: string;
-  email: string;
-  first_name: string;
-  login: string;
-  phone: string;
-  second_name: string;
-  avatar: string;
+  id?: number
+  first_name: string
+  second_name: string
+  display_name: string
+  login: string
+  avatar: string
+  email: string
+  phone: string
 }
 
 export interface IPassword {
