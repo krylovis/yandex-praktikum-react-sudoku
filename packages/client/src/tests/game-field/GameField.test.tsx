@@ -26,7 +26,7 @@ describe('GameField', () => {
   });
 
   it('drawing the value in the cell', async () => {
-    const element = render(<NumbersCanvas value={5} color="black" />).getByTestId('sudoku-canvas') as HTMLCanvasElement;
+    const element = render(<NumbersCanvas value={5} color="black" size={40} />).getByTestId('sudoku-canvas') as HTMLCanvasElement;
     const context = element.getContext('2d') as jest.Mocked<CanvasRenderingContext2D>;
 
     expect(context.fillText).toHaveBeenCalledWith('5', expect.any(Number), expect.any(Number));
