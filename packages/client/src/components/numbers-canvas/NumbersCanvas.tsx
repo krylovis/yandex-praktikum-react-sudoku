@@ -1,8 +1,8 @@
 import { useRef, useEffect } from 'react';
 
 interface NumbersCanvasProps {
-    value: number;
-    color: string;
+  value: number;
+  color: string;
 }
 
 function NumbersCanvas({ value, color }: NumbersCanvasProps) {
@@ -25,6 +25,7 @@ function NumbersCanvas({ value, color }: NumbersCanvasProps) {
 
   return (
     <canvas
+      data-testid="sudoku-canvas"
       ref={canvasRef}
       width={40}
       height={40}

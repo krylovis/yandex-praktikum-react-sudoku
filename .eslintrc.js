@@ -24,10 +24,8 @@ module.exports = {
       },
     },
   },
-  languageOptions: {
-    globals: {
-      RequestInit: true
-    },
+  globals: {
+    RequestInit: true
   },
   rules: {
     '@typescript-eslint/ban-ts-comment': 1,
@@ -82,4 +80,12 @@ module.exports = {
       },
     ],
   },
+  overrides: [
+    {
+      files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx'],
+      env: {
+        jest: true,
+      },
+    },
+  ],
 };

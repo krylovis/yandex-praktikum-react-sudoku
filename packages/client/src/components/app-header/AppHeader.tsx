@@ -14,9 +14,9 @@ export default function AppHeader() {
   function getRoute() {
     if (loggedIn) {
       return { route: ROUTES.PROFILE, title: 'Личный кабинет' };
-    } else {
-      return { route: ROUTES.LOGIN, title: 'Войти' };
     }
+
+    return { route: ROUTES.LOGIN, title: 'Войти' };
   }
 
   const tabs = [

@@ -3,11 +3,11 @@ import style from './InputField.module.scss';
 import Input from '../input/Input';
 
 interface InputFieldProps {
-  label: string
-  value: string|undefined
-  name: string
-  isEditing: boolean
-  onChange: (value?: string) => void
+  label: string;
+  value: string | undefined;
+  name: string;
+  isEditing: boolean;
+  onChange: (value?: string) => void;
 }
 
 function InputField({

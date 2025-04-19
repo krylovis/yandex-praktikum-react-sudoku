@@ -44,12 +44,14 @@ export class BaseApi {
     if (!res.ok) {
       return Promise.reject(new Error(`Ошибка: ${res.status}`));
     }
-    
+
     if (contentType?.includes('json')) {
-      return await res.json();
-    } else if (contentType?.includes('text')) {
-      return await res.text();
+      return res.json();
+    } if (contentType?.includes('text')) {
+      return res.text();
     }
+
+    return res;
   }
 
   _request({ path, options }: IRequest) {

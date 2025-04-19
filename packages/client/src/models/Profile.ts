@@ -10,6 +10,6 @@ export interface IProfile {
 }
 
 export interface IPassword {
-  newPassword: string
-  oldPassword: string
+  newPassword: string;
+  oldPassword: string;
 }

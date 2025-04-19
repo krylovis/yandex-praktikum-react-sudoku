@@ -14,7 +14,9 @@ function Pagination({
       <button
         type="button"
         key="prev"
-        className={`${style.pageButton} ${currentPage === 1 ? style.disabled : ''}`}
+        className={`${style.pageButton} ${
+          currentPage === 1 ? style.disabled : ''
+        }`}
         onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
       >
@@ -28,7 +30,9 @@ function Pagination({
           <button
             type="button"
             key={i}
-            className={`${style.pageButton} ${currentPage === i ? style.active : ''}`}
+            className={`${style.pageButton} ${
+              currentPage === i ? style.active : ''
+            }`}
             onClick={() => onPageChange(i)}
           >
             {i}
@@ -41,7 +45,9 @@ function Pagination({
         <button
           type="button"
           key={1}
-          className={`${style.pageButton} ${currentPage === 1 ? style.active : ''}`}
+          className={`${style.pageButton} ${
+            currentPage === 1 ? style.active : ''
+          }`}
           onClick={() => onPageChange(1)}
         >
           1
@@ -59,7 +65,9 @@ function Pagination({
           <button
             type="button"
             key={i}
-            className={`${style.pageButton} ${currentPage === i ? style.active : ''}`}
+            className={`${style.pageButton} ${
+              currentPage === i ? style.active : ''
+            }`}
             onClick={() => onPageChange(i)}
           >
             {i}
@@ -76,7 +84,9 @@ function Pagination({
           <button
             type="button"
             key={totalPages}
-            className={`${style.pageButton} ${currentPage === totalPages ? style.active : ''}`}
+            className={`${style.pageButton} ${
+              currentPage === totalPages ? style.active : ''
+            }`}
             onClick={() => onPageChange(totalPages)}
           >
             {totalPages}
@@ -89,8 +99,11 @@ function Pagination({
       <button
         type="button"
         key="next"
-        className={`${style.pageButton} ${currentPage === totalPages ? style.disabled : ''}`}
-        onClick={() => currentPage < totalPages && onPageChange(currentPage + 1)}
+        className={`${style.pageButton} ${
+          currentPage === totalPages ? style.disabled : ''
+        }`}
+        onClick={() =>
+          currentPage < totalPages && onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
       >
         &gt;
@@ -98,10 +111,6 @@ function Pagination({
     );
     return paginationItems;
   };
-  return (
-    <div className={style.pagination}>
-      {renderPagination()}
-    </div>
-  );
+  return <div className={style.pagination}>{renderPagination()}</div>;
 }
 export default Pagination;

@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IProfile } from '../../models/Profile';
 import { UserState } from '../types';
-import authApi, { IReqData } from '../../utils/Api/AuthApi';
+import { fetchUserData, fetchAuthorize, fetchSignUp, fetchLogout } from './userExtraReducers';
 
 const initialState: UserState = {
   user: null,
@@ -9,63 +9,6 @@ const initialState: UserState = {
   loading: false,
   error: null,
 };
-
-export const fetchUserData = createAsyncThunk('user/fetchUserData',
-  async (_, { rejectWithValue, dispatch }) => {
-    try {
-      const response = await authApi.getUser();
-      dispatch(setUser(response));
-      return response;
-    } catch (error) {
-      if (error instanceof Error) {
-        return rejectWithValue(error.message);
-      }
-      return rejectWithValue('Произошла неизвестная ошибка');
-    }
-  }
-);
-
-export const fetchAuthorize = createAsyncThunk('user/fetchAuthorize',
-  async (data: IReqData, { rejectWithValue, dispatch }) => {
-    try {
-      const response = await authApi.signIn(data);
-      await dispatch(fetchUserData());
-      return response;
-    } catch (error) {
-      if (error instanceof Error) {
-        return rejectWithValue(error.message);
-      }
-      return rejectWithValue('Произошла неизвестная ошибка');
-    }
-  });
-
-export const fetchSignUp = createAsyncThunk('user/fetchSignUp',
-  async (data: IReqData, { rejectWithValue, dispatch }) => {
-    try {
-      const response = await authApi.signUp(data);
-      await dispatch(fetchUserData());
-      return response;
-    } catch (error) {
-      if (error instanceof Error) {
-        return rejectWithValue(error.message);
-      }
-      return rejectWithValue('Произошла неизвестная ошибка');
-    }
-  });
-
-export const fetchLogout = createAsyncThunk('user/fetchLogout',
-  async (_, { rejectWithValue, dispatch }) => {
-    try {
-      const response = await authApi.logout();
-      dispatch(logoutUser());
-      return response;
-    } catch (error) {
-      if (error instanceof Error) {
-        return rejectWithValue(error.message);
-      }
-      return rejectWithValue('Произошла неизвестная ошибка');
-    }
-  });
 
 const userSlice = createSlice({
   name: 'user',
@@ -126,7 +69,6 @@ const userSlice = createSlice({
     selectLoading: (state) => state.loading,
   },
 });
-
 
 export const { setUser, setLoading, setError, logoutUser, updateUser } = userSlice.actions;
 export const { selectUser, selectAuth, selectError, selectLoading } = userSlice.selectors;
