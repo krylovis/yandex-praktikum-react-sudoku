@@ -4,11 +4,13 @@ import mockField from './mockField';
 
 import style from './GameField.module.scss';
 import addOrRemove from '../../utils/addOrRemove';
-import GameFieldButton from '../buttons';
+import { GameFieldButton, InputNumberButton } from '../buttons';
 import { GAME_BUTTONS } from '../../constants/constants';
+import Popup from '../popup/Popup';
 
 export interface CellInfo {
   colIndex: number;
+  correctValue: number | null;
   isFixed: boolean;
   notes: number[];
   rowIndex: number;
@@ -30,9 +32,10 @@ interface IDocument {
 
 function GameField() {
   const [field, setField] = useState<CellInfo[][]>(mockField);
-  const [selectedCell, setSelectedCell] = useState<CellInfo>();
   const [isEnabledNotes, setIsEnabledNotes] = useState<boolean>(false);
+  const [isPopupOpen, setPopupOpen] = useState<boolean>(false);
   const [moveHistory, setMoveHistory] = useState<CellInfo[]>([]);
+  const [selectedCell, setSelectedCell] = useState<CellInfo>();
 
   const handleChangeValue = useCallback(
     (newValue: number | null): void => {
@@ -44,6 +47,9 @@ function GameField() {
         alert('Нельзя менять изначальные значения');
         return;
       }
+
+      // TODO: логика 3х неправильных ответов => конец игры
+      // TODO: менять notes в ряду при выборе значения
 
       const newField = [...field];
       const currentCell = newField[rowIndex][colIndex];
@@ -67,6 +73,20 @@ function GameField() {
     },
     [selectedCell, isEnabledNotes]
   );
+
+  const handleHelpValue = useCallback((): void => {
+    if (!selectedCell) return;
+
+    const { correctValue, isFixed } = selectedCell;
+
+    if (isFixed) {
+      alert('Нельзя менять изначальные значения');
+      return;
+    }
+
+    // TODO: логика отображения 3х подсказок
+    handleChangeValue(correctValue);
+  }, [selectedCell, isEnabledNotes]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     if (event.key >= '1' && event.key <= '9') {
@@ -126,27 +146,72 @@ function GameField() {
   };
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div className={style.section} onKeyDown={handleKeyDown} ref={containerRef}>
+  // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+    <div
+      className={style.section}
+      onKeyDown={handleKeyDown}
+      ref={containerRef}
+    >
+      <Popup
+        isOpen={isPopupOpen}
+        title="Как играть"
+        onClose={() => setPopupOpen(false)}
+      >
+        <p>
+          Игровое поле представляет собой сетку с ячейками размером 9х9,
+          разделённую на меньшие сетки со стороной в 3 ячейки. Таким образом,
+          всё игровое поле состоит из 81 ячейки. В начале игры в них уже стоят
+          некоторые цифры (от 1 до 9).
+          <br />
+          От игрока требуется заполнить свободные ячейки цифрами от 1 до 9 так,
+          чтобы в каждой строке, в каждом столбце и в каждом малом квадрате 3х3
+          каждая цифра встречалась бы только один раз.
+          <br />
+          В игре есть несколько полезных функций, таких как «Очистить»,
+          «Восстановить», «Заметки», «Подсказка».
+          <br />
+          <br />
+          «Очистить» - стирает введенную ранее в поле цифру. Есть возможность
+          стереть только введенные вами цифры. Цифры, что стояли в ячейках на
+          начало игры удалению не подлежат.
+          <br />
+          «Восстановить» - стирает все введенные вами цифры во всех ячейках.
+          Цифры, что стояли в ячейках на начало игры не удаляются.
+          <br />
+          «Заметки» - позволяет ставить заметки в ячейках.
+          <br />
+          «Подсказка» - вставляет в выбранную вами ячейку верную цифру.
+        </p>
+      </Popup>
+      <div className={style.gameHeader}>
+        <span>{`${new Date().getHours()}:${new Date().getSeconds()}`}</span>
+        <button
+          className={style.gameHeader_button}
+          onClick={() => setPopupOpen(true)}
+          type="button"
+        >
+          <img
+            src="./hints.svg"
+            alt="Иконка кнопки"
+          />
+        </button>
+      </div>
       <div className={style.main}>
         {field.map((row, rowIndex) =>
-          row.map((item, colIndex) => (
-            <GameCell
-              colIndex={colIndex}
-              isHighlight={
-                selectedCell?.rowIndex === rowIndex
-                || selectedCell?.colIndex === colIndex
-              }
-              isSelected={
-                selectedCell?.rowIndex === rowIndex
-                && selectedCell?.colIndex === colIndex
-              }
-              notes={item.notes}
-              onClick={() => setSelectedCell(item)}
-              rowIndex={rowIndex}
-              value={item.value}
-            />
-          ))
+          row.map((currentCell, colIndex) => {
+            const key = `${rowIndex}${colIndex}`;
+
+            return (
+              <GameCell
+                key={key}
+                colIndex={colIndex}
+                currentCell={currentCell}
+                onClick={() => setSelectedCell(currentCell)}
+                rowIndex={rowIndex}
+                selectedCell={selectedCell}
+              />
+            );
+          })
         )}
       </div>
 
@@ -164,11 +229,12 @@ function GameField() {
         <GameFieldButton
           srcImage="./notes-button.svg"
           onClick={() => setIsEnabledNotes(!isEnabledNotes)}
+          isHighlight={isEnabledNotes}
           titleBtn="Заметки"
         />
         <GameFieldButton
           srcImage="./help-button.svg"
-          onClick={() => console.log('Реализовать')}
+          onClick={() => handleHelpValue()}
           titleBtn="Подсказка"
         />
         <GameFieldButton
@@ -178,17 +244,11 @@ function GameField() {
         />
       </div>
 
-      <div className={style.main}>
+      <div className={style.gameButtons}>
         {GAME_BUTTONS.map((item: number) => (
-          <GameCell
+          <InputNumberButton
             value={item}
-            key={item}
             onClick={() => handleChangeValue(item)}
-            colIndex={0}
-            isHighlight={false}
-            isSelected={false}
-            notes={[]}
-            rowIndex={0}
           />
         ))}
       </div>

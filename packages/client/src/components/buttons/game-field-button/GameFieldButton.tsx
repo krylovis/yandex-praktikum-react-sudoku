@@ -1,19 +1,23 @@
 import style from './GameFieldButton.module.scss';
 
 interface GameFieldButtonProps {
-  srcImage: string;
-  titleBtn: string;
-  onClick: () => void;
+    isHighlight?: boolean;
+    onClick: () => void;
+    srcImage: string;
+    titleBtn: string;
 }
 
 function GameFieldButton({
+  isHighlight,
   onClick,
   srcImage,
   titleBtn,
 }: GameFieldButtonProps) {
+  const buttonClass: string = !isHighlight ? style.gameButton : `${style.gameButton} ${style.gameButton_active}`;
+
   return (
     <button
-      className={style.gameButton}
+      className={buttonClass}
       onClick={() => onClick()}
       type="button"
     >
