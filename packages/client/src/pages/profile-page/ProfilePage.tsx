@@ -31,6 +31,7 @@ function ProfilePage() {
   });
 
   const user = useAppSelector((state) => selectUser(state));
+  console.log('user', user);
 
   const prevProfile = usePrevious(profile);
   const [isEditing, setEditingMode] = useState<boolean>(false);
