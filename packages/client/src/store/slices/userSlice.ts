@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IProfile } from '../../models/Profile';
 import { UserState } from '../types';
-import { fetchUserData, fetchAuthorize, fetchSignUp, fetchLogout } from './userExtraReducers';
+import { fetchUserData, fetchAuthorize } from './userExtraReducers';
 
 const initialState: UserState = {
   user: null,
