@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { selectAuth } from '../store/slices/userSlice';
@@ -18,25 +18,10 @@ import {
   NotFoundPage,
   InternalServerErrorPage,
 } from '../pages/index';
-import { AppHeader, ForumPageWrapper, Navigation } from '../components';
+import { AppHeader, ForumPageWrapper } from '../components';
 import ROUTES from '../constants/constants';
 
-const hideNavigationOnRoutes: string[] = [
-  ROUTES.SIGN_UP,
-  ROUTES.TOPICS,
-  ROUTES.GAME,
-  ROUTES.LEADERBOARD,
-  ROUTES.LOGIN,
-  ROUTES.PROFILE,
-  ROUTES.TOPIC,
-  ROUTES.MAIN,
-  ROUTES.CREATE_TOPIC,
-  ROUTES.TOPICS_LIST,
-  ROUTES.TOPIC,
-];
-
 function App() {
-  const navigate = useNavigate();
   const location = useLocation();
   const dispatch: AppDispatch = useDispatch();
   const loggedIn = useAppSelector((state) => selectAuth(state));
@@ -82,25 +67,7 @@ function App() {
           path={ROUTES.UNDEFINED}
           element={<Navigate to={ROUTES.NOT_FOUND_404} state={{ from: location }} replace />}
         />
-        <Route
-          path="/"
-          element={(
-            <div style={{ marginTop: '100px' }}>
-              <div>Вот тут будет жить ваше приложение :)</div>
-              <Navigation />
-            </div>
-          )}
-        />
       </Routes>
-
-      {/* Кнопка "Назад" для определённых страниц */}
-      {hideNavigationOnRoutes.includes(location.pathname) && (
-        <div style={{ position: 'absolute', top: '100px', left: 0, zIndex: 5 }}>
-          <button type="button" onClick={() => navigate('/')}>
-            Назад
-          </button>
-        </div>
-      )}
     </>
   );
 }
