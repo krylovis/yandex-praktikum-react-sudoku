@@ -107,7 +107,7 @@ export default function ProfilePage() {
     <section className={style.profilePage}>
       <ErrorBoundary>
         <div className={style.profilePage__card}>
-          <div className={style.profilePage__card__avatarContainer}>
+          <div className={style.profilePage__avatarContainer}>
             <img src={getAvatar(profile?.avatar)} alt="Avatar" className={style.profilePage__avatar} />
           </div>
           <div className={style.profilePage__actions}>
