@@ -3,16 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import ROUTES from '../../constants/constants';
 import InputField from '../../components/inputField/InputField';
 import style from './ProfilePage.module.scss';
-import { changeAvatar, changePassword, changeProfile } from '../../services/UserServices';
+import { changePassword, changeProfile } from '../../services/UserServices';
 import { IProfile } from '../../models/Profile';
-import apiConfig from '../../config/ApiConfig';
 import Popup from '../../components/popup/Popup';
 import usePrevious from '../../components/hooks/usePrevios';
 import ErrorBoundary from '../../components/utils';
 import { CustomButton } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { fetchLogout } from '../../store/slices/userExtraReducers';
+import { fetchChangeAvatar, fetchLogout } from '../../store/slices/userExtraReducers';
 import { selectUser } from '../../store/slices/userSlice';
+import defaultAvatar from '../../assets/images/default-avatar.png';
 
 type field = { key: string; label: string; value?: string; };
 
@@ -93,31 +93,29 @@ function ProfilePage() {
     }
   };
 
-  const getAvatar = (url: string | undefined) =>
-    (url ? `${apiConfig.baseUrlResource}${url}` : '');
-
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     const formData = new FormData();
 
-    if (!file) {
-      return;
-    }
+    if (!file) return;
 
     formData.append('avatar', file);
 
-    await changeAvatar(formData).then((res) => {
-      setProfile(res);
-      setPopupOpen(false);
-    });
+    try {
+      await dispatch(fetchChangeAvatar(formData));
+    } catch (error) {
+      console.error('error', error);
+    }
   };
 
   return (
     <section className={style.profilePage}>
       <ErrorBoundary>
         <div className={style.profilePage__card}>
-          <div className={style.profilePage__card__avatarContainer}>
-            <img src={getAvatar(profile?.avatar)} alt="Avatar" className={style.profilePage__avatar} />
+          <div className={style.profilePage__avatarContainer}>
+            {user?.avatar
+              ? <img src={`https://ya-praktikum.tech/api/v2/resources${user.avatar}`} alt="Avatar" className={style.profilePage__avatar} />
+              : <img src={defaultAvatar} alt="Avatar" className={style.profilePage__avatar} />}
           </div>
 
           <div className={style.profilePage__actions}>
