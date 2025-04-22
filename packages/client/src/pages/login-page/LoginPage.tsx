@@ -2,12 +2,13 @@ import { useCallback, FormEvent, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   ContentContainer, FormField, MainForm,
-} from '../../components';
+} from '../../components/index';
 import ROUTES from '../../constants/constants';
 import useForm from '../../components/utils/hooks/form/useForm';
 import { loginFormText, loginInputs, getFormData } from '../../components/utils/form-helper';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { setUser } from '../../store/slices/userSlice';
+import { useAppDispatch } from '../../store/hooks';
+import { fetchAuthorize } from '../../store/slices/userExtraReducers';
+import { IReqData } from '../../utils/Api/AuthApi';
 
 function LoginPage() {
   const formType = 'login';
@@ -15,38 +16,27 @@ function LoginPage() {
   const { formData, isFormValid, handleChange, handleBlur } = useForm(getFormData(ids), formType);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.user);
 
   const handleNavigate = useCallback(() => {
     navigate(ROUTES.SIGN_UP);
   }, []);
 
-  const handleSubmit = useCallback((e: FormEvent) => {
+  const handleSubmit = useCallback(async (e: FormEvent) => {
     e.preventDefault();
-    console.log('useLoginForm', formData);
-    try {
-      // TODO: Здесь должна быть реальная логика авторизации, например:
-      // const response = await authService.signIn(values.login, values.password);
+    const reqData: IReqData = {};
 
-      // Моковые данные для примера:
-      const mockUser = {
-        first_name: 'Ivan',
-        second_name: 'Ivanov',
-        display_name: 'Iv',
-        email: 'ivan_ivanov@mail.ru',
-        phone: '+1234567890',
-        avatar: '',
-        login: 'IvanIvanov',
-      };
-
-      dispatch(setUser(mockUser));
-      console.log('mockUser from store', user);
-      navigate(ROUTES.MAIN);
-    } catch (error) {
-      console.error('Login error:', error);
-      // Можно добавить обработку ошибок
+    // eslint-disable-next-line no-restricted-syntax
+    for (const [key, { value }] of Object.entries(formData)) {
+      reqData[key] = value;
     }
-  }, [formData, dispatch, navigate]);
+
+    try {
+      const data = await dispatch(fetchAuthorize(reqData)).unwrap();
+      if (data) navigate(ROUTES.MAIN);
+    } catch (error) {
+      console.error('LoginPage error:', error);
+    }
+  }, [formData, dispatch]);
 
   const { formTitle, submitText, linkText } = loginFormText;
   return (

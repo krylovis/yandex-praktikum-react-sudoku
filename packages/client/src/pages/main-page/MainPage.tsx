@@ -50,6 +50,7 @@ export default function MainPage() {
         <div className={style.mainPage__actions}>
           {actions.map(({ text, onNavigate }) => (
             <CustomButton
+              key={text}
               className={[style.button]}
               type="button"
               color="secondary"

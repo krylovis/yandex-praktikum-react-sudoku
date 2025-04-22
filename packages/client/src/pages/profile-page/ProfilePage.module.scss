@@ -6,17 +6,17 @@
   width: 900px;
   margin: 0 auto;
 
-  @media (max-width: 767px) {
+  @media (width <= 767px) {
     width: 100%;
     padding: 16px;
     border-radius: 0;
   }
 
-  @media (min-width: 768px) and (max-width: 1023px) {
+  @media (width >= 768px) and (width <= 1023px) {
     width: 600px;
   }
 
-  @media (min-width: 1024px) {
+  @media (width >= 1024px) {
     width: 900px;
   }
 
@@ -33,7 +33,7 @@
     padding: 24px;
     width: inherit;
     border-radius: 16px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 10%);
     position: relative;
   }
 
@@ -66,6 +66,12 @@
 }
 
 .button {
+  all: unset;
+  color: $color-primary;
+  text-decoration: none;
+  font-size: 12px;
+  font-family: inherit;
+
   &:hover {
     cursor: pointer;
   }
@@ -73,10 +79,4 @@
   &__cancel {
     color: $color-danger;
   }
-
-  all: unset;
-  color: $color-primary;
-  text-decoration: none;
-  font-size: inherit;
-  font-family: inherit;
 }
