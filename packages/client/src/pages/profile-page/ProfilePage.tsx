@@ -169,6 +169,7 @@ function ProfilePage() {
                     placeholder={placeholder}
                     type={type}
                     text={text}
+                    isReadonly={!isEditing}
                     errorMessage={formData[id].errorText}
                     value={formData[id].value}
                     onChange={handleChange}
