@@ -1,52 +1,42 @@
-import React, { ChangeEvent, useCallback, useState, memo } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useState, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../../constants/constants';
-import InputField from '../../components/inputField/InputField';
+import useForm from '../../components/utils/hooks/form/useForm';
+import useWithPasswordForm from '../../components/utils/hooks/form/useWithPasswordForm';
 import style from './ProfilePage.module.scss';
-import { changePassword, changeProfile } from '../../services/UserServices';
-import { IProfile } from '../../models/Profile';
 import Popup from '../../components/popup/Popup';
-import usePrevious from '../../components/hooks/usePrevios';
 import ErrorBoundary from '../../components/utils';
-import { CustomButton } from '../../components';
+import { CustomButton, FormField } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { fetchChangeAvatar, fetchLogout } from '../../store/slices/userExtraReducers';
+import { fetchChangeAvatar, fetchUpdateProfile, fetchChangePassword, fetchLogout } from '../../store/slices/userExtraReducers';
 import { selectUser } from '../../store/slices/userSlice';
 import defaultAvatar from '../../assets/images/default-avatar.png';
-
-type field = { key: string; label: string; value?: string; };
+import { changePasswordInputs, profileInputs, getFormData } from '../../components/utils/form-helper';
+import { IReqData } from '../../utils/Api/AuthApi';
+import { IProfile } from '../../models/Profile';
 
 function ProfilePage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [isPopupOpen, setPopupOpen] = useState<boolean>(false);
-  const [profile, setProfile] = useState<IProfile>({
-    first_name: '',
-    second_name: '',
-    display_name: '',
-    email: '',
-    phone: '',
-    avatar: '',
-    login: '',
-  });
 
   const user = useAppSelector((state) => selectUser(state));
-  console.log('user', user);
 
-  const prevProfile = usePrevious(profile);
+  const profileIds = profileInputs.map(({ id }) => id);
+  const {
+    formData, isFormValid, handleChange, handleBlur,
+  } = useForm(getFormData(profileIds, user as IProfile), 'profile');
+
+  const passIds = changePasswordInputs.map(({ id }) => id);
+  const {
+    formData: passFormData,
+    isFormValid: isPassFormValid,
+    handleChange: handlePassChange,
+    handleBlur: handlePassBlur,
+  } = useWithPasswordForm(getFormData(passIds), 'password');
+
   const [isEditing, setEditingMode] = useState<boolean>(false);
   const [isPasswordMode, setPasswordMode] = useState<boolean>(false);
-  const fieldsUserInfo: field[] = [
-    { key: 'first_name', label: 'Имя', value: profile?.first_name },
-    { key: 'second_name', label: 'Фамилия', value: profile?.second_name },
-    { key: 'email', label: 'Почта', value: profile?.email },
-    { key: 'phone', label: 'Телефон', value: profile?.phone },
-    { key: 'display_name', label: 'Никнейм', value: profile?.display_name },
-  ];
-  const fieldsUserPassword: field[] = [
-    { key: 'oldPassword', label: 'Старый пароль', value: '' },
-    { key: 'newPassword', label: 'Новый пароль', value: '' },
-  ];
 
   const handleLogout = useCallback(async () => {
     try {
@@ -57,52 +47,56 @@ function ProfilePage() {
     }
   }, [dispatch]);
 
-  const handleFieldChange = (key: string, value?: string) => {
-    setProfile((prev) => ({ ...prev, [key]: value }));
-  };
-
   const handleCancel = () => {
     if (isPasswordMode) {
       setPasswordMode(false);
-    } else {
-      setProfile(prevProfile as IProfile);
     }
 
     setEditingMode(false);
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const form = (event.target as HTMLFormElement).closest('form');
+  const handleSubmit = useCallback(async (e: FormEvent) => {
+    e.preventDefault();
+    const reqData: IReqData = {};
 
-    if (form) {
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
-
-      if (isPasswordMode) {
-        await changePassword(data).then(() => {
-          setEditingMode(false);
-          setPasswordMode(false);
-        });
-      } else if (isEditing) {
-        await changeProfile(data).then((res) => {
-          setProfile(res);
-          setEditingMode(false);
-        });
-      }
+    // eslint-disable-next-line no-restricted-syntax
+    for (const [key, { value }] of Object.entries(formData)) {
+      reqData[key] = value;
     }
-  };
+
+    try {
+      await dispatch(fetchUpdateProfile(reqData)).unwrap();
+      handleCancel();
+    } catch (error) {
+      console.error('error', error);
+    }
+  }, [formData, dispatch]);
+
+  const handlePasswordSubmit = useCallback(async (e: FormEvent) => {
+    e.preventDefault();
+
+    try {
+      await dispatch(fetchChangePassword({
+        newPassword: passFormData.password.value,
+        oldPassword: passFormData.oldPassword.value,
+      })).unwrap();
+      handleCancel();
+    } catch (error) {
+      console.error('error', error);
+    }
+  }, [passFormData, dispatch]);
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    const formData = new FormData();
+    const avatarformData = new FormData();
 
     if (!file) return;
 
-    formData.append('avatar', file);
+    avatarformData.append('avatar', file);
 
     try {
-      await dispatch(fetchChangeAvatar(formData));
+      await dispatch(fetchChangeAvatar(avatarformData));
+      setPopupOpen(false);
     } catch (error) {
       console.error('error', error);
     }
@@ -152,42 +146,53 @@ function ProfilePage() {
               </>
             )}
           </div>
-          <form onSubmit={handleSubmit} className={style.profilePage__form}>
+          <form className={style.profilePage__form}>
             <div className={style.profilePage__fields}>
               {isPasswordMode
-                ? fieldsUserPassword.map(({ label, key, value }) => (
-                  <InputField
-                    label={label}
-                    value={value}
-                    key={key}
-                    name={key}
-                    isEditing={isPasswordMode}
-                    onChange={(e) => handleFieldChange(key, e)}
+                ? changePasswordInputs.map(({ id, type, placeholder, text }) => (
+                  <FormField
+                    key={id}
+                    id={id}
+                    placeholder={placeholder}
+                    type={type}
+                    text={text}
+                    errorMessage={passFormData[id].errorText}
+                    value={passFormData[id].value}
+                    onChange={handlePassChange}
+                    onBlur={handlePassBlur}
                   />
                 ))
-                : fieldsUserInfo.map(({ label, key, value }) => (
-                  <InputField
-                    label={label}
-                    value={value}
-                    name={key}
-                    key={key}
-                    isEditing={isEditing}
-                    onChange={(e) => handleFieldChange(key, e)}
+                : profileInputs.map(({ id, type, placeholder, text }) => (
+                  <FormField
+                    key={id}
+                    id={id}
+                    placeholder={placeholder}
+                    type={type}
+                    text={text}
+                    errorMessage={formData[id].errorText}
+                    value={formData[id].value}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
                 ))}
             </div>
             {(isEditing || isPasswordMode) && (
               <div className={style.profilePage__form__actions}>
-                <button
-                  className={`${style.button} ${style.button__cancel}`}
+                <CustomButton
+                  className={[style.button__cancel]}
                   type="button"
+                  color="transparent"
+                  text="Отмена"
                   onClick={() => handleCancel()}
-                >
-                  Отмена
-                </button>
-                <button className={style.button} type="submit">
-                  Сохранить
-                </button>
+                />
+
+                <CustomButton
+                  type="submit"
+                  color="transparent"
+                  text="Сохранить"
+                  isDisabled={isPasswordMode ? !isPassFormValid : !isFormValid}
+                  onClick={isPasswordMode ? handlePasswordSubmit : handleSubmit}
+                />
               </div>
             )}
           </form>

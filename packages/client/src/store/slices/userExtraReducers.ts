@@ -74,3 +74,33 @@ export const fetchChangeAvatar = createAsyncThunk('user/fetchChangeAvatar',
     }
   }
 );
+
+export const fetchUpdateProfile = createAsyncThunk('user/fetchUpdateProfile',
+  async (data: IReqData, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await userApi.updateProfile(data);
+      dispatch(setUser(response));
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue('Произошла неизвестная ошибка');
+    }
+  }
+);
+
+export const fetchChangePassword = createAsyncThunk('user/fetchChangePassword',
+  async (data: IReqData, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await userApi.changePassword(data);
+      dispatch(setUser(response));
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue('Произошла неизвестная ошибка');
+    }
+  }
+);
