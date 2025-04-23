@@ -1,0 +1,31 @@
+.gameOverWrapper {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+  z-index: 11;
+  position: absolute;
+}
+
+.gameOverForm {
+  background-color: #fff;
+  width: 500px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  gap: 20px;
+
+  &_title {
+    font-weight: 700;
+    font-size: 30px;
+    margin: 0;
+  }
+
+  &_button {
+    border: 1px solid $color-primary;
+  }
+}

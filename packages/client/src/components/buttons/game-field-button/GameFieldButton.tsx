@@ -1,6 +1,7 @@
 import style from './GameFieldButton.module.scss';
 
 interface GameFieldButtonProps {
+    count?: number;
     isHighlight?: boolean;
     onClick: () => void;
     srcImage: string;
@@ -8,6 +9,7 @@ interface GameFieldButtonProps {
 }
 
 function GameFieldButton({
+  count,
   isHighlight,
   onClick,
   srcImage,
@@ -27,6 +29,9 @@ function GameFieldButton({
         className={style.gameButton_image}
       />
       <p className={style.gameButton_title}>{titleBtn}</p>
+      {count !== undefined && (
+        <span className={style.gameButton_count}>{count}</span>
+      )}
     </button>
   );
 }
