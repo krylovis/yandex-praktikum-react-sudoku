@@ -8,13 +8,14 @@ interface IProps {
   value: string,
   text: string,
   errorMessage: string,
+  isReadonly?: boolean,
   type: 'text' | 'email' | 'tel' | 'password' | 'number',
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
   onBlur: (e: React.ChangeEvent<HTMLInputElement>) => void,
 }
 
 function FormField({
-  id, placeholder, value, type, text, errorMessage, onChange, onBlur,
+  id, placeholder, value, type, text, errorMessage, isReadonly, onChange, onBlur,
 }: IProps) {
   return (
     <label className={style.formField} htmlFor={id}>
@@ -26,6 +27,7 @@ function FormField({
         type={type}
         value={value}
         isError={!!errorMessage}
+        isReadonly={isReadonly}
         onChange={onChange}
         onBlur={onBlur}
       />

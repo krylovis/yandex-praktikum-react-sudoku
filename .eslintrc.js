@@ -25,7 +25,7 @@ module.exports = {
     },
   },
   globals: {
-    RequestInit: true
+    RequestInit: true,
   },
   rules: {
     '@typescript-eslint/ban-ts-comment': 1,

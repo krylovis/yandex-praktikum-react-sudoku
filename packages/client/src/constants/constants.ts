@@ -1,5 +1,5 @@
 enum ROUTES {
-  MAIN = '/main',
+  MAIN = '/',
   SIGN_UP = '/signup',
   GAME = '/sudoku',
   LEADERBOARD = '/leaderboard',

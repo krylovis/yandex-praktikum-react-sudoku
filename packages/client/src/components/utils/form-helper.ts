@@ -1,3 +1,5 @@
+import { IProfile } from '../../models/Profile';
+
 const PASSWORD_REGEXP = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$/;
 const EMAIL_REGEXP = /^[a-z0-9._%+-]+@[a-z0-9.\\-]+\.[a-z]{2,3}$/;
 const SPASE_CHARACTERS = /^\S*$/;
@@ -60,11 +62,15 @@ export const RULES: IRules = {
   },
 };
 
-export const getFormData = (ids: string[]): IValues => {
+type TIds = string[];
+
+export const getFormData = (ids: TIds, user?: IProfile): IValues => {
   const object: IValues = {};
   // eslint-disable-next-line no-restricted-syntax
   for (const id of ids) {
-    object[id] = { value: '', errorText: '', isValid: false };
+    let value = '';
+    if (user?.[id as keyof IProfile]) value = user?.[id as keyof IProfile] as string;
+    object[id] = { value, errorText: '', isValid: false };
   }
 
   return object;
@@ -73,6 +79,7 @@ export const getFormData = (ids: string[]): IValues => {
 const profileRules = {
   email: ['required', 'isEmail'],
   first_name: ['required', 'isName'],
+  display_name: ['required'],
   second_name: ['required', 'isName'],
   phone: ['required', 'isPhone'],
   login: ['required', 'isLogin'],
@@ -99,6 +106,7 @@ export const inputsRules: IInputsRules = {
   },
 
   password: {
+    oldPassword: ['required'],
     ...passwordRules,
   },
 };
@@ -137,7 +145,7 @@ export const loginInputs: IProps[] = [
   },
 ];
 
-export const signupInputs: IProps[] = [
+export const profileInputs: IProps[] = [
   {
     id: 'first_name',
     placeholder: 'Введите имя',
@@ -163,11 +171,20 @@ export const signupInputs: IProps[] = [
     text: 'Телефон',
   },
   {
+    id: 'display_name',
+    placeholder: 'Никнейм',
+    type: 'text',
+    text: 'Никнейм',
+  },
+  {
     id: 'login',
     placeholder: 'Придумайте логин',
     type: 'text',
     text: 'Логин',
   },
+];
+
+export const passwordInputs: IProps[] = [
   {
     id: 'password',
     placeholder: 'Введите пароль',
@@ -180,6 +197,32 @@ export const signupInputs: IProps[] = [
     type: 'password',
     text: 'Пароль (ещё раз)',
   },
+];
+
+export const changePasswordInputs: IProps[] = [
+  {
+    id: 'oldPassword',
+    placeholder: 'Введите старый пароль',
+    type: 'password',
+    text: 'Введите старый пароль',
+  },
+  {
+    id: 'password',
+    placeholder: 'Введите новый пароль',
+    type: 'password',
+    text: 'Введите новый пароль',
+  },
+  {
+    id: 'password_confirmation',
+    placeholder: 'Повторите новый пароль',
+    type: 'password',
+    text: 'Новый пароль (ещё раз)',
+  },
+];
+
+export const signupInputs: IProps[] = [
+  ...profileInputs,
+  ...passwordInputs,
 ];
 
 export function getErrorText({ name, value, message, type }: IGetErrorText): string {
