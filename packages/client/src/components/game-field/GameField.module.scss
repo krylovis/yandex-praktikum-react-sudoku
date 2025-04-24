@@ -10,10 +10,16 @@
   display: flex;
   gap: 10px;
   justify-content: space-between;
-  width: 420px;
+  width: 560px;
 
   @media (max-width: 767px) {
     width: 372px;
+  }
+
+  & button:last-child {
+    @media (max-width: 767px) {
+      display: none;
+    }
   }
 }
 
