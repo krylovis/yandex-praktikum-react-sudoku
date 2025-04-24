@@ -31,10 +31,15 @@ this.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.open(CACHE_NAME).then((cache) =>
       cache.match(event.request).then((response) => {
+        if (event.request.method === 'POST') {
+          return fetch(event.request);
+        }
         const fetchPromise = fetch(event.request).then((
           networkResponse
         ) => {
-          cache.put(event.request, networkResponse.clone());
+          if (event.request.method === 'GET') {
+            cache.put(event.request, networkResponse.clone());
+          }
           return networkResponse;
         });
         return response || fetchPromise;
