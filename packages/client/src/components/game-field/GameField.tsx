@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import GameCell from '../game-cell/GameCell';
 import mockField from './mockField';
 
@@ -145,19 +145,17 @@ function GameField() {
     setMoveHistory((prevState: CellInfo[]) => prevState.slice(0, -1));
   }, [moveHistory]);
 
-  const containerRef = useRef<HTMLDivElement | null>(null);
-
   const enterFullscreen = () => {
-    const body = document.body as IFullscreenElement;
+    const fullscreenElement = document.body as IFullscreenElement;
 
-    if (body.requestFullscreen) {
-      body.requestFullscreen();
-    } else if (body.webkitRequestFullscreen) {
-      body.webkitRequestFullscreen();
-    } else if (body.mozRequestFullScreen) {
-      body.mozRequestFullScreen();
-    } else if (body.msRequestFullscreen) {
-      body.msRequestFullscreen();
+    if (fullscreenElement.requestFullscreen) {
+      fullscreenElement.requestFullscreen();
+    } else if (fullscreenElement.webkitRequestFullscreen) {
+      fullscreenElement.webkitRequestFullscreen();
+    } else if (fullscreenElement.mozRequestFullScreen) {
+      fullscreenElement.mozRequestFullScreen();
+    } else if (fullscreenElement.msRequestFullscreen) {
+      fullscreenElement.msRequestFullscreen();
     }
   };
 
@@ -194,7 +192,6 @@ function GameField() {
       <div
         className={style.section}
         onKeyDown={handleKeyDown}
-        ref={containerRef}
       >
         <Popup
           isOpen={isPopupOpen}
