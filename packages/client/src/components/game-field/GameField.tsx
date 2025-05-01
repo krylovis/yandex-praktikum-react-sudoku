@@ -148,16 +148,16 @@ function GameField() {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const enterFullscreen = () => {
-    const fullscreenElement = containerRef.current as IFullscreenElement;
+    const body = document.body as IFullscreenElement;
 
-    if (fullscreenElement.requestFullscreen) {
-      fullscreenElement.requestFullscreen();
-    } else if (fullscreenElement.webkitRequestFullscreen) {
-      fullscreenElement.webkitRequestFullscreen();
-    } else if (fullscreenElement.mozRequestFullScreen) {
-      fullscreenElement.mozRequestFullScreen();
-    } else if (fullscreenElement.msRequestFullscreen) {
-      fullscreenElement.msRequestFullscreen();
+    if (body.requestFullscreen) {
+      body.requestFullscreen();
+    } else if (body.webkitRequestFullscreen) {
+      body.webkitRequestFullscreen();
+    } else if (body.mozRequestFullScreen) {
+      body.mozRequestFullScreen();
+    } else if (body.msRequestFullscreen) {
+      body.msRequestFullscreen();
     }
   };
 
