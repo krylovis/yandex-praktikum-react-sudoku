@@ -2,8 +2,8 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { selectAuth } from '../store/slices/userSlice';
-import { fetchUserData } from '../store/slices/userExtraReducers';
-import { AppDispatch } from '../store/index';
+import { fetchUserByCode, fetchUserData } from '../store/slices/userExtraReducers';
+import { AppDispatch } from '../store';
 import ProtectedRoute from '../components/route/ProtectedRoute';
 import { useAppSelector } from '../store/hooks';
 import {
@@ -27,7 +27,22 @@ function App() {
   const loggedIn = useAppSelector((state) => selectAuth(state));
 
   useEffect(() => {
-    dispatch(fetchUserData());
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+
+    const handleAuth = async () => {
+      if (code) {
+        const result = await dispatch(fetchUserByCode({ code }));
+
+        if (fetchUserByCode.fulfilled.match(result)) {
+          dispatch(fetchUserData());
+        }
+      } else {
+        dispatch(fetchUserData());
+      }
+    };
+
+    handleAuth();
   }, [dispatch]);
 
   return (

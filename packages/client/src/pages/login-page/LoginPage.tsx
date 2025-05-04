@@ -7,7 +7,7 @@ import ROUTES from '../../constants/constants';
 import useForm from '../../components/utils/hooks/form/useForm';
 import { loginFormText, loginInputs, getFormData } from '../../components/utils/form-helper';
 import { useAppDispatch } from '../../store/hooks';
-import { fetchAuthorize } from '../../store/slices/userExtraReducers';
+import { fetchAuthorize, fetchServiceId } from '../../store/slices/userExtraReducers';
 import { IReqData } from '../../utils/Api/AuthApi';
 
 function LoginPage() {
@@ -38,16 +38,26 @@ function LoginPage() {
     }
   }, [formData, dispatch]);
 
-  const { formTitle, submitText, linkText } = loginFormText;
+  const handleOtherAuthorize = useCallback(async () => {
+    try {
+      await dispatch(fetchServiceId()).unwrap();
+    } catch (error) {
+      console.error('Ошибка авторизации через Яндекс', error);
+    }
+  }, [formData, dispatch]);
+
+  const { formTitle, submitText, otherAuthText, linkText } = loginFormText;
   return (
     <ContentContainer>
       <MainForm
         type={formType}
         formTitle={formTitle}
         submitText={submitText}
+        otherAuthText={otherAuthText}
         linkText={linkText}
         isFormValid={isFormValid}
         onSubmit={handleSubmit}
+        onOtherAuthorize={handleOtherAuthorize}
         onNavigate={handleNavigate}
       >
 
