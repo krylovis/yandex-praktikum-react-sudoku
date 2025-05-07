@@ -40,7 +40,7 @@ async function createServer() {
 
       // Загружаем модуль клиента, который писали выше,
       // он будет рендерить HTML-код
-      const { render } = await vite.ssrLoadModule(
+      const { default: render } = await vite.ssrLoadModule(
         path.join(clientPath, 'src/entry-server.tsx')
       );
 
