@@ -3,7 +3,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs/promises';
-import { createServer as createViteServer } from 'vite';
+import { createServer as createViteServer, ViteDevServer } from 'vite';
 
 // Получаем __dirname и __filename вручную
 const __filename = fileURLToPath(import.meta.url);
@@ -16,33 +16,61 @@ const isDev = process.env.NODE_ENV === 'development';
 
 async function createServer() {
   const app = express();
+  let vite: ViteDevServer | undefined;
 
-  const vite = await createViteServer({
-    server: { middlewareMode: true },
-    root: clientPath,
-    appType: 'custom',
-  });
+  if (isDev) {
+    vite = await createViteServer({
+      server: { middlewareMode: true },
+      root: clientPath,
+      appType: 'custom',
+    });
 
-  app.use(vite.middlewares);
-
+    app.use(vite.middlewares);
+  } else {
+    app.use(
+      express.static(path.join(clientPath, 'dist/client'), { index: false })
+    );
+  }
   app.get('/', async (req, res, next) => {
     const url = req.originalUrl;
 
     try {
       // Получаем файл client/index.html который мы правили ранее
-      let template = await fs.readFile(
-        path.resolve(clientPath, 'index.html'),
-        'utf-8'
-      );
+      // Создаём переменные
+      let render: () => Promise<string>;
+      let template: string;
+      if (vite) {
+        template = await fs.readFile(
+          path.resolve(clientPath, 'index.html'),
+          'utf-8'
+        );
 
-      // Применяем встроенные HTML-преобразования vite и плагинов
-      template = await vite.transformIndexHtml(url, template);
+        // Применяем встроенные HTML-преобразования vite и плагинов
+        template = await vite.transformIndexHtml(url, template);
 
-      // Загружаем модуль клиента, который писали выше,
-      // он будет рендерить HTML-код
-      const { default: render } = await vite.ssrLoadModule(
-        path.join(clientPath, 'src/entry-server.tsx')
-      );
+        // Загружаем модуль клиента, который писали выше,
+        // он будет рендерить HTML-код
+        render = (
+          await vite.ssrLoadModule(
+            path.join(clientPath, 'src/entry-server.tsx')
+          )
+        ).render;
+      } else {
+        template = await fs.readFile(
+          path.join(clientPath, 'dist/client/index.html'),
+          'utf-8'
+        );
+
+        // Получаем путь до сбилдженого модуля клиента,
+        // чтобы не тащить средства сборки клиента на сервер
+        const pathToServer = path.join(
+          clientPath,
+          'dist/server/entry-server.js'
+        );
+
+        // Импортируем этот модуль и вызываем с инишл стейтом
+        render = (await import(pathToServer)).render;
+      }
 
       // Получаем HTML-строку из JSX
       const appHtml = await render();
@@ -51,7 +79,7 @@ async function createServer() {
       const html = template.replace('<!--ssr-outlet-->', appHtml);
 
       // Завершаем запрос и отдаём HTML-страницу
-      res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
+      res.status(200).send(html);
     } catch (e) {
       vite.ssrFixStacktrace(e as Error);
       next(e);
