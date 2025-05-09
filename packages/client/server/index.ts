@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 import fs from 'fs/promises';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
 
@@ -37,7 +37,7 @@ async function createServer() {
     try {
       // Получаем файл client/index.html который мы правили ранее
       // Создаём переменные
-      let render: () => Promise<string>;
+      let render: (renderUrl: string) => Promise<string>;
       let template: string;
       if (vite) {
         template = await fs.readFile(
@@ -50,11 +50,8 @@ async function createServer() {
 
         // Загружаем модуль клиента, который писали выше,
         // он будет рендерить HTML-код
-        render = (
-          await vite.ssrLoadModule(
-            path.join(clientPath, 'src/entry-server.tsx')
-          )
-        ).render;
+        const serverModule = await vite.ssrLoadModule(path.join(clientPath, 'src/entry-server.tsx'));
+        render = serverModule.default;
       } else {
         template = await fs.readFile(
           path.join(clientPath, 'dist/client/index.html'),
@@ -68,12 +65,16 @@ async function createServer() {
           'dist/server/entry-server.js'
         );
 
+        // Преобразуем путь в корректный URL с протоколом file://
+        const moduleUrl = new URL(pathToFileURL(pathToServer)).href;
+
         // Импортируем этот модуль и вызываем с инишл стейтом
-        render = (await import(pathToServer)).render;
+        const serverModule = await import(moduleUrl);
+        render = serverModule.default;
       }
 
       // Получаем HTML-строку из JSX
-      const appHtml = await render();
+      const appHtml = await render(url);
 
       // Заменяем комментарий на сгенерированную HTML-строку
       const html = template.replace('<!--ssr-outlet-->', appHtml);
@@ -81,7 +82,9 @@ async function createServer() {
       // Завершаем запрос и отдаём HTML-страницу
       res.status(200).send(html);
     } catch (e) {
-      vite.ssrFixStacktrace(e as Error);
+      if (vite) {
+        vite.ssrFixStacktrace(e as Error);
+      }
       next(e);
     }
   });
